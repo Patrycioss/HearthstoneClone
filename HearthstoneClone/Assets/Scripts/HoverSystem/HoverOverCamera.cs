@@ -1,13 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using Cards.Interfaces.MouseOver;
 using UnityEngine;
 
-namespace Engine
+namespace HoverSystem
 {
-	public class HoverOver : MonoBehaviour
+	/// <summary>
+	/// Script that allows for hovering over a <see cref="GameObject"/> with a <see cref="MonoBehaviour"/> that implements <see cref="IMouseOver"/>.
+	/// <remarks>
+	/// Needs to be attached to a <see cref="Camera"/>.
+	/// </remarks>
+	/// </summary>
+	public class HoverOverCamera : MonoBehaviour
 	{
 		private Camera mainCamera;
 
@@ -16,12 +19,18 @@ namespace Engine
 
 		private void Awake()
 		{
-			mainCamera = Camera.main;
+			mainCamera = GetComponent<Camera>();
+
+			if (!mainCamera)
+			{
+				Debug.LogWarning($"{typeof(HoverOverCamera)} should be attached to a {typeof(Camera)}!");
+			}
 		}
 
 		public void FixedUpdate()
 		{
 			Ray ray = mainCamera.ScreenPointToRay (Input.mousePosition);
+			
 			if (Physics.Raycast (ray, out RaycastHit hit, 100))
 			{
 				if (hit.transform == hoveringOver) return;
