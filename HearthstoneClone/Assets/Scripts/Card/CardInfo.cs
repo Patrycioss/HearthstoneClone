@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Card
 {
 	/// <summary>
 	/// Contains all of the info necessary to construct a card.
 	/// </summary>
+	[Serializable]
 	public struct CardInfo
 	{
 		/// <summary>
@@ -15,7 +17,7 @@ namespace Card
 		/// <summary>
 		/// Mana cost of the card.
 		/// </summary>
-		public string ManaCost;
+		public int ManaCost;
 		
 		/// <summary>
 		/// Image for the card.

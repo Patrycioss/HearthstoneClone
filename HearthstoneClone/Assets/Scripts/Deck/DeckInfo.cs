@@ -1,26 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using Card;
+using UnityEngine;
 
 namespace Deck
 {
 	/// <summary>
-	/// Info of what cards are in the deck, can be used to pull cards.
+	/// Info of a created deck.
 	/// </summary>
 	[Serializable]
 	public struct DeckInfo
 	{
-		public List<CardInfo> cards;
+		/// <summary>
+		/// Name of the deck.
+		/// </summary>
+		public string Name;
 
 		/// <summary>
-		/// Pull a random card from the deck.
+		/// Description of the deck.
 		/// </summary>
-		public CardInfo PullRandomCard()
-		{
-			int index = UnityEngine.Random.Range(0, cards.Count);
-			CardInfo cardInfo = cards[index];
-			cards.RemoveAt(index);
-			return cardInfo;
-		}
+		public string Description;
+
+		/// <summary>
+		/// Image for the thumbnail of the deck.
+		/// </summary>
+		public Sprite Image;
+		
+		/// <summary>
+		/// Cards in the deck.
+		/// </summary>
+		public List<CardInfo> cards;
 	}
 }
