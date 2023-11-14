@@ -12,7 +12,9 @@ namespace Deck
 		/// </summary>
 		public DeckInfo ActiveDeckInfo => activeDeckInfo;
 
+		[Header("TESTING")]
 		[SerializeField] private DeckInfo testDeckInfo;
+		[SerializeField] private bool testing = false;
 		
 		private DeckInfo activeDeckInfo;
 		private PhysicalDeck instance;
@@ -25,8 +27,11 @@ namespace Deck
 				Destroy(this);
 			}
 			instance = this;
-			
-			activeDeckInfo = testDeckInfo;
+
+			if (testing)
+			{
+				activeDeckInfo = testDeckInfo;
+			}
 		}
 	}
 }
