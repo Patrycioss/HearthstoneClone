@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CustomStates
+namespace StateSystem
 {
 	/// <summary>
 	/// State for a <see cref="StateMachine"/>
@@ -24,7 +24,7 @@ namespace CustomStates
 		/// Is called every frame.
 		/// </summary>
 		public abstract void Update();
-		
+
 		/// <summary>
 		/// Is called when this <see cref="State"/> stops.
 		/// </summary>

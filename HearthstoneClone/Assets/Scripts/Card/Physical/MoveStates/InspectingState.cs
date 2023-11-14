@@ -1,4 +1,5 @@
 ﻿using System;
+using StateSystem;
 using UnityEngine;
 
 namespace Card.Physical.MoveStates
@@ -6,7 +7,7 @@ namespace Card.Physical.MoveStates
 	/// <summary>
 	/// State that handles what happens when the player is inspecting a <see cref="PhysicalCard"/>.
 	/// </summary>
-	public class InspectingState : CustomStates.MovePhysicalCardState
+	public class InspectingState : MovePhysicalCardState
 	{
 		private Transform canvasParent;
 		private Vector3 startPosition;

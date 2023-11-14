@@ -1,13 +1,14 @@
 ﻿using System;
+using StateSystem;
 using UnityEngine;
-using State = CustomStates.State;
+using State = StateSystem.State;
 
 namespace Card.Physical.MoveStates
 {
 	/// <summary>
 	/// State that handles what happens when a <see cref="PhysicalCard"/> is being moved by the player.
 	/// </summary>
-	public class MovingState : CustomStates.MovePhysicalCardState
+	public class MovingState : MovePhysicalCardState
 	{
 		private const float CLIP_PLANE_CONSTANT = 5.8f;
 		

@@ -10,6 +10,7 @@ namespace HoverSystem
 	/// Needs to be attached to a <see cref="Camera"/>.
 	/// </remarks>
 	/// </summary>
+	[RequireComponent(typeof(Camera))]
 	public class HoverOverCamera : MonoBehaviour
 	{
 		private Camera mainCamera;

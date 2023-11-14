@@ -1,11 +1,12 @@
 ﻿using System;
+using StateSystem;
 
 namespace Card.Physical.MoveStates
 {
 	/// <summary>
 	/// State that handles what happens when a <see cref="PhysicalCard"/> is in the player's hand.
 	/// </summary>
-	public class HeldState : CustomStates.MovePhysicalCardState
+	public class HeldState : MovePhysicalCardState
 	{
 		public HeldState(PhysicalCard card) : base(card) {}
 

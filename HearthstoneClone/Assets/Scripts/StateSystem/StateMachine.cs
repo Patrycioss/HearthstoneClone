@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using UnityEngine;
 
-namespace CustomStates
+namespace StateSystem
 {
 	/// <summary>
 	/// Manages states.
