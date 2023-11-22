@@ -14,7 +14,6 @@ namespace HoverSystem
 	public class HoverOverCamera : MonoBehaviour
 	{
 		private Camera mainCamera;
-
 		private Transform hoveringOver;
 		private List<IMouseOver> mouseOvers = new();
 
@@ -28,7 +27,7 @@ namespace HoverSystem
 			}
 		}
 
-		public void FixedUpdate()
+		private void FixedUpdate()
 		{
 			Ray ray = mainCamera.ScreenPointToRay (Input.mousePosition);
 			
@@ -39,16 +38,16 @@ namespace HoverSystem
 				hoveringOver = hit.transform;
 				mouseOvers.ForEach(pOver =>
 				{
-					pOver.OnEndHover();
 					pOver.IsHovering = false;
+					pOver.OnEndHover();
 				});
 				
 				mouseOvers = hit.transform.GetComponents<IMouseOver>().ToList();
 				
 				mouseOvers.ForEach(pOver =>
 				{
-					pOver.OnStartHover();
 					pOver.IsHovering = true;
+					pOver.OnStartHover();
 				});
 			}
 		}

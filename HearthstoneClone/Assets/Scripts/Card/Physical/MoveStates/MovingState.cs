@@ -32,7 +32,7 @@ namespace Card.Physical.MoveStates
 			Vector3 mousePos = Input.mousePosition;
 			mousePos.z = camera.nearClipPlane + 5.7f;
 
-			movingOffset = camera.ScreenToWorldPoint(mousePos) - physicalCard.transform.position;
+			movingOffset = camera.ScreenToWorldPoint(mousePos) - PhysicalCard.transform.position;
 		}
 
 		public override void Update()
@@ -41,17 +41,17 @@ namespace Card.Physical.MoveStates
 			mousePos.z = CLIP_PLANE_CONSTANT;
 			
 			Vector3 newPosition = camera.ScreenToWorldPoint(mousePos) - movingOffset;
-			physicalCard.transform.position = new Vector3(newPosition.x, physicalCard.transform.position.y, newPosition.z);
+			PhysicalCard.transform.position = new Vector3(newPosition.x, PhysicalCard.transform.position.y, newPosition.z);
 			
 			if (!(Input.GetMouseButton(0) || Input.GetMouseButton(1)))
 			{
-			    stateMachine.SetState(nextState);
+			    StateMachine.SetState(nextState);
 			}
 		}
 
 		public override void Stop(Action onCompleteCallback)
 		{
-			physicalCard.transform.position = startPos;
+			PhysicalCard.transform.position = startPos;
 			onCompleteCallback();
 			// card.transform.DOMove(startPos, Card.GetMoveDuration(card.transform.position, startPos))
 			// 	.SetEase(Ease.OutCubic).OnComplete(() =>

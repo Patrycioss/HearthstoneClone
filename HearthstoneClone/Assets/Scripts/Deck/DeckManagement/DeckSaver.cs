@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Deck.DeckManagement
@@ -21,6 +20,10 @@ namespace Deck.DeckManagement
 			else Debug.Log($"{nameof(DeckSaver)} found save folder with path {saveFolderPath}");
 		}
 
+		/// <summary>
+		/// Save a <see cref="DeckInfo"/> to disk.
+		/// </summary>
+		/// <param name="deck"></param>
 		public void SaveDeck(DeckInfo deck)
 		{
 			if (string.IsNullOrEmpty(deck.Name))
@@ -52,6 +55,10 @@ namespace Deck.DeckManagement
 			}
 		}
 
+		/// <summary>
+		/// Save a list of <see cref="DeckInfo"/> to disk.
+		/// </summary>
+		/// <param name="decks">List of info for decks to be created.</param>
 		public void SaveDecks(List<DeckInfo> decks)
 		{
 			foreach (DeckInfo deck in decks)

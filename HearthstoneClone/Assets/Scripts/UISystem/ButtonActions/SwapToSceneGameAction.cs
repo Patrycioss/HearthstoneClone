@@ -1,14 +1,14 @@
-﻿using External;
+﻿using CustomEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Actions
+namespace UISystem.ButtonActions
 {
-	public class SwapToSceneGameAction : GameAction
+	public class SwapToSceneGameAction : ButtonAction
 	{
 		[SerializeField] private SceneField sceneField;
 		
-		public override void Act()
+		private void OnClick()
 		{
 			SceneManager.LoadSceneAsync(sceneField);
 		}

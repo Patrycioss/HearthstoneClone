@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Card;
-using DG.Tweening.Plugins.Core.PathCore;
 using UnityEngine;
 using Path = System.IO.Path;
 
@@ -27,7 +26,7 @@ namespace Deck.DeckManagement
 			
 			deckSaver.SaveDeck(new DeckInfo()
 			{
-				cards = new List<CardInfo>(){new ()
+				Cards = new List<CardInfo>(){new ()
 				{
 					Image = null,
 					ManaCost = 5,

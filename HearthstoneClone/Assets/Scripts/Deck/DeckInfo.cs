@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Deck
 {
 	/// <summary>
-	/// Info of a created deck.
+	/// Contains all of the info necessary to construct a deck.
 	/// </summary>
 	[Serializable]
 	public struct DeckInfo
@@ -29,6 +29,6 @@ namespace Deck
 		/// <summary>
 		/// Cards in the deck.
 		/// </summary>
-		public List<CardInfo> cards;
+		public List<CardInfo> Cards;
 	}
 }

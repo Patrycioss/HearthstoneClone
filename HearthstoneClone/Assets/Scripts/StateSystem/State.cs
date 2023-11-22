@@ -3,17 +3,17 @@
 namespace StateSystem
 {
 	/// <summary>
-	/// State for a <see cref="StateMachine"/>
+	/// State for a <see cref="StateSystem.StateMachine"/>
 	/// </summary>
 	public abstract class State
 	{
 		/// <summary>
 		/// StateMachine that this <see cref="State"/> is part of.
 		/// <remarks>
-		/// Is set through reflection in the <see cref="StateMachine"/> that this is added to.
+		/// Is set through reflection in the <see cref="StateSystem.StateMachine"/> that this is added to.
 		/// </remarks>
 		/// </summary>
-		protected StateMachine stateMachine;
+		protected StateMachine StateMachine;
 		
 		/// <summary>
 		/// Is called when the state starts.

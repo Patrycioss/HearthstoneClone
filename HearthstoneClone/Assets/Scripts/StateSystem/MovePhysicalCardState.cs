@@ -4,11 +4,11 @@ namespace StateSystem
 {
 	public abstract class MovePhysicalCardState : State
 	{
-		protected PhysicalCard physicalCard;
+		protected PhysicalCard PhysicalCard;
 		
 		public MovePhysicalCardState(PhysicalCard physicalCard)
 		{
-			this.physicalCard = physicalCard;
+			PhysicalCard = physicalCard;
 		}
 	}
 }
