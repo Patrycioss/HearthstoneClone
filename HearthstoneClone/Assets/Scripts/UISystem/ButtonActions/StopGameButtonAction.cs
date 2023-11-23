@@ -6,7 +6,7 @@ namespace UISystem.ButtonActions
 {
 	public class StopGameButtonAction : ButtonAction
 	{
-		private void OnClick()
+		protected override void OnClick()
 		{
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;			

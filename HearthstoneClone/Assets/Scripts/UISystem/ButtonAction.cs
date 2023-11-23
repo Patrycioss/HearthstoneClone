@@ -14,8 +14,6 @@ namespace UISystem
 			Button.onClick.AddListener(OnClick);
 		}
 
-		private void OnClick()
-		{
-		}
+		protected abstract void OnClick();
 	}
 }

@@ -8,7 +8,7 @@ namespace UISystem.ButtonActions
 	{
 		[SerializeField] private SceneField sceneField;
 		
-		private void OnClick()
+		protected override void OnClick()
 		{
 			SceneManager.LoadSceneAsync(sceneField);
 		}
