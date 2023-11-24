@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Card
 {
@@ -20,8 +19,8 @@ namespace Card
 		public int ManaCost;
 		
 		/// <summary>
-		/// Image for the card.
+		/// Name of the sprite that the card uses.
 		/// </summary>
-		public Sprite Image;
+		public string SpriteName;
 	}
 }

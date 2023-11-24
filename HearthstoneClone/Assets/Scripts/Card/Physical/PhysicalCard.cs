@@ -1,8 +1,10 @@
 using System.Collections;
+using AssetManagement.Sprites;
 using Card.Physical.MoveStates;
 using HoverSystem;
 using StateSystem;
 using UnityEngine;
+using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,8 +18,12 @@ namespace Card.Physical
     {
         private const float CHECK_IF_HOLDING_TIME = 0.1f;
         
+        /// <inheritdoc/>
+        public bool IsHovering { get; set; }   
+        
         [SerializeField] private Transform canvasParentTransform;
-
+        [SerializeField] private Image image;
+        
         private StateMachine stateMachine;
         private Vector3 startPos;
         private Quaternion startRot;
@@ -28,10 +34,19 @@ namespace Card.Physical
 
         private bool checkingIfConsciouslyHovering = false;
         private bool consciouslyHovering = false;
-        
-        /// <inheritdoc/>
-        public bool IsHovering { get; set; }
 
+        private CardInfo cardInfo;
+
+        /// <summary>
+        /// Instantiate the physical card.
+        /// </summary>
+        /// <param name="cardInfo">Info necessary to instantiate the physical card.</param>
+        public void Instantiate(CardInfo cardInfo)
+        {
+            this.cardInfo = cardInfo;
+            image.sprite = SpriteManager.Instance.GetSprite(cardInfo.SpriteName);
+        }
+        
         private void Awake()
         {
             stateMachine = new StateMachine();
@@ -44,6 +59,7 @@ namespace Card.Physical
             
             stateMachine.SetState(new HeldState(this));
         }
+        
 
         private void Update()
         {

@@ -24,6 +24,6 @@ public class Core : MonoBehaviour
       DeckManager = new DeckManager();
       DeckManager.Initialize(saveFolderName);
       
-      DeckManager.AddDeck(testDeck);
+      DeckManager.AddUserDeck(testDeck);
    }
 }

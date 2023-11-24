@@ -4,10 +4,17 @@ using UnityEngine;
 
 namespace Deck.DeckManagement
 {
+	/// <summary>
+	/// Saves decks from memory to disk.
+	/// </summary>
 	public class DeckSaver
 	{
 		private string folderPath;
 		
+		/// <summary>
+		/// Initialize the deck saver.
+		/// </summary>
+		/// <param name="saveFolderPath">Path of the folder in which to save the decks.</param>
 		public void Initialize(string saveFolderPath)
 		{
 			folderPath = saveFolderPath;
@@ -24,12 +31,16 @@ namespace Deck.DeckManagement
 		/// Save a <see cref="DeckInfo"/> to disk.
 		/// </summary>
 		/// <param name="deck"></param>
-		public void SaveDeck(DeckInfo deck)
+		/// <returns>Whether the saving succeeded or not.</returns>
+		public Result SaveDeck(DeckInfo deck)
 		{
 			if (string.IsNullOrEmpty(deck.Name))
 			{
-				Debug.LogError($"Can't save deck as name is null or empty!");
-				return;
+				return new Result
+				{
+					Success = SuccessType.Failed,
+					Message = new Message($"Can't save deck as name for {deck} is null or empty!"),
+				};
 			}
 
 			string path = Path.Combine(folderPath, deck.Name);
@@ -37,8 +48,11 @@ namespace Deck.DeckManagement
 
 			if (string.IsNullOrEmpty(dataToStore))
 			{
-				Debug.LogError($"Something went wrong with converting {deck.Name} to JSON!");
-				return;
+				return new Result
+				{
+					Success = SuccessType.Failed,
+					Message = new Message($"Failed to convert {deck.Name} to JSON!"),
+				};
 			}
 
 			if (File.Exists(path))
@@ -48,23 +62,41 @@ namespace Deck.DeckManagement
 
 			using (FileStream stream = new FileStream(path, FileMode.Create))
 			{
-				using (StreamWriter writer = new StreamWriter(stream)) 
+				using (StreamWriter writer = new StreamWriter(stream))
 				{
 					writer.WriteAsync(dataToStore);
 				}
 			}
+
+			return new Result();
 		}
 
 		/// <summary>
 		/// Save a list of <see cref="DeckInfo"/> to disk.
 		/// </summary>
 		/// <param name="decks">List of info for decks to be created.</param>
-		public void SaveDecks(List<DeckInfo> decks)
+		public Result SaveDecks(List<DeckInfo> decks)
 		{
+			Result result = new Result();
+
 			foreach (DeckInfo deck in decks)
 			{
-				SaveDeck(deck);
+				Result saveResult = SaveDeck(deck);
+
+				if (saveResult.Success is SuccessType.Failed or SuccessType.Problem)
+				{
+					result.Message += saveResult.Message;
+
+					result.Success = result.Success switch
+					{
+						SuccessType.Success => saveResult.Success,
+						SuccessType.Problem when saveResult.Success == SuccessType.Failed => SuccessType.Failed,
+						_ => result.Success
+					};
+				}
 			}
+
+			return result;
 		}
 	}
 }
