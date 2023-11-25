@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using ErrorHandling;
 using UnityEngine;
 
 namespace Deck.DeckManagement
@@ -9,93 +12,141 @@ namespace Deck.DeckManagement
 	/// </summary>
 	public class DeckSaver
 	{
-		private string folderPath;
+		private const string TEMP_PATH_MODIFIER = "TEMP_MODIFIER";
 		
-		/// <summary>
-		/// Initialize the deck saver.
-		/// </summary>
-		/// <param name="saveFolderPath">Path of the folder in which to save the decks.</param>
-		public void Initialize(string saveFolderPath)
-		{
-			folderPath = saveFolderPath;
-
-			if (!Directory.Exists(saveFolderPath))
-			{
-				Debug.Log($"{nameof(DeckSaver)} created save folder with path {saveFolderPath}");
-				Directory.CreateDirectory(saveFolderPath);
-			}
-			else Debug.Log($"{nameof(DeckSaver)} found save folder with path {saveFolderPath}");
-		}
-
 		/// <summary>
 		/// Save a <see cref="DeckInfo"/> to disk.
 		/// </summary>
-		/// <param name="deck"></param>
+		/// <param name="deck"><see cref="DeckInfo"/> to save to disk.</param>
+		/// <param name="path">Path to save the <see cref="DeckInfo"/> to.</param>
 		/// <returns>Whether the saving succeeded or not.</returns>
-		public Result SaveDeck(DeckInfo deck)
+		public async Task<Result> SaveDeck(DeckInfo deck, string path)
 		{
-			if (string.IsNullOrEmpty(deck.Name))
+			Result result = new Result();
+
+			if (deck == null)
 			{
-				return new Result
-				{
-					Success = SuccessType.Failed,
-					Message = new Message($"Can't save deck as name for {deck} is null or empty!"),
-				};
+				return result + $"Can't save deck that is null!";
 			}
 
-			string path = Path.Combine(folderPath, deck.Name);
 			string dataToStore = JsonUtility.ToJson(deck, true);
 
 			if (string.IsNullOrEmpty(dataToStore))
 			{
-				return new Result
-				{
-					Success = SuccessType.Failed,
-					Message = new Message($"Failed to convert {deck.Name} to JSON!"),
-				};
+				return result + $"Failed to convert {deck.Name} to JSON!";
 			}
 
-			if (File.Exists(path))
+			bool fileAlreadyExists = File.Exists(path);
+			string originalPath = new string(path);
+
+			if (fileAlreadyExists)
 			{
-				File.Delete(path);
+				path += TEMP_PATH_MODIFIER;
 			}
 
-			using (FileStream stream = new FileStream(path, FileMode.Create))
+			try
 			{
-				using (StreamWriter writer = new StreamWriter(stream))
+				await using (FileStream stream = new FileStream(path, FileMode.Create))
 				{
-					writer.WriteAsync(dataToStore);
+					await using (StreamWriter writer = new StreamWriter(stream))
+					{
+						await writer.WriteAsync(dataToStore);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				return result + $"Failed to save deck to {path}. Exception {e} occurred!";
+			}
+
+			// Only delete and rename the file if saving succeeded.
+			if (fileAlreadyExists)
+			{
+				// Try to delete original file.
+				try
+				{
+					File.Delete(originalPath);
+				}
+				catch (Exception e)
+				{
+					return result + $"Failed to delete deck with originalPath {originalPath}. Exception {e} occurred!";
+				}
+
+				// Try to move new file to original destination.
+				try
+				{
+					File.Move(path, originalPath);
+				}
+				catch (Exception e)
+				{
+					return result + $"Failed to move deck with path {path} to originalPath {originalPath}. Exception {e} occurred!";
 				}
 			}
 
-			return new Result();
+			result += $"Saved deck {deck} to {originalPath}";
+			return result;
 		}
 
 		/// <summary>
 		/// Save a list of <see cref="DeckInfo"/> to disk.
 		/// </summary>
 		/// <param name="decks">List of info for decks to be created.</param>
-		public Result SaveDecks(List<DeckInfo> decks)
+		/// <param name="directoryPath">Path of the directory the decks should be saved in.</param>
+		/// <param name="createDirectory">If true creates the directory if it can't find it.</param>
+		public async Task<Result> SaveDecksToDirectory(List<DeckInfo> decks, string directoryPath, bool createDirectory = true)
 		{
 			Result result = new Result();
-
-			foreach (DeckInfo deck in decks)
+			
+			if (string.IsNullOrEmpty(directoryPath))
 			{
-				Result saveResult = SaveDeck(deck);
+				return result + $"{nameof(directoryPath)} is empty!";
+			}
 
-				if (saveResult.Success is SuccessType.Failed or SuccessType.Problem)
+			if (!Directory.Exists(directoryPath))
+			{
+				if (createDirectory)
 				{
-					result.Message += saveResult.Message;
-
-					result.Success = result.Success switch
+					try
 					{
-						SuccessType.Success => saveResult.Success,
-						SuccessType.Problem when saveResult.Success == SuccessType.Failed => SuccessType.Failed,
-						_ => result.Success
-					};
+						Directory.CreateDirectory(directoryPath);
+					}
+					catch (Exception e)
+					{
+						return result + $"Failed to create directory with path {directoryPath}. Exception {e} occurred!";
+					}
+
+					result += $"Created directory with path {directoryPath}.";
+				}
+				else
+				{
+					return result + $"Could not find directory with path {directoryPath} and {nameof(createDirectory)} is set to false!";
 				}
 			}
 
+			bool success = true;
+
+			foreach (DeckInfo deck in decks)
+			{
+				if (string.IsNullOrEmpty(deck.Name))
+				{
+					result += $"Failed to save deck {deck} as {nameof(deck.Name)} is empty!";
+					success = false;
+					continue;
+				}
+
+				string path = Path.Combine(directoryPath, deck.Name);
+				
+				Result saveResult = await SaveDeck(deck, path);
+				result += saveResult.Message;
+
+				if (!saveResult.Success)
+				{
+					success = false;
+				}
+			}
+
+			result.Success = success;
+			
 			return result;
 		}
 	}

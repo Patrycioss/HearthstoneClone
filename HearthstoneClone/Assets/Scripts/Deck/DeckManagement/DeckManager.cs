@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ErrorHandling;
 using UnityEngine;
 using Path = System.IO.Path;
 
@@ -10,49 +12,94 @@ namespace Deck.DeckManagement
 	/// </summary>
 	public class DeckManager : MonoBehaviour
 	{
-		[SerializeField] private List<DeckInfo> testDecks;
-		
-		private List<DeckInfo> userDecks = new();
+		[Header("Saving/Loading")]
+		[SerializeField] private string saveFolderName = "UserDecks";
 
-		private DeckLoader deckLoader = new();
-		private DeckSaver deckSaver = new();
+		[Header("Debugging")] 
+		[SerializeField] private string debugSaveFolderName = "DebugDecks";
+		[SerializeField] private List<DeckInfo> debugDecks;
+		
+		private DeckLoader deckLoader = new DeckLoader();
+		private DeckSaver deckSaver = new DeckSaver();
+
+		private string saveFolderPath;
+		private string debugSaveFolderPath;
+		
+		private List<DeckInfo> userDecks = new List<DeckInfo>();
 
 		/// <summary>
 		/// Initializes the <see cref="DeckManager"/>.
 		/// </summary>
-		public void Initialize(string saveFolderName)
+		public void Initialize()
 		{
-			string saveFolderPath = Path.Combine(Application.persistentDataPath, saveFolderName); 
-			deckLoader.Initialize(saveFolderPath);
-			deckSaver.Initialize(saveFolderPath);
+			saveFolderPath = Path.Combine(Application.persistentDataPath, saveFolderName);
+			debugSaveFolderPath = Path.Combine(Application.persistentDataPath, debugSaveFolderName);
 		}
 		
 		/// <summary>
-		/// Adds a <see cref="DeckInfo"/> to the user's collection.
+		/// Adds a <see cref="DeckInfo"/> to the collection of decks.
+		/// <param name="deckInfo"><see cref="DeckInfo"/> to be added.</param>
+		/// <param name="isDebug">Add the deck to the debug collection.</param>
 		/// </summary>
-		public void AddUserDeck(DeckInfo deckInfo)
+		public Result AddDeck(DeckInfo deckInfo, bool isDebug = false)
 		{
-			userDecks.Add(deckInfo);
-			deckSaver.SaveDeck(deckInfo);
+			Result result = new Result();
+			int index = GetDeckIndex(deckInfo, isDebug);
+			
+			if (index == -1)
+			{
+				if (isDebug)
+				{
+					debugDecks.Add(deckInfo);
+				}
+				else
+				{
+					userDecks.Add(deckInfo);
+				}
+				
+				result.Message += $"Added {deckInfo} to {(isDebug ? "debug" : "user")} collection.";
+			}
+			else
+			{
+				DeckInfo oldDeck;
+				if (isDebug)
+				{
+					oldDeck = debugDecks[index];
+					debugDecks[index] = deckInfo;
+				}
+				else
+				{
+					oldDeck = userDecks[index];
+					userDecks[index] = deckInfo;
+				}
+				
+				result.Message += $"Replaced {oldDeck} at {index} with {deckInfo} in the {(isDebug ? "debug" : "user")} collection.";
+			}
+
+			result.Success = true;
+			return result;
 		}
 
 		/// <summary>
 		/// Gets a <see cref="DeckInfo"/> from the user's collection.
+		/// <param name="deckName">Name of the deck.</param>
+		/// <param name="isDebug">Is the deck part of the debug collection.</param>
 		/// </summary>
-		[Pure]
-		public Result<DeckInfo> GetUserDeck(string deckName)
+		public Result<DeckInfo> GetDeck(string deckName, bool isDebug = false)
 		{
 			Result<DeckInfo> result = new()
 			{
-				Value = userDecks.Find(info => info.Name == deckName),
+				Value = isDebug ? 
+					debugDecks.Find(info => info.Name == deckName) 
+					: userDecks.Find(info => info.Name == deckName)
 			};
 
 			if (result.Value == null)
 			{
-				result.Message += $"Failed to find deck with name {deckName}";
-				result.Success = SuccessType.Failed;
+				return result + $"Failed to find deck with name {deckName}";
 			}
 
+			result.Success = true;
 			return result;
 		}
 
@@ -60,59 +107,122 @@ namespace Deck.DeckManagement
 		/// Saves a user deck from memory to disk.
 		/// </summary>
 		/// <param name="deckName">Name of the deck.</param>
-		/// <returns>Whether the deck saved correctly.</returns>
-		public Result SaveUserDeck(string deckName)
+		/// <param name="isDebug">Should the deck be saved in the debug save folder..</param>
+		/// <returns>a <see cref="Result"/>.</returns>
+		public async Task<Result> SaveDeck(string deckName, bool isDebug = false)
 		{
-			Result<DeckInfo> deckResult = GetUserDeck(deckName);
+			Result result = new Result();
 
-			Result result = new()
-			{
-				Success = deckResult.Success,
-				Message = deckResult.Message
-			};
+			Result<DeckInfo> deckResult = GetDeck(deckName, isDebug);
+			
+			result += deckResult.Message;
 
-			if (result.Success == SuccessType.Failed)
+			if (!deckResult)
 			{
 				return result;
 			}
+
+			string path;
+			try
+			{ 
+				path = Path.Combine(saveFolderPath, deckName);
+			}
+			catch (Exception e)
+			{
+				return deckResult + $"Failed to make path combining {saveFolderPath} and {deckName}. Exception {e} occurred!";
+			}
 			
-			return deckSaver.SaveDeck(deckResult.Value);
+			Result saveResult = await deckSaver.SaveDeck(deckResult.Value, path);
+
+			result += saveResult.Message;
+			result.Success = true;
+			return result;
 		}
 
 		/// <summary>
 		/// Saves all user decks in memory to disk.
 		/// </summary>
-		public Result SaveAllUserDecks()
+		/// <param name="isDebug">Should it save the debug decks.</param>
+		/// <returns>A <see cref="Result"/>.</returns>
+		public async Task<Result> SaveAllDecks(bool isDebug = false)
+		{
+			return await deckSaver.SaveDecksToDirectory(
+				isDebug? debugDecks : userDecks, 
+				isDebug? debugSaveFolderPath : saveFolderPath);
+		}
+
+		/// <summary>
+		/// Loads all user decks from disk to memory.
+		/// </summary>
+		/// <param name="isDebug">Should it load the debug decks.</param>
+		/// <returns>A <see cref="Result{T}"/> where T is a list of <see cref="DeckInfo"/>.</returns>
+		public async Task<Result> LoadAllDecks(bool isDebug = false)
 		{
 			Result result = new Result();
-			
-			foreach (DeckInfo deckInfo in userDecks)
-			{
-				Result saveResult = deckSaver.SaveDeck(deckInfo);
-				
-				if (saveResult.Success is SuccessType.Failed or SuccessType.Problem)
-				{
-					result.Message += saveResult.Message;
+			Result<List<DeckInfo>> loadResult = await deckLoader.LoadDecksFromDirectory(isDebug? debugSaveFolderPath : saveFolderPath);
 
-					result.Success = result.Success switch
-					{
-						SuccessType.Success => saveResult.Success,
-						SuccessType.Problem when saveResult.Success == SuccessType.Failed => SuccessType.Failed,
-						_ => result.Success
-					};
+			result += loadResult.Message;
+			
+			if (loadResult.Value != null)
+			{
+				foreach (DeckInfo deckInfo in loadResult.Value)
+				{
+					Result addResult = AddDeck(deckInfo, isDebug);
+					result += addResult.Message;
 				}
+			}
+			
+			if (loadResult)
+			{
+				result.Success = true;
 			}
 
 			return result;
 		}
 
 		/// <summary>
-		/// Loads all user decks from disk into memory.
+		/// Load a deck from disk to memory.
 		/// </summary>
-		public void LoadUserDecks()
+		/// <param name="deckName">Name of the deck.</param>
+		/// <param name="isDebug">Is the deck in the debug folder.</param>
+		/// <returns>A <see cref="Result{T}"/> where T is a <see cref="DeckInfo"/>.</returns>
+		public async Task<Result> LoadDeck(string deckName, bool isDebug = false)
 		{
+			Result result = new Result();
+
+			string path;
+			try
+			{ 
+				path = Path.Combine(isDebug? debugSaveFolderPath : saveFolderPath, deckName);
+			}
+			catch (Exception e)
+			{
+				return result + $"Failed to make path combining {saveFolderPath} and {deckName}. Exception {e} occurred!";
+			}
 			
+			Result<DeckInfo> loadResult = await deckLoader.LoadDeck(path);
+			result += loadResult.Message;
+
+			if (loadResult)
+			{
+				Result addResult = AddDeck(loadResult.Value, isDebug);
+				
+				result += addResult.Message;
+				result.Success = true;
+			}
+
+			return result;
 		}
-		
+
+		/// <summary>
+		/// Looks for the index of the <see cref="DeckInfo"/> in the collection of decks.
+		/// </summary>
+		/// <param name="deckInfo"><see cref="DeckInfo"/> to look for.</param>
+		/// <param name="isDebug">Is it part of the debug collection.</param>
+		/// <returns> -1 if not found and otherwise an index >= 0.</returns>
+		private int GetDeckIndex(DeckInfo deckInfo,bool isDebug)
+		{
+			return isDebug ? debugDecks.IndexOf(deckInfo) : userDecks.IndexOf(deckInfo);
+		}
 	}
 }
