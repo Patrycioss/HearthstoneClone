@@ -103,6 +103,11 @@ namespace Deck.DeckManagement
 			return result;
 		}
 
+		public IEnumerable<DeckInfo> GetAllDecks(bool isDebug = false)
+		{
+			return new List<DeckInfo>(userDecks);
+		}
+
 		/// <summary>
 		/// Saves a user deck from memory to disk.
 		/// </summary>

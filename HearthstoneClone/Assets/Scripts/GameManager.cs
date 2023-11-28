@@ -13,10 +13,21 @@ public class GameManager : MonoBehaviour
 
    [Header("Managers")]
    [SerializeField] private DeckManager deckManager;
-   
+
+
+   public static GameManager Instance;
    
    private async void Awake()
    {
+      if (Instance == null)
+      {
+         Instance = this;
+      }
+      else
+      {
+         Destroy(this);
+      }
+      
       DontDestroyOnLoad(this);
       deckManager.Initialize();
 
