@@ -12,6 +12,11 @@ namespace Deck.DeckManagement
 	/// </summary>
 	public class DeckManager : MonoBehaviour
 	{
+		/// <summary>
+		/// The deck that is currently in use in either the editor or the game.
+		/// </summary>
+		public DeckInfo ActiveDeck { get; private set; }
+		
 		[Header("Saving/Loading")]
 		[SerializeField] private string saveFolderName = "UserDecks";
 
@@ -24,7 +29,7 @@ namespace Deck.DeckManagement
 
 		private string saveFolderPath;
 		private string debugSaveFolderPath;
-		
+
 		private List<DeckInfo> userDecks = new List<DeckInfo>();
 
 		/// <summary>
@@ -34,6 +39,15 @@ namespace Deck.DeckManagement
 		{
 			saveFolderPath = Path.Combine(Application.persistentDataPath, saveFolderName);
 			debugSaveFolderPath = Path.Combine(Application.persistentDataPath, debugSaveFolderName);
+		}
+
+		/// <summary>
+		/// Sets the currently active deck.
+		/// </summary>
+		/// <param name="deckInfo">The <see cref="DeckInfo"/> in question.</param>
+		public void SetActiveDeck(DeckInfo deckInfo)
+		{
+			ActiveDeck = deckInfo;
 		}
 		
 		/// <summary>

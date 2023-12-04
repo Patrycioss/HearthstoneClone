@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Deck;
 using ErrorHandling;
@@ -9,45 +10,104 @@ namespace UI
 {
 	public class DeckListViewer : MonoBehaviour
 	{
+		private event Action<DeckInfo, DeckCard> OnDeckSelectedEvent = delegate { };
+
 		[SerializeField] private GameObject deckCardPrefab;
+		
 		[SerializeField] private GridLayoutGroup contentTransform;
+		[SerializeField] private Scrollbar scrollbar;
+	
+		[SerializeField] private SelectedOptions selectedOptions;
+		[SerializeField] private GameObject selectedOptionsElement;
 
 		private List<DeckInfo> decks = new();
+		
+		private DeckInfo selectedDeck = null;
+		private DeckCard selectedDeckCard = null;
 
-		private async void Awake()
+		private void Awake()
 		{
-			Debug.LogError($"{gameObject.name}");
+			LoadDecks();
+			selectedOptionsElement.SetActive(false);
 
+			OnDeckSelectedEvent += OnDeckSelected;
+
+			selectedOptions.OnPlayButtonClicked += OnPlayDeckButtonClicked;
+			selectedOptions.OnEditButtonClicked += OnEditDeckButtonClicked;
+			selectedOptions.OnDeleteButtonClicked += OnDeleteDeckButtonClicked;
+		}
+
+		private async void LoadDecks()
+		{
 			Result a = await GameManager.Instance.DeckManager.LoadAllDecks();
-			Debug.Log(a.Message);
+			Debug.Log($"Logging {a.Message} from {nameof(DeckListViewer)} in {nameof(LoadDecks)}");
 
 			decks = GameManager.Instance.DeckManager.GetAllDecks().ToList();
 
-			foreach (DeckInfo deckInfo in decks)
+			for (int i = 0; i < decks.Count; i++)
 			{
+				DeckInfo deckInfo = decks[i];
 				GameObject cardObject = Instantiate(deckCardPrefab, contentTransform.transform);
+				cardObject.name = cardObject.name += $" - {i}";
 
 				if (cardObject.TryGetComponent(out DeckCard deckCard))
 				{
-					deckCard.Instantiate(deckInfo);
+					deckCard.Instantiate(deckInfo, OnDeckSelected);
 				}
 				else Debug.LogError($"Spawned object in {nameof(DeckListViewer)} doesn't have a {nameof(DeckCard)}!");
 			}
 
-
-			Vector2 cardSize = contentTransform.cellSize;
-			Vector2 spacing = contentTransform.spacing;
-
-			float height = decks.Count * cardSize.y + decks.Count * spacing.y;
-			
-			RectTransform rect = contentTransform.GetComponent<RectTransform>();
-			rect.sizeDelta = new Vector2(rect.sizeDelta.x, height);
+			scrollbar.value = 1;
 		}
 
-		private void OnEnable()
+		private void OnDisable()
 		{
+			OnDeckSelectedEvent -= OnDeckSelected;
 			
+			selectedOptions.OnPlayButtonClicked -= OnPlayDeckButtonClicked;
+			selectedOptions.OnEditButtonClicked -= OnEditDeckButtonClicked;
+			selectedOptions.OnDeleteButtonClicked -= OnDeleteDeckButtonClicked;
+		}
+		
+		private void OnDeckSelected(DeckInfo deck, DeckCard deckCard)
+		{
+			if (deck == selectedDeck)
+			{
+				deckCard.SetSelectedIndicatorActive(false);
+				selectedOptionsElement.SetActive(false);
+				selectedDeck = null;
+				selectedDeckCard = null;
+			}
+			else 
+			{
+				if (selectedDeckCard != null)
+				{
+					selectedDeckCard.SetSelectedIndicatorActive(false);
+				}
 
+				selectedOptionsElement.SetActive(true);
+				deckCard.SetSelectedIndicatorActive(true);
+				selectedDeck = deck;
+				selectedDeckCard = deckCard;
+			}
+		}
+
+		private void OnPlayDeckButtonClicked()
+		{
+			Debug.Log($"Pressed play button for {selectedDeckCard.name}.");
+			// Todo: implement giving deckinfo to confirmation that then starts game with deck.
+		}
+
+		private void OnEditDeckButtonClicked()
+		{
+			Debug.Log($"Pressed edit button for {selectedDeckCard.name}.");
+			// Todo: implement edit window to give deckinfo to.
+		}
+
+		private void OnDeleteDeckButtonClicked()
+		{
+			Debug.Log($"Pressed delete button for {selectedDeckCard.name}.");
+			// Todo : implement giving deckinfo to confirmation screen that then deletes it.
 		}
 	}
 }

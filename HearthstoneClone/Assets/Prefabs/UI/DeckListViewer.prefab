@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4713109485826811759}
   - component: {fileID: 3404829535808490702}
   - component: {fileID: 6473013012998358784}
-  - component: {fileID: 3877423503166396271}
+  - component: {fileID: -1489167747886617025}
   m_Layer: 5
   m_Name: DeckListViewer
   m_TagString: Untagged
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3877423503166396271
+--- !u!114 &-1489167747886617025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8240869773290353806}
   m_HandleRect: {fileID: 1566451879164254954}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -446,11 +446,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5128648114351445547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7681663241460505008
 MonoBehaviour:
   m_ObjectHideFlags: 0

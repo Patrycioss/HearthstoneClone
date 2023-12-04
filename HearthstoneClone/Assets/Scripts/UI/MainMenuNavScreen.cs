@@ -13,50 +13,39 @@ namespace UI
 		[SerializeField] private Button decksButton;
 		[SerializeField] private Button exitButton;
 
+		private bool startButtonClicked = false;
+		private bool decksButtonClicked = false;
+
 		private void Awake()
 		{
-			if (startButton)
-			{
-				startButton.onClick.AddListener(OnStartButtonClicked);
-			}
-
-			if (decksButton)
-			{
-				decksButton.onClick.AddListener(OnDecksButtonClicked);
-			}
-
-			if (exitButton)
-			{
-				exitButton.onClick.AddListener(OnExitButtonClicked);
-			}
+			startButton.onClick.AddListener(OnStartButtonClicked);
+			decksButton.onClick.AddListener(OnDecksButtonClicked);
+			exitButton.onClick.AddListener(OnExitButtonClicked);
 		}
 
 		private void OnDisable()
 		{
-			if (startButton)
-			{
-				startButton.onClick.RemoveListener(OnStartButtonClicked);
-			}
-			
-			if (decksButton)
-			{
-				decksButton.onClick.RemoveListener(OnDecksButtonClicked);
-			}
-
-			if (exitButton)
-			{
-				exitButton.onClick.RemoveListener(OnExitButtonClicked);
-			}
+			startButton.onClick.RemoveAllListeners();
+			decksButton.onClick.RemoveAllListeners();
+			exitButton.onClick.RemoveAllListeners();
 		}
 
 		private void OnStartButtonClicked()
 		{
-			SceneManager.LoadSceneAsync("Game");
+			if (!startButtonClicked)
+			{
+				startButtonClicked = true;
+				SceneManager.LoadSceneAsync("Game");
+			}
 		}
 
 		private void OnDecksButtonClicked()
 		{
-			SceneManager.LoadSceneAsync("Decks");
+			if (!decksButtonClicked)
+			{
+				decksButtonClicked = true;
+				SceneManager.LoadSceneAsync("Decks");
+			}
 		}
 
 		private void OnExitButtonClicked()
