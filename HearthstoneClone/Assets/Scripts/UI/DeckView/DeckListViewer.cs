@@ -3,10 +3,14 @@ using System.Linq;
 using Deck;
 using ErrorHandling;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.DeckView
 {
+	/// <summary>
+	/// Controls the UI to show the user a list of their decks.
+	/// </summary>
 	public class DeckListViewer : MonoBehaviour
 	{
 		[SerializeField] private GameObject deckCardPrefab;
@@ -93,8 +97,9 @@ namespace UI.DeckView
 
 		private void OnEditDeckButtonClicked()
 		{
-			Debug.Log($"Pressed edit button for {selectedDeckCard.name}.");
-			// Todo: implement edit window to give deckinfo to.
+			Debug.Log($"Pressed edit button for {selectedDeckCard.name}. Setting active deck to {selectedDeck}. Loading deck editor scene...");
+			GameManager.Instance.DeckManager.SetActiveDeck(selectedDeck);
+			SceneManager.LoadSceneAsync("DeckEditor");
 		}
 
 		private void OnDeleteDeckButtonClicked()
