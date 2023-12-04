@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.DeckView
 {
 	/// <summary>
 	/// Handles the navigation in the selected options screen in the <see cref="DeckListViewer"/>.

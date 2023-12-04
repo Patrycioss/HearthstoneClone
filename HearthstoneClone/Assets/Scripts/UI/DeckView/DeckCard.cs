@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.DeckView
 {
 	/// <summary>
 	/// Used to show the properties of a deck as a card in the <see cref="DeckListViewer"/>.

@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Deck;
 using ErrorHandling;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.DeckView
 {
 	public class DeckListViewer : MonoBehaviour
 	{
-		private event Action<DeckInfo, DeckCard> OnDeckSelectedEvent = delegate { };
-
 		[SerializeField] private GameObject deckCardPrefab;
 		
 		[SerializeField] private GridLayoutGroup contentTransform;
@@ -29,8 +26,6 @@ namespace UI
 		{
 			LoadDecks();
 			selectedOptionsElement.SetActive(false);
-
-			OnDeckSelectedEvent += OnDeckSelected;
 
 			selectedOptions.OnPlayButtonClicked += OnPlayDeckButtonClicked;
 			selectedOptions.OnEditButtonClicked += OnEditDeckButtonClicked;
@@ -62,8 +57,6 @@ namespace UI
 
 		private void OnDisable()
 		{
-			OnDeckSelectedEvent -= OnDeckSelected;
-			
 			selectedOptions.OnPlayButtonClicked -= OnPlayDeckButtonClicked;
 			selectedOptions.OnEditButtonClicked -= OnEditDeckButtonClicked;
 			selectedOptions.OnDeleteButtonClicked -= OnDeleteDeckButtonClicked;

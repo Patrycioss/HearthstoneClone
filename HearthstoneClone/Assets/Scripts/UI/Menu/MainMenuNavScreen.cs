@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Menu
 {
 	/// <summary>
 	/// Handles the navigation buttons in the main menu.
