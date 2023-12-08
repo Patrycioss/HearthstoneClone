@@ -40,11 +40,11 @@ namespace Card.Physical
         /// <summary>
         /// Instantiate the physical card.
         /// </summary>
-        /// <param name="cardInfo">Info necessary to instantiate the physical card.</param>
-        public void Instantiate(CardInfo cardInfo)
+        /// <param name="initCardInfo">Info necessary to instantiate the physical card.</param>
+        public void Instantiate(CardInfo initCardInfo)
         {
-            this.cardInfo = cardInfo;
-            image.sprite = SpriteManager.Instance.GetSprite(cardInfo.SpriteName);
+            cardInfo = initCardInfo;
+            image.sprite = SpriteManager.Instance.GetSprite(initCardInfo.SpriteName);
         }
         
         private void Awake()

@@ -20,11 +20,12 @@ namespace UI.DeckView
 		[SerializeField] private Button button;
 
 		private DeckInfo info;
-		
+
 		/// <summary>
 		/// Instantiate the deck card with <see cref="DeckInfo"/>.
 		/// </summary>
 		/// <param name="receivedInfo"><see cref="DeckInfo"/> necessary to show the correct properties of the deck.</param>
+		/// <param name="onClickCallback">Callback to call when card is clicked.</param>
 		public void Instantiate(DeckInfo receivedInfo, Action<DeckInfo, DeckCard> onClickCallback)
 		{
 			info = receivedInfo;

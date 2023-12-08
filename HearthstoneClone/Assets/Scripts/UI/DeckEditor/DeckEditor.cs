@@ -4,31 +4,26 @@ using UnityEngine;
 namespace UI.DeckEditor
 {
 	/// <summary>
-	/// Manages the UI of the deck editor.
+	/// Manages the deck editor.
 	/// </summary>
 	public class DeckEditor : MonoBehaviour
 	{
 		[SerializeField] private DeckInformation deckInformation;
 
-		private DeckInfo activeDeck;
-		
-		private void Awake()
-		{
-			activeDeck = GameManager.Instance.DeckManager.ActiveDeck;
-
-			if (activeDeck != null)
-			{
-				Debug.Log($"Active deck has name {activeDeck.Name} and description {activeDeck.Description}");
-			}
-			else
-			{
-				Debug.LogError("No active deck found!");
-			}
-		}
+		private GameManager gameManager;
 
 		private void Start()
 		{
-			deckInformation.Initialize(activeDeck);
+			DeckInfo deck = GameManager.Instance.GetTransferable("ActiveDeck") as DeckInfo;
+
+			if (deck == null)
+			{
+				Debug.LogError($"No active deck found in GameManager!");
+			}
+			else
+			{
+				deckInformation.Initialize(deck);
+			}
 		}
 	}
 }

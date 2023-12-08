@@ -1199,11 +1199,11 @@ RectTransform:
   - {fileID: 1170381402}
   m_Father: {fileID: 1333378727}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -896, y: 428}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 19, y: -75}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1249179420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1216,12 +1216,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f7db11d8c6459d863d11ab852de563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1880766773}
-  useDebugFolder: 1
-  specificSaveName: TestDeck
+  deckToSave:
+    Name: DoTestTest
+    Description: Testtestest
+    Image: {fileID: 0}
+    Cards:
+    - Name: a
+      ManaCost: 5
+      SpriteName: b
   saveSpecificButton: {fileID: 2083361670}
+  decksToSave: []
   saveAllButton: {fileID: 2134914504}
-  specificLoadName: TestDeck
+  deckToLoad: 
+  directoryToLoadFrom: 0
   loadSpecificButton: {fileID: 283400322}
   loadAllButton: {fileID: 1170381403}
 --- !u!1 &1322105396
@@ -1597,47 +1604,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Name
-      value: TestDeck
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Image
-      value: 
-      objectReference: {fileID: 21300000, guid: 04797641de2a4024aac8e3559f281d6c,
-        type: 3}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Description
-      value: Super testy deck
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Cards.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Cards.Array.data[0].Name
-      value: TestCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Cards.Array.data[0].ManaCost
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: debugDecks.Array.data[0].Cards.Array.data[0].SpriteName
-      value: test
-      objectReference: {fileID: 0}
     - target: {fileID: 7441500084515478648, guid: 589c0084b14107c4c9aab3673a331f72,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1693,100 +1659,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: deckManager
-      value: 
-      objectReference: {fileID: 1880766772}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Name
-      value: Koele zooi dit
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Image
-      value: 
-      objectReference: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Description
-      value: Kattenbak
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Cards.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.cards.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Cards.Array.data[0].Name
-      value: Kat
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.cards.Array.data[0].Name
-      value: Kat
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Cards.Array.data[0].Image
-      value: test
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.cards.Array.data[0].Image
-      value: 
-      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Cards.Array.data[0].ManaCost
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.cards.Array.data[0].ManaCost
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-        type: 3}
-      propertyPath: testDeck.Cards.Array.data[0].SpriteName
-      value: test
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 589c0084b14107c4c9aab3673a331f72, type: 3}
---- !u!114 &1880766772 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 849516946276982481, guid: 589c0084b14107c4c9aab3673a331f72,
-    type: 3}
-  m_PrefabInstance: {fileID: 1880766771}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc7f75267e64a44a48547249dd229bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1880766773 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
-    type: 3}
-  m_PrefabInstance: {fileID: 1880766771}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf36f4c25f824e4fb2f629576f5cd2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2083361668
 GameObject:
   m_ObjectHideFlags: 0

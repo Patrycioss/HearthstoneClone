@@ -1,6 +1,8 @@
 ﻿using Deck;
+using Deck.DeckManagement;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.DeckEditor
 {
@@ -16,16 +18,20 @@ namespace UI.DeckEditor
 		
 		[SerializeField] private TMP_InputField nameText;
 		[SerializeField] private TMP_InputField descriptionText;
+		[SerializeField] private Button saveButton;
 		
+		private DiskManager diskManager;
+
 		private DeckInfo deckInfo;
 
 		/// <summary>
 		/// Initializes the <see cref="DeckInformation"/>.
 		/// </summary>
-		/// <param name="deckInfo"><see cref="DeckInfo"/> to display.</param>
-		public void Initialize(DeckInfo deckInfo)
+		/// <param name="initDeckInfo"><see cref="DeckInfo"/> to display.</param>
+		public void Initialize(DeckInfo initDeckInfo)
 		{
-			this.deckInfo = deckInfo;
+			deckInfo = initDeckInfo;
+			diskManager = GameManager.Instance.DiskManager;
 			ShouldSave = false;
 			
 			SetUpText();
@@ -36,12 +42,14 @@ namespace UI.DeckEditor
 		{
 			nameText.onValueChanged.AddListener(OnNameValueChanged);
 			descriptionText.onValueChanged.AddListener(OnDescriptionValueChanged);
+			saveButton.onClick.AddListener(OnSaveButtonClicked);
 		}
 
 		private void OnDisable()
 		{
 			nameText.onValueChanged.RemoveAllListeners();
 			descriptionText.onValueChanged.RemoveAllListeners();
+			saveButton.onClick.RemoveAllListeners();
 		}
 
 		private void OnNameValueChanged(string newValue)
@@ -52,8 +60,17 @@ namespace UI.DeckEditor
 		
 		private void OnDescriptionValueChanged(string newValue)
 		{
-			deckInfo.Name = newValue;
+			deckInfo.Description = newValue;
 			ShouldSave = true;
+		}
+
+		private async void OnSaveButtonClicked()
+		{
+			if (ShouldSave)
+			{
+				await diskManager.SaveToDisk(deckInfo);
+				ShouldSave = false;
+			}
 		}
 
 		private void SetUpText()

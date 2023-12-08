@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Deck;
-using ErrorHandling;
+using Deck.DeckManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,28 +20,29 @@ namespace UI.DeckView
 		[SerializeField] private SelectedOptions selectedOptions;
 		[SerializeField] private GameObject selectedOptionsElement;
 
-		private List<DeckInfo> decks = new();
+		private DiskManager diskManager;
 		
+		private List<DeckInfo> decks = new();
 		private DeckInfo selectedDeck = null;
 		private DeckCard selectedDeckCard = null;
-
-		private void Awake()
+		
+		private void Start()
 		{
-			LoadDecks();
+			diskManager = GameManager.Instance.DiskManager;
+			
 			selectedOptionsElement.SetActive(false);
 
 			selectedOptions.OnPlayButtonClicked += OnPlayDeckButtonClicked;
 			selectedOptions.OnEditButtonClicked += OnEditDeckButtonClicked;
 			selectedOptions.OnDeleteButtonClicked += OnDeleteDeckButtonClicked;
+			
+			LoadDecks();
 		}
 
 		private async void LoadDecks()
 		{
-			Result a = await GameManager.Instance.DeckManager.LoadAllDecks();
-			Debug.Log($"Logging {a.Message} from {nameof(DeckListViewer)} in {nameof(LoadDecks)}");
-
-			decks = GameManager.Instance.DeckManager.GetAllDecks().ToList();
-
+			decks = await diskManager.LoadFromDisk<DeckInfo>(SaveDirectory.Decks);
+			
 			for (int i = 0; i < decks.Count; i++)
 			{
 				DeckInfo deckInfo = decks[i];
@@ -98,7 +98,7 @@ namespace UI.DeckView
 		private void OnEditDeckButtonClicked()
 		{
 			Debug.Log($"Pressed edit button for {selectedDeckCard.name}. Setting active deck to {selectedDeck}. Loading deck editor scene...");
-			GameManager.Instance.DeckManager.SetActiveDeck(selectedDeck);
+			GameManager.Instance.AddTransferable("ActiveDeck", selectedDeck);
 			SceneManager.LoadSceneAsync("DeckEditor");
 		}
 

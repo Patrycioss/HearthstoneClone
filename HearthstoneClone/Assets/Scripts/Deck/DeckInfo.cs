@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Card;
+using Deck.DeckManagement;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Deck
@@ -9,31 +11,37 @@ namespace Deck
 	/// Contains all of the info necessary to construct a deck.
 	/// </summary>
 	[Serializable]
-	public class DeckInfo
+	public class DeckInfo : Savable, ITransferable
 	{
 		/// <summary>
 		/// Name of the deck.
 		/// </summary>
-		public string Name = null;
+		[NotNull] public string Name = string.Empty;
 
 		/// <summary>
 		/// Description of the deck.
 		/// </summary>
-		public string Description = null;
+		[NotNull] public string Description = string.Empty;
 
-		/// <summary>
-		/// Image for the thumbnail of the deck.
-		/// </summary>
-		public Sprite Image = null;
-		
+		// Todo: Get better image solution.
+		// /// <summary>
+		// /// Image for the thumbnail of the deck.
+		// /// </summary>
+		// [CanBeNull] public Sprite Image = null;
+
 		/// <summary>
 		/// Cards in the deck.
 		/// </summary>
-		public List<CardInfo> Cards = null;
+		[NotNull] public List<CardInfo> Cards = new List<CardInfo>();
 
+		public DeckInfo() : base(SaveDirectory.Decks)
+		{
+			
+		}
+		
 		public override string ToString()
 		{
-			return $"{Name}/{Description}";
+			return $"[Deck( Name: {Name}, Description: {Description}), {base.ToString()}]";
 		}
 	}
 }

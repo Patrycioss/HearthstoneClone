@@ -28,11 +28,12 @@ namespace Deck
 			}
 			else description.text = deckInfo.Description;
 
-			if (deckInfo.Image == null)
-			{
-				image.gameObject.SetActive(false);
-			}
-			else image.sprite = deckInfo.Image;
+			// Todo: Make image work again.
+			// if (deckInfo.Image == null)
+			// {
+			// 	image.gameObject.SetActive(false);
+			// }
+			// else image.sprite = deckInfo.Image;
 			
 			if (string.IsNullOrEmpty(deckInfo.Name))
 			{
