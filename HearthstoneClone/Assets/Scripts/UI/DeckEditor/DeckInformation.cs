@@ -1,8 +1,8 @@
 ﻿using Deck;
 using Deck.DeckManagement;
 using TMPro;
+using UI.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.DeckEditor
 {
@@ -18,10 +18,10 @@ namespace UI.DeckEditor
 		
 		[SerializeField] private TMP_InputField nameText;
 		[SerializeField] private TMP_InputField descriptionText;
-		[SerializeField] private Button saveButton;
+		[SerializeField] private ButtonContainer saveButton;
+		[SerializeField] private Message message;
 		
 		private DiskManager diskManager;
-
 		private DeckInfo deckInfo;
 
 		/// <summary>
@@ -42,14 +42,14 @@ namespace UI.DeckEditor
 		{
 			nameText.onValueChanged.AddListener(OnNameValueChanged);
 			descriptionText.onValueChanged.AddListener(OnDescriptionValueChanged);
-			saveButton.onClick.AddListener(OnSaveButtonClicked);
+			saveButton.AddListener(OnSaveButtonClicked);
 		}
 
 		private void OnDisable()
 		{
 			nameText.onValueChanged.RemoveAllListeners();
 			descriptionText.onValueChanged.RemoveAllListeners();
-			saveButton.onClick.RemoveAllListeners();
+			saveButton.RemoveListeners();
 		}
 
 		private void OnNameValueChanged(string newValue)
@@ -66,6 +66,16 @@ namespace UI.DeckEditor
 
 		private async void OnSaveButtonClicked()
 		{
+			if (string.IsNullOrEmpty(deckInfo.Name))
+			{
+				message.Activate(new MessageConfiguration()
+				{
+					MessageText = $"Make sure to give your deck a name before saving!",
+					ButtonText = "Continue"
+				});
+				return;
+			}
+			
 			if (ShouldSave)
 			{
 				await diskManager.SaveToDisk(deckInfo);

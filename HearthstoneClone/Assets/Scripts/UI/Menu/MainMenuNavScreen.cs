@@ -9,25 +9,25 @@ namespace UI.Menu
 	/// </summary>
 	public class MainMenuNavScreen : MonoBehaviour
 	{
-		[SerializeField] private Button startButton;
-		[SerializeField] private Button decksButton;
-		[SerializeField] private Button exitButton;
+		[SerializeField] private ButtonContainer startButton;
+		[SerializeField] private ButtonContainer decksButton;
+		[SerializeField] private ButtonContainer exitButton;
 
 		private bool startButtonClicked = false;
 		private bool decksButtonClicked = false;
 
-		private void Awake()
+		private void OnEnable()
 		{
-			startButton.onClick.AddListener(OnStartButtonClicked);
-			decksButton.onClick.AddListener(OnDecksButtonClicked);
-			exitButton.onClick.AddListener(OnExitButtonClicked);
+			startButton.AddListener(OnStartButtonClicked);
+			decksButton.AddListener(OnDecksButtonClicked);
+			exitButton.AddListener(OnExitButtonClicked);
 		}
 
 		private void OnDisable()
 		{
-			startButton.onClick.RemoveAllListeners();
-			decksButton.onClick.RemoveAllListeners();
-			exitButton.onClick.RemoveAllListeners();
+			startButton.RemoveListeners();
+			decksButton.RemoveListeners();
+			exitButton.RemoveListeners();
 		}
 
 		private void OnStartButtonClicked()

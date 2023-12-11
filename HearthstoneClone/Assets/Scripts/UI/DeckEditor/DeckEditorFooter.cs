@@ -1,7 +1,6 @@
-﻿using UI.DeckEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UI.Footers
+namespace UI.DeckEditor
 {
 	/// <summary>
 	/// Overrides the standard footer functions to notify the user to save before leaving.
@@ -9,7 +8,19 @@ namespace UI.Footers
 	public class DeckEditorFooter : Footer
 	{
 		[SerializeField] private DeckInformation deckInformation;
+
+		private TransferableSceneData previousSceneData;
 		
+		protected void Start()
+		{ 
+			previousSceneData = GameManager.Instance.GetTransferable("PreviousScene") as TransferableSceneData;
+
+			if (previousSceneData == null)
+			{
+				Debug.LogWarning($"Couldn't find previous scene data with key PreviousScene in transferable data!");
+			}
+		}
+
 		protected override void OnBackButtonClicked()
 		{
 			if (deckInformation.ShouldSave)

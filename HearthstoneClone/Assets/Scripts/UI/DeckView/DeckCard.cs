@@ -2,22 +2,18 @@
 using Deck;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.DeckView
 {
 	/// <summary>
 	/// Used to show the properties of a deck as a card in the <see cref="DeckListViewer"/>.
 	/// </summary>
-	public class DeckCard : MonoBehaviour
+	public class DeckCard : ButtonContainer
 	{
 		[SerializeField] private GameObject selectedIndicator;
 		
 		[SerializeField] private TextMeshProUGUI title;
 		[SerializeField] private TextMeshProUGUI description;
-		[SerializeField] private Image image;
-
-		[SerializeField] private Button button;
 
 		private DeckInfo info;
 
@@ -34,7 +30,7 @@ namespace UI.DeckView
 			description.text = info.Description;
 			// image.sprite = info.Image;
 
-			button.onClick.AddListener(() => onClickCallback?.Invoke(info, this));
+			AddListener(() => onClickCallback?.Invoke(info, this));
 		}
 
 		/// <summary>
@@ -49,6 +45,11 @@ namespace UI.DeckView
 		private void Awake()
 		{
 			selectedIndicator.SetActive(false);
+		}
+
+		private void OnDisable()
+		{
+			RemoveListeners();
 		}
 	}
 }

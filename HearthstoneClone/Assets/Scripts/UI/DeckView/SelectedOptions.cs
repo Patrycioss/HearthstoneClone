@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.DeckView
 {
@@ -24,22 +23,22 @@ namespace UI.DeckView
 		/// </summary>
 		public event Action OnDeleteButtonClicked;
 
-		[SerializeField] private Button playButton;
-		[SerializeField] private Button editButton;
-		[SerializeField] private Button deleteButton;
+		[SerializeField] private ButtonContainer playButton;
+		[SerializeField] private ButtonContainer editButton;
+		[SerializeField] private ButtonContainer deleteButton;
 
 		private void OnEnable()
 		{
-			playButton.onClick.AddListener(() => OnPlayButtonClicked?.Invoke());
-			editButton.onClick.AddListener(() => OnEditButtonClicked?.Invoke());
-			deleteButton.onClick.AddListener(() => OnDeleteButtonClicked?.Invoke());
+			playButton.AddListener(() => OnPlayButtonClicked?.Invoke());
+			editButton.AddListener(() => OnEditButtonClicked?.Invoke());
+			deleteButton.AddListener(() => OnDeleteButtonClicked?.Invoke());
 		}
 
 		private void OnDisable()
 		{
-			playButton.onClick.RemoveAllListeners();
-			editButton.onClick.RemoveAllListeners();
-			deleteButton.onClick.RemoveAllListeners();
+			playButton.RemoveListeners();
+			editButton.RemoveListeners();
+			deleteButton.RemoveListeners();
 		}
 	}
 }

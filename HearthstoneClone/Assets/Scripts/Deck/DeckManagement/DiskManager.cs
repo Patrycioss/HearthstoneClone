@@ -29,8 +29,43 @@ namespace Deck.DeckManagement
 			
 			PerformDirectoryChecks();
 		}
-		
 
+		/// <summary>
+		/// Try to remove a <see cref="Savable"/> from disk.
+		/// </summary>
+		/// <param name="savable">A <see cref="Savable"/> to delete.</param>
+		public void RemoveFromDisk([NotNull] Savable savable)
+		{
+			Result result = new Result();
+
+			bool failed = false;
+			
+			Result<string> pathResult = savable.GetPath();
+			if (pathResult)
+			{
+				try
+				{
+					if (File.Exists(pathResult.Value!))
+					{
+						File.Delete(pathResult.Value!);
+					}
+
+				}
+				catch (Exception e)
+				{
+					result += $"Failed deleting file with path {pathResult.Value} because of exception {e}!";
+					failed = true;
+				}
+			}
+
+			if (!failed)
+			{
+				result += $"Succeeded in deleting file with path {pathResult.Value}.";
+			}
+			
+			Debug.Log(result);
+		}
+		
 		/// <summary>
 		/// Save a <see cref="Savable"/> to disk using <see cref="DiskSaver"/>.
 		/// </summary>
@@ -156,8 +191,11 @@ namespace Deck.DeckManagement
 					result += $"Created directory with path {path}.";
 				}
 			}
-			
-			Debug.Log(result);
+
+			if (!string.IsNullOrEmpty(result.Message.ToString()))
+			{
+				Debug.Log(result);
+			}
 		}
 	}
 }

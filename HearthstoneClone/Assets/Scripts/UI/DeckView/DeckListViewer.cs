@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Deck;
 using Deck.DeckManagement;
+using UI.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,12 +15,11 @@ namespace UI.DeckView
 	public class DeckListViewer : MonoBehaviour
 	{
 		[SerializeField] private GameObject deckCardPrefab;
-		
 		[SerializeField] private GridLayoutGroup contentTransform;
 		[SerializeField] private Scrollbar scrollbar;
-	
 		[SerializeField] private SelectedOptions selectedOptions;
 		[SerializeField] private GameObject selectedOptionsElement;
+		[SerializeField] private ConfirmationScreen confirmationScreen;
 
 		private DiskManager diskManager;
 		
@@ -29,14 +30,15 @@ namespace UI.DeckView
 		private void Start()
 		{
 			diskManager = GameManager.Instance.DiskManager;
-			
 			selectedOptionsElement.SetActive(false);
+			LoadDecks();
+		}
 
+		private void OnEnable()
+		{
 			selectedOptions.OnPlayButtonClicked += OnPlayDeckButtonClicked;
 			selectedOptions.OnEditButtonClicked += OnEditDeckButtonClicked;
 			selectedOptions.OnDeleteButtonClicked += OnDeleteDeckButtonClicked;
-			
-			LoadDecks();
 		}
 
 		private async void LoadDecks()
@@ -92,20 +94,42 @@ namespace UI.DeckView
 		private void OnPlayDeckButtonClicked()
 		{
 			Debug.Log($"Pressed play button for {selectedDeckCard.name}.");
+			
+			GameManager.Instance.AddTransferable("PreviousScene", new TransferableSceneData()
+			{
+				Scene = SceneManager.GetActiveScene()
+			});
+			
 			// Todo: implement giving deckinfo to confirmation that then starts game with deck.
 		}
 
 		private void OnEditDeckButtonClicked()
 		{
 			Debug.Log($"Pressed edit button for {selectedDeckCard.name}. Setting active deck to {selectedDeck}. Loading deck editor scene...");
+			
 			GameManager.Instance.AddTransferable("ActiveDeck", selectedDeck);
+			GameManager.Instance.AddTransferable("PreviousScene", new TransferableSceneData()
+			{
+				Scene = SceneManager.GetActiveScene()
+			});
+			
 			SceneManager.LoadSceneAsync("DeckEditor");
 		}
 
 		private void OnDeleteDeckButtonClicked()
 		{
 			Debug.Log($"Pressed delete button for {selectedDeckCard.name}.");
-			// Todo : implement giving deckinfo to confirmation screen that then deletes it.
+
+			confirmationScreen.OnConfirmButtonPressed += () =>
+			{
+				diskManager.RemoveFromDisk(selectedDeck);
+				Destroy(selectedDeckCard.gameObject);
+			};
+
+			confirmationScreen.Activate(new ConfirmationScreenConfiguration
+			{
+				MessageText = $"Are you sure you wish to delete this deck?"
+			});
 		}
 	}
 }

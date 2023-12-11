@@ -1,26 +1,25 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-namespace UI.Footers
+namespace UI
 {
 	/// <summary>
 	/// Handles the base navigation in the footer.
 	/// </summary>
 	public class Footer : MonoBehaviour
 	{
-		[SerializeField] private Button backButton;
-		[SerializeField] private Button exitButton;
+		[SerializeField] protected ButtonContainer backButton;
+		[SerializeField] protected ButtonContainer exitButton;
 		
-		protected virtual void Awake()
+		protected virtual void OnEnable()
 		{
-			backButton.onClick.AddListener(OnBackButtonClicked);
-			exitButton.onClick.AddListener(OnExitButtonClicked);
+			backButton.AddListener(OnBackButtonClicked);
+			exitButton.AddListener(OnExitButtonClicked);
 		}
 
 		protected virtual void OnDisable()
 		{
-			backButton.onClick.RemoveAllListeners();
-			exitButton.onClick.RemoveAllListeners();
+			backButton.RemoveListeners();
+			exitButton.RemoveListeners();
 		}
 		
 		protected virtual void OnBackButtonClicked()

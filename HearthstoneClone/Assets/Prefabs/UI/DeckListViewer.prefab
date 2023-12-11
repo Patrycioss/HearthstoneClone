@@ -124,6 +124,9 @@ MonoBehaviour:
   deckCardPrefab: {fileID: 7053906495881493468, guid: 48307a9a76987da4aa1d2e3d3555a624,
     type: 3}
   contentTransform: {fileID: 7681663241460505008}
+  scrollbar: {fileID: 627661732873479024}
+  selectedOptions: {fileID: 0}
+  selectedOptionsElement: {fileID: 0}
 --- !u!1 &2215999892128515779
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +337,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8240869773290353806}
   m_HandleRect: {fileID: 1566451879164254954}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

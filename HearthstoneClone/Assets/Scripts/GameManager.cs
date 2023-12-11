@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
    /// <param name="transferable"><see cref="ITransferable"/> to transfer.</param>
    public void AddTransferable(string identifier, ITransferable transferable)
    {
+      if (transferableData.ContainsKey(identifier))
+      {
+         transferableData.Remove(identifier);
+      }
+      
       transferableData.Add(identifier, transferable);
    }
 
