@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace UI.Menu
 {
@@ -15,6 +13,13 @@ namespace UI.Menu
 
 		private bool startButtonClicked = false;
 		private bool decksButtonClicked = false;
+
+		private SceneSwapper sceneSwapper;
+
+		private void Start()
+		{
+			sceneSwapper = GameManager.Instance.SceneSwapper;
+		}
 
 		private void OnEnable()
 		{
@@ -35,7 +40,7 @@ namespace UI.Menu
 			if (!startButtonClicked)
 			{
 				startButtonClicked = true;
-				SceneManager.LoadSceneAsync("Game");
+				sceneSwapper.SetScene(SceneSwapper.Scene.Game);
 			}
 		}
 
@@ -44,17 +49,13 @@ namespace UI.Menu
 			if (!decksButtonClicked)
 			{
 				decksButtonClicked = true;
-				SceneManager.LoadSceneAsync("Decks");
+				sceneSwapper.SetScene(SceneSwapper.Scene.DeckView);
 			}
 		}
 
 		private void OnExitButtonClicked()
 		{
-#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;			
-#else
-			Application.Quit();
-#endif
+			sceneSwapper.ExitGame();
 		}
 	}
 }

@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
    /// Active <see cref="DiskManager"/>.
    /// </summary>
    public DiskManager DiskManager { get; private set; }
+   
+   /// <summary>
+   /// Active <see cref="SceneSwapper"/>.
+   /// </summary>
+   public SceneSwapper SceneSwapper { get; private set; }
 
    private Dictionary<string, ITransferable> transferableData;
 
@@ -70,5 +75,8 @@ public class GameManager : MonoBehaviour
 
       DiskManager = new DiskManager();
       DiskManager.Initialize();
+
+      SceneSwapper = new SceneSwapper();
+      SceneSwapper.Initialize();
    }
 }

@@ -1,6 +1,5 @@
 ﻿using Deck;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UI.DeckView
 {
@@ -23,10 +22,15 @@ namespace UI.DeckView
 			createDeckButton.RemoveListeners();
 		}
 
+		protected override void Back()
+		{
+			GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.MainMenu);
+		}
+
 		private void OnCreateDeckButtonClicked()
 		{
 			GameManager.Instance.AddTransferable("ActiveDeck",new DeckInfo());
-			SceneManager.LoadSceneAsync("DeckEditor");
+			GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.DeckEditor);			
 		}
 	}
 }

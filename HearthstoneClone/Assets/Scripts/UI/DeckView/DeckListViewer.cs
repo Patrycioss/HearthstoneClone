@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Deck;
 using Deck.DeckManagement;
 using UI.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.DeckView
@@ -95,12 +93,14 @@ namespace UI.DeckView
 		{
 			Debug.Log($"Pressed play button for {selectedDeckCard.name}.");
 			
-			GameManager.Instance.AddTransferable("PreviousScene", new TransferableSceneData()
+			confirmationScreen.Activate(new ConfirmationScreenConfiguration
 			{
-				Scene = SceneManager.GetActiveScene()
+				MessageText = $"Are you sure you want to start a game with this deck?",
+				OnConfirm = () =>
+				{
+					GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.Game);
+				}
 			});
-			
-			// Todo: implement giving deckinfo to confirmation that then starts game with deck.
 		}
 
 		private void OnEditDeckButtonClicked()
@@ -108,27 +108,21 @@ namespace UI.DeckView
 			Debug.Log($"Pressed edit button for {selectedDeckCard.name}. Setting active deck to {selectedDeck}. Loading deck editor scene...");
 			
 			GameManager.Instance.AddTransferable("ActiveDeck", selectedDeck);
-			GameManager.Instance.AddTransferable("PreviousScene", new TransferableSceneData()
-			{
-				Scene = SceneManager.GetActiveScene()
-			});
-			
-			SceneManager.LoadSceneAsync("DeckEditor");
+			GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.DeckEditor);
 		}
 
 		private void OnDeleteDeckButtonClicked()
 		{
 			Debug.Log($"Pressed delete button for {selectedDeckCard.name}.");
-
-			confirmationScreen.OnConfirmButtonPressed += () =>
-			{
-				diskManager.RemoveFromDisk(selectedDeck);
-				Destroy(selectedDeckCard.gameObject);
-			};
-
+			
 			confirmationScreen.Activate(new ConfirmationScreenConfiguration
 			{
-				MessageText = $"Are you sure you wish to delete this deck?"
+				MessageText = $"Are you sure you wish to delete this deck?",
+				OnConfirm = () =>
+				{
+					diskManager.RemoveFromDisk(selectedDeck);
+					Destroy(selectedDeckCard.gameObject);
+				}
 			});
 		}
 	}

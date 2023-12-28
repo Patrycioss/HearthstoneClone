@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Card;
+using CardManagement.CardComposition;
 using Deck.DeckManagement;
 using JetBrains.Annotations;
 

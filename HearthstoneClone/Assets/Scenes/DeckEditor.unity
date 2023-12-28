@@ -490,6 +490,21 @@ PrefabInstance:
       propertyPath: saveButton
       value: 
       objectReference: {fileID: 3638482935324778959}
+    - target: {fileID: 423758660005769237, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: cardsLabel.m_LabelString
+      value: cards
+      objectReference: {fileID: 0}
+    - target: {fileID: 423758660005769237, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: cardPrefabLabel.m_LabelString
+      value: card_prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 893703406662998627, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1253569221452058767, guid: 0e6b59aa670d22f4381a190045a3ca7a,
         type: 3}
       propertyPath: m_Name

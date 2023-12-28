@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace UI.Generic
 {
@@ -19,5 +20,11 @@ namespace UI.Generic
 		/// </summary>
 		[NotNull]
 		public string ButtonText = "Continue";
+
+		/// <summary>
+		/// Action that is called when the user continues.
+		/// </summary>
+		[CanBeNull] 
+		public Action OnContinue = null;
 	}
 }

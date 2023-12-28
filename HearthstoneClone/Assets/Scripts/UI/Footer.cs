@@ -10,6 +10,13 @@ namespace UI
 		[SerializeField] protected ButtonContainer backButton;
 		[SerializeField] protected ButtonContainer exitButton;
 		
+		private SceneSwapper sceneSwapper;
+		
+		protected void Start()
+		{
+			sceneSwapper = GameManager.Instance.SceneSwapper;
+		}
+		
 		protected virtual void OnEnable()
 		{
 			backButton.AddListener(OnBackButtonClicked);
@@ -24,16 +31,22 @@ namespace UI
 		
 		protected virtual void OnBackButtonClicked()
 		{
-			//TODO: Implement	
+			Back();
 		}
 
 		protected virtual void OnExitButtonClicked()
 		{
-#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;			
-#else
-			Application.Quit();
-#endif
+			Exit();
+		}
+		
+		protected virtual void Back()
+		{
+			sceneSwapper.SetScene(sceneSwapper.PreviousScene);
+		}
+
+		protected virtual void Exit()
+		{
+			sceneSwapper.ExitGame();
 		}
 	}
 }

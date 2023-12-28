@@ -9,16 +9,6 @@ namespace UI.Generic
 	/// </summary>
 	public class ConfirmationScreen : MonoBehaviour
 	{
-		/// <summary>
-		/// Is called when the user presses the cancel button.
-		/// </summary>
-		public event Action OnCancelButtonPressed = delegate { };
-		
-		/// <summary>
-		/// Is called when the user presses the confirm button.
-		/// </summary>
-		public event Action OnConfirmButtonPressed = delegate { };
-		
 		[SerializeField] private TextMeshProUGUI messageText;
 		[SerializeField] private ButtonContainer confirmButton;
 		[SerializeField] private ButtonContainer cancelButton;
@@ -54,13 +44,13 @@ namespace UI.Generic
 
 		private void CancelButtonPressed()
 		{
-			OnCancelButtonPressed?.Invoke();
+			config.OnCancel?.Invoke();
 			gameObject.SetActive(false);
 		}
 
 		private void ConfirmButtonPressed()
 		{
-			OnConfirmButtonPressed?.Invoke();
+			config.OnConfirm?.Invoke();
 			gameObject.SetActive(false);
 		}
 

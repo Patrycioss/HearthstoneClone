@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 599ede8cfe6acf8449e2ce6c31757e7f
   - enabled: 1
-    path: Assets/Scenes/Decks.unity
+    path: Assets/Scenes/DeckView.unity
     guid: 4fddcccd61830354d9022a8394b919b4
   - enabled: 1
     path: Assets/Scenes/Game.unity
@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeckEditor.unity
     guid: d1db5e9bcb5d31d4e9a822c90ec0437d
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 5b7aa839f36a8194a82e27058f8bae63,
+      type: 2}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI.Generic;
+using UnityEngine;
 
 namespace UI.DeckEditor
 {
@@ -8,33 +9,32 @@ namespace UI.DeckEditor
 	public class DeckEditorFooter : Footer
 	{
 		[SerializeField] private DeckInformation deckInformation;
-
-		private TransferableSceneData previousSceneData;
-		
-		protected void Start()
-		{ 
-			previousSceneData = GameManager.Instance.GetTransferable("PreviousScene") as TransferableSceneData;
-
-			if (previousSceneData == null)
-			{
-				Debug.LogWarning($"Couldn't find previous scene data with key PreviousScene in transferable data!");
-			}
-		}
+		[SerializeField] private ConfirmationScreen confirmationScreen;
 
 		protected override void OnBackButtonClicked()
 		{
 			if (deckInformation.ShouldSave)
 			{	
-				// Todo: show go back without saving screen.
+				confirmationScreen.Activate(new ConfirmationScreenConfiguration()
+				{
+					MessageText = $"Are you sure you wish to exit without saving?",
+					OnConfirm = Back
+				});
 			}
+			else Back();
 		}
 
 		protected override void OnExitButtonClicked()
 		{
 			if (deckInformation.ShouldSave)
 			{
-				// Todo: show quit without saving screen.
+				confirmationScreen.Activate(new ConfirmationScreenConfiguration()
+				{
+					MessageText = $"Are you sure you wish to exit without saving?",
+					OnConfirm = Exit
+				});
 			}
+			else Exit();
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using Card.Physical;
+﻿using CardManagement.Physical;
 
 namespace StateSystem
 {
