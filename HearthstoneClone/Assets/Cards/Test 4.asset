@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a2e314ab648450aac16a4853ce80671, type: 3}
-  m_Name: Test
+  m_Name: Test 4
   m_EditorClassIdentifier: 
-  CardName: DOEI
+  CardName: HOE GAAT HET?
   Description: A test description for my test card.
-  Cost: 0
+  Cost: 4
   ImageReference:
     m_AssetGUID: 04797641de2a4024aac8e3559f281d6c
     m_SubObjectName: TestSprite

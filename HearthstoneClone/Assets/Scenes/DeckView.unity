@@ -502,6 +502,11 @@ PrefabInstance:
       propertyPath: confirmationScreen
       value: 
       objectReference: {fileID: 1490800969}
+    - target: {fileID: 4477536848397001444, guid: 7163a0f6bfe01f14fa50631e719d9890,
+        type: 3}
+      propertyPath: deckCardLabel.m_LabelString
+      value: deck_card_prefab
+      objectReference: {fileID: 0}
     - target: {fileID: 4668867735034730033, guid: 7163a0f6bfe01f14fa50631e719d9890,
         type: 3}
       propertyPath: m_AnchorMax.x

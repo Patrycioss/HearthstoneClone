@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Deck.DeckManagement;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Manages other managers that are important throughout the whole game.
@@ -23,6 +24,31 @@ public class GameManager : MonoBehaviour
    /// </summary>
    public SceneSwapper SceneSwapper { get; private set; }
 
+   /// <summary>
+   /// Starting health of a player.
+   /// </summary>
+   public int PlayerStartHealth => playerStartHealth;
+
+   /// <summary>
+   /// Maximum mana a player can have.
+   /// </summary>
+   public int MaxMana => maxMana;
+
+   /// <summary>
+   /// Starting mana amount a player has.
+   /// </summary>
+   public int StartMana => startMana;
+
+   /// <summary>
+   /// Turn length in seconds.
+   /// </summary>
+   public int TurnLength => turnLength; 
+   
+   [SerializeField] private int playerStartHealth = 30;
+   [SerializeField] private int maxMana = 10;
+   [SerializeField] private int startMana = 1;
+   [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
+   
    private Dictionary<string, ITransferable> transferableData;
 
    /// <summary>

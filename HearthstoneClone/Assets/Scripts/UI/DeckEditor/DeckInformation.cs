@@ -37,6 +37,11 @@ namespace UI.DeckEditor
 			SetUpText();
 			SetUpCardsView();
 		}
+
+		public void EnableShouldSave()
+		{
+			ShouldSave = true;
+		}
 		
 		private void OnEnable()
 		{

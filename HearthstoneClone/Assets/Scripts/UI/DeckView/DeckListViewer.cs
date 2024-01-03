@@ -3,6 +3,8 @@ using Deck;
 using Deck.DeckManagement;
 using UI.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace UI.DeckView
@@ -12,7 +14,7 @@ namespace UI.DeckView
 	/// </summary>
 	public class DeckListViewer : MonoBehaviour
 	{
-		[SerializeField] private GameObject deckCardPrefab;
+		[SerializeField] private AssetLabelReference deckCardLabel;
 		[SerializeField] private GridLayoutGroup contentTransform;
 		[SerializeField] private Scrollbar scrollbar;
 		[SerializeField] private SelectedOptions selectedOptions;
@@ -46,14 +48,21 @@ namespace UI.DeckView
 			for (int i = 0; i < decks.Count; i++)
 			{
 				DeckInfo deckInfo = decks[i];
-				GameObject cardObject = Instantiate(deckCardPrefab, contentTransform.transform);
-				cardObject.name = cardObject.name += $" - {i}";
 
-				if (cardObject.TryGetComponent(out DeckCard deckCard))
+				var deckCardHandle = Addressables.InstantiateAsync(deckCardLabel, contentTransform.transform);
+				await deckCardHandle.Task;
+
+				if (deckCardHandle.Status == AsyncOperationStatus.Succeeded)
 				{
-					deckCard.Instantiate(deckInfo, OnDeckSelected);
+					GameObject cardObject = deckCardHandle.Result;
+					cardObject.name = cardObject.name += $" - {i}";
+
+					if (cardObject.TryGetComponent(out DeckCard deckCard))
+					{
+						deckCard.Instantiate(deckInfo, OnDeckSelected);
+					}
+					else Debug.LogError($"Spawned object in {nameof(DeckListViewer)} doesn't have a {nameof(DeckCard)}!");
 				}
-				else Debug.LogError($"Spawned object in {nameof(DeckListViewer)} doesn't have a {nameof(DeckCard)}!");
 			}
 
 			scrollbar.value = 1;

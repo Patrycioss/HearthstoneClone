@@ -5,7 +5,6 @@ using CardManagement.Physical.MoveStates;
 using HoverSystem;
 using StateSystem;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
@@ -74,8 +73,13 @@ namespace CardManagement.Physical
         
         private void Update()
         {
-            stateMachine.Update();
+            if (cardInfo == null)
+            {
+                return;
+            }
             
+            stateMachine.Update();
+
             cardInfo.Behaviours.ForEach(behaviour => behaviour.Update());
 
             if (IsHovering)
@@ -170,17 +174,24 @@ namespace CardManagement.Physical
 
         private void LoadSprite()
         {
-            Addressables.LoadAssetAsync<Sprite>(cardInfo.ImagePath).Completed += (handle) =>
+            if (cardInfo.ImageReference != null)
             {
-                if (handle.Status == AsyncOperationStatus.Succeeded)
+                cardInfo.ImageReference.LoadAssetAsync<Sprite>().Completed += (handle) =>
                 {
-                    image.sprite = handle.Result;
-                }
-                else
-                {
-                    Debug.LogError($"Failed to load sprite with path: {cardInfo.ImagePath}! Make sure you have the correct path.");
-                }
-            };
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        image.sprite = handle.Result;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Failed to load addressable asset: {cardInfo.ImageReference}!");
+                    }
+                };
+            }
+            else
+            {
+                Debug.LogError($"No image reference set for {cardInfo.CardName}!");
+            }
         }
     }
 }

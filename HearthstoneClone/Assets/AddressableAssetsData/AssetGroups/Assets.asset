@@ -28,6 +28,24 @@ MonoBehaviour:
     m_SerializedLabels:
     - card_prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6ec99ad42c844a45ae246eb37247447
+    m_Address: Assets/Prefabs/UI/CollectionCard.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui_card_prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7323f3066e2e7748b955ae001dde1f1
+    m_Address: Assets/Prefabs/UI/CardLayer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui_card_layer_prefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48307a9a76987da4aa1d2e3d3555a624
+    m_Address: Assets/Prefabs/UI/DeckCard.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - deck_card_prefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 64e27590390a40641a23ffe0df3fde3c, type: 2}
   m_SchemaSet:

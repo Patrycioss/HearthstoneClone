@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CardManagement.CardComposition.Behaviours;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CardManagement.CardComposition
 {
@@ -13,14 +14,14 @@ namespace CardManagement.CardComposition
 		/// <summary>
 		/// Name of the card.
 		/// </summary>
-		[NotNull] 
-		public string CardName = string.Empty;
+		[CanBeNull] 
+		public string CardName;
 
 		/// <summary>
 		/// Description of the card.
 		/// </summary>
-		[NotNull] 
-		public string Description = string.Empty;
+		[CanBeNull] 
+		public string Description;
 		
 		/// <summary>
 		/// Cost of the card.
@@ -28,10 +29,10 @@ namespace CardManagement.CardComposition
 		public int Cost = 0;
 		
 		/// <summary>
-		/// Path to load the image used for the card.
+		/// Addressable asset used for the image.
 		/// </summary>
-		[NotNull] 
-		public string ImagePath = string.Empty;
+		[CanBeNull]
+		public AssetReference ImageReference;
 		
 		/// <summary>
 		/// Behaviour associated with the card.

@@ -1190,6 +1190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasParentTransform: {fileID: 1020433313014857024}
+  image: {fileID: 3134822472721944363}
 --- !u!65 &573030947264157074
 BoxCollider:
   m_ObjectHideFlags: 0
