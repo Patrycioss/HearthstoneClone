@@ -8,18 +8,25 @@ namespace Game
 {
 	public class PlayManager : MonoBehaviour
 	{
-		private Player player1;
-		private Player player2;
+		[SerializeField] private Player player1;
+		[SerializeField] private Player player2;
+		
 
 		private async void Start()
 		{
 			if (GameManager.Instance.GetTransferable("ActiveDeck") is DeckInfo deck)
 			{
 				IList<CardInfo> cards = await ResourceUtils.LoadAddressablesFromIdentifiers<CardInfo>(deck.Cards);
-
-				player1 = new Player(cards);
-				player2 = new Player(cards);
+				player1.Instantiate(cards);
+				player2.Instantiate(cards);
 			}
+			
+			StartGame();
+		}
+
+		private void StartGame()
+		{
+			
 		}
 	}
 }

@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
    public int StartMana => startMana;
 
    /// <summary>
+   /// Maximum amount of cards in hand.
+   /// </summary>
+   public int MaxCardsInHand => maxCardsInHand;
+   
+   /// <summary>
    /// Turn length in seconds.
    /// </summary>
    public int TurnLength => turnLength; 
@@ -47,6 +52,7 @@ public class GameManager : MonoBehaviour
    [SerializeField] private int playerStartHealth = 30;
    [SerializeField] private int maxMana = 10;
    [SerializeField] private int startMana = 1;
+   [SerializeField] private int maxCardsInHand = 5;
    [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
    
    private Dictionary<string, ITransferable> transferableData;
