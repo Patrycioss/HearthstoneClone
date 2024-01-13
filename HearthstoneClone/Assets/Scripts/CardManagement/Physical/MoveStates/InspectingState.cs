@@ -15,8 +15,6 @@ namespace CardManagement.Physical.MoveStates
 		private const float SCALE_AMOUNT = 1.3f;
 		private const float SCALE_DURATION = 0.5f;
 		
-		private Vector3 startPosition;
-
 		public InspectingState(PhysicalCard pPhysicalCard) : base(pPhysicalCard)
 		{
 		}

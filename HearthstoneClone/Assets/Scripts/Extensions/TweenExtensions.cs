@@ -38,8 +38,6 @@ namespace Extensions
 			{
 				Debug.LogWarning($"No valid token passed on for this tween!");
 			}
-
-			tween.Play();
 			
 			return taskCompletionSource.Task;
 		}

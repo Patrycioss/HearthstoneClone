@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using DG.Tweening;
 using Extensions;
 using StateSystem;
 using UnityEngine;
-using State = StateSystem.State;
 
 namespace CardManagement.Physical.MoveStates
 {
@@ -15,13 +13,8 @@ namespace CardManagement.Physical.MoveStates
 	public class MovingState : MovePhysicalCardState
 	{
 		private const float SPEED_FACTOR = 700;
-		
-		private Vector3 startPos;
 
-		public MovingState(PhysicalCard card) : base(card)
-		{
-			startPos = card.transform.position;
-		}
+		public MovingState(PhysicalCard card) : base(card) {}
 
 		public override Task Start(CancellationToken fastForwardToken)
 		{
@@ -36,8 +29,8 @@ namespace CardManagement.Physical.MoveStates
 		
 		public override async Task Stop(CancellationToken fastForwardToken)
 		{
-			float duration = Vector3.Distance(startPos, PhysicalCard.transform.position) / SPEED_FACTOR;
-			var tween = PhysicalCard.transform.DOMove(startPos, duration);
+			float duration = Vector3.Distance(PhysicalCard.BasePosition, PhysicalCard.transform.position) / SPEED_FACTOR;
+			var tween = PhysicalCard.transform.DOMove(PhysicalCard.BasePosition, duration);
 			await tween.AsFastForwardTask(fastForwardToken);
 		}
 	}

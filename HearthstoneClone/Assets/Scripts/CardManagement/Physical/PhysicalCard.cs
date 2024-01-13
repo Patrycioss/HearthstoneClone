@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CardManagement.CardComposition;
 using CardManagement.CardComposition.Behaviours;
 using CardManagement.Physical.MoveStates;
-using Extensions;
 using JetBrains.Annotations;
 using StateSystem;
 using TMPro;
@@ -38,6 +39,11 @@ namespace CardManagement.Physical
         /// Can the card be moved?
         /// </summary>
         public bool IsLocked { get; set; }
+        
+        /// <summary>
+        /// Base position of the card.
+        /// </summary>
+        public Vector3 BasePosition { get; set; }
 
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
@@ -51,11 +57,15 @@ namespace CardManagement.Physical
 
         private Side cardSide = Side.Back;
         private bool consciouslyHovering = false;
+        private bool hovering = false;
         private bool moving = false;
 
         [CanBeNull] private Task checkConsciousHoverTask;
+        [CanBeNull] private Task setStateToInspectingTask;
         private CancellationTokenSource cancelConsciousTimerToken = new CancellationTokenSource();
         private bool initialized = false;
+
+        private Queue<Action> doNextUpdate = new Queue<Action>();
         
         /// <summary>
         /// Instantiate the physical card.
@@ -72,6 +82,8 @@ namespace CardManagement.Physical
             
             image.sprite = await LoadSprite();
             initialized = true;
+
+            BasePosition = transform.position;
         }
 
         /// <summary>
@@ -94,36 +106,35 @@ namespace CardManagement.Physical
             }
         }
         
-        private async void Update()
+        private void Update()
         {
+            while (doNextUpdate.Count > 0)
+            {
+                doNextUpdate.Dequeue()?.Invoke();
+            }
+            
             if (!initialized)
             {
                 return;
             }
-            
-            if (consciouslyHovering)
+
+            if (hovering)
             {
-                if (!moving && Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0) && !moving)
                 {
-                    Debug.Log($"Start moving");
                     moving = true;
                     stateMachine.FastForwardNextStateStartTask();
                     stateMachine.FastForwardNextStateStopTask();
                     stateMachine.SetState(new MovingState(this));
                 }
-                else if (moving && !Input.GetMouseButton(0))
+                else if (!Input.GetMouseButton(0) && moving)
                 {
-                    Debug.Log($"Stop moving");
-
                     moving = false;
                     stateMachine.SetState(new HeldState(this));
                 }
             }
-            
-            if (stateMachine != null)
-            { 
-                await stateMachine.Update();
-            }
+
+            stateMachine?.Update();
 
             foreach (CardBehaviour behaviour in cardInfo.Behaviours)
             {
@@ -138,24 +149,19 @@ namespace CardManagement.Physical
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Task.Run(async () =>
-            {
-                await Task.Delay(CONSCIOUS_HOVERING_TIME_MILLIS, cancelConsciousTimerToken.Token);
-                consciouslyHovering = true;
+            hovering = true;
             
-                if (stateMachine.ActiveState is HeldState)
-                {
-                    stateMachine.SetState(new InspectingState(this));
-                }
-            }, cancelConsciousTimerToken.Token);
+            if (stateMachine.ActiveState is HeldState)
+            {
+                stateMachine.SetState(new InspectingState(this));
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            cancelConsciousTimerToken.Cancel();
-            cancelConsciousTimerToken = cancelConsciousTimerToken.Reset();
-
-            if (stateMachine.ActiveState is not HeldState)
+            hovering = false;
+          
+            if (stateMachine.ActiveState is not null or HeldState)
             {
                 stateMachine.SetState(new HeldState(this));
             }
