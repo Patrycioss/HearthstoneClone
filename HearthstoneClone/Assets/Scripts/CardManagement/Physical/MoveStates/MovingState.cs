@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DG.Tweening;
+using Extensions;
 using StateSystem;
 using UnityEngine;
 using State = StateSystem.State;
@@ -10,54 +14,31 @@ namespace CardManagement.Physical.MoveStates
 	/// </summary>
 	public class MovingState : MovePhysicalCardState
 	{
-		private const float CLIP_PLANE_CONSTANT = 5.8f;
+		private const float SPEED_FACTOR = 700;
 		
-		private Camera camera;
-		private Vector3 movingOffset;
-
 		private Vector3 startPos;
 
-		private State nextState;
-		
-		public MovingState(PhysicalCard card, State nextState) : base(card)
+		public MovingState(PhysicalCard card) : base(card)
 		{
-			camera = Camera.main;
-
 			startPos = card.transform.position;
-			this.nextState = nextState;
 		}
 
-		public override void Start()
+		public override Task Start(CancellationToken fastForwardToken)
 		{
-			Vector3 mousePos = Input.mousePosition;
-			mousePos.z = camera.nearClipPlane + 5.7f;
-
-			movingOffset = camera.ScreenToWorldPoint(mousePos) - PhysicalCard.transform.position;
+			return Task.CompletedTask;
 		}
 
-		public override void Update()
+		public override Task Update()
 		{
-			Vector3 mousePos = Input.mousePosition;
-			mousePos.z = CLIP_PLANE_CONSTANT;
-			
-			Vector3 newPosition = camera.ScreenToWorldPoint(mousePos) - movingOffset;
-			PhysicalCard.transform.position = new Vector3(newPosition.x, PhysicalCard.transform.position.y, newPosition.z);
-			
-			if (!(Input.GetMouseButton(0) || Input.GetMouseButton(1)))
-			{
-			    StateMachine.SetState(nextState);
-			}
+			PhysicalCard.transform.position = Input.mousePosition;
+			return Task.CompletedTask;
 		}
-
-		public override void Stop(Action onCompleteCallback)
+		
+		public override async Task Stop(CancellationToken fastForwardToken)
 		{
-			PhysicalCard.transform.position = startPos;
-			onCompleteCallback();
-			// card.transform.DOMove(startPos, Card.GetMoveDuration(card.transform.position, startPos))
-			// 	.SetEase(Ease.OutCubic).OnComplete(() =>
-			// {
-			// 	onCompleteCallback();
-			// });
+			float duration = Vector3.Distance(startPos, PhysicalCard.transform.position) / SPEED_FACTOR;
+			var tween = PhysicalCard.transform.DOMove(startPos, duration);
+			await tween.AsFastForwardTask(fastForwardToken);
 		}
 	}
 }

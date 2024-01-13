@@ -13,6 +13,16 @@ namespace Game
 	public class Player : MonoBehaviour
 	{
 		/// <summary>
+		/// Name of the player.
+		/// </summary>
+		public string PlayerName { get; private set; }
+		
+		/// <summary>
+		/// Turn object of the player.
+		/// </summary>
+		public Turn Turn { get; private set; }
+		
+		/// <summary>
 		/// Health of the player.
 		/// </summary>
 		public ResourceContainer Health { get; private set; }
@@ -34,16 +44,21 @@ namespace Game
 
 		[SerializeField] private PlayerHand playerHand;
 		[SerializeField] private ManaBar manaBar;
+		[SerializeField] private Turn turn;
+		
 
 		private List<CardInfo> cardsInHand;
-		
+
 		/// <summary>
 		/// Construct a new player with a set of cards in the deck.
 		/// </summary>
-		/// <param name="cards"></param>
-		public void Instantiate(IEnumerable<CardInfo> cards)
+		/// <param name="playerName">Name of the player.</param>
+		/// <param name="cards">The cards the player has.</param>
+		public void Instantiate(string playerName, IEnumerable<CardInfo> cards)
 		{
+			PlayerName = playerName;
 			PlayerHand = playerHand;
+			Turn = turn;
 			ManaBar = manaBar;
 			Health = new ResourceContainer(GameManager.Instance.PlayerStartHealth);
 			PlayerDeck = new PlayerDeck(CollectionUtils.RandomizeList(cards.ToList()));
@@ -59,7 +74,13 @@ namespace Game
 			{
 				if (PlayerDeck.GetCard(out CardInfo card))
 				{
+					Debug.Log($"[{PlayerName}]: Drawing card: {card.CardName}");
+
 					PlayerHand.AddCard(card!);
+				}
+				else
+				{
+					Debug.Log($"[{PlayerName}]: No more cards to draw!");
 				}
 			}
 		}

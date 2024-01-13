@@ -29,7 +29,7 @@ namespace UI.DeckView
 
 		private void OnCreateDeckButtonClicked()
 		{
-			GameManager.Instance.AddTransferable("ActiveDeck",new DeckInfo());
+			GameManager.Instance.AddTransferable("ActiveDeck",new Transferable(new DeckInfo()));
 			GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.DeckEditor);			
 		}
 	}

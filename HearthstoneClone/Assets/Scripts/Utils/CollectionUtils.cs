@@ -25,6 +25,7 @@ namespace Utils
 				int index = Random.Range(0, list.Count);
 				T card = list[index];
 				newList.Add(card);
+				list.Remove(card);
 			}
 
 			return newList;

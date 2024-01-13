@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeckEditor.unity
     guid: d1db5e9bcb5d31d4e9a822c90ec0437d
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: ae3527fe23521ec45ba2b5cd3303b2bb
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5b7aa839f36a8194a82e27058f8bae63,
       type: 2}

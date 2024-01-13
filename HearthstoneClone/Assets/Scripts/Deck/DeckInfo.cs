@@ -12,7 +12,7 @@ namespace Deck
 	/// Contains all of the info necessary to construct a deck.
 	/// </summary>
 	[Serializable]
-	public class DeckInfo : Savable, ITransferable
+	public class DeckInfo : Savable
 	{
 		private static readonly int MaxCardCount = 15;
 		

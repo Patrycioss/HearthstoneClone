@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace StateSystem
 {
 	/// <summary>
-	/// State for a <see cref="StateSystem.StateMachine"/>
+	/// State for a <see cref="StateSystem.StateMachine"/>.
 	/// </summary>
 	public abstract class State
 	{
@@ -14,21 +15,22 @@ namespace StateSystem
 		/// </remarks>
 		/// </summary>
 		protected StateMachine StateMachine;
-		
+
 		/// <summary>
 		/// Is called when the state starts.
 		/// </summary>
-		public abstract void Start();
+		/// <param name="fastForwardToken">Cancellation token to fast forward the function.</param>
+		public abstract Task Start(CancellationToken fastForwardToken);
 		
 		/// <summary>
 		/// Is called every frame.
 		/// </summary>
-		public abstract void Update();
+		public abstract Task Update();
 
 		/// <summary>
 		/// Is called when this <see cref="State"/> stops.
 		/// </summary>
-		/// <param name="onCompleteCallback">Is called when the state is done stopping.</param>
-		public abstract void Stop(Action onCompleteCallback);
+		/// <param name="fastForwardToken">Cancellation token to fast forward the function.</param>
+		public abstract Task Stop(CancellationToken fastForwardToken);
 	}
 }

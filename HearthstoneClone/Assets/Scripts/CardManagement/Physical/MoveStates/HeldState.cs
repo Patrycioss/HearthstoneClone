@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using StateSystem;
 
 namespace CardManagement.Physical.MoveStates
@@ -10,13 +11,19 @@ namespace CardManagement.Physical.MoveStates
 	{
 		public HeldState(PhysicalCard card) : base(card) {}
 
-		public override void Start(){}
-
-		public override void Update(){}
-
-		public override void Stop(Action onCompleteCallback)
+		public override Task Start(CancellationToken fastForwardToken)
 		{
-			onCompleteCallback();
+			return Task.CompletedTask;
+		}
+
+		public override Task Update()
+		{
+			return Task.CompletedTask;
+		}
+
+		public override Task Stop(CancellationToken fastForwardToken)
+		{
+			return Task.CompletedTask;
 		}
 	}
 }

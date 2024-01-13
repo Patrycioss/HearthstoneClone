@@ -1,4 +1,7 @@
-﻿using System;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using DG.Tweening;
+using Extensions;
 using StateSystem;
 using UnityEngine;
 
@@ -9,64 +12,34 @@ namespace CardManagement.Physical.MoveStates
 	/// </summary>
 	public class InspectingState : MovePhysicalCardState
 	{
-		private Transform canvasParent;
+		private const float SCALE_AMOUNT = 1.3f;
+		private const float SCALE_DURATION = 0.5f;
+		
 		private Vector3 startPosition;
-		private Quaternion startRotation;
 
-		private Camera activeCamera;
-
-		// private TweenerCore<Vector3, Vector3, VectorOptions> inspectMoveTween;
-		// private TweenerCore<Quaternion, Vector3, QuaternionOptions> inspectRotateTween;
-
-		public InspectingState(PhysicalCard pPhysicalCard, Transform canvasParent, Vector3 startPosition, Quaternion startRotation) : base(pPhysicalCard)
+		public InspectingState(PhysicalCard pPhysicalCard) : base(pPhysicalCard)
 		{
-			this.canvasParent = canvasParent;
-
-			this.startPosition = startPosition;
-			this.startRotation = startRotation;
-
-			activeCamera = Camera.main;
 		}
 
-		public override void Start()
+		public override async Task Start(CancellationToken fastForwardToken)
 		{
-			float hWidth = Screen.width / 2f;
-			float newX = -(hWidth - Input.mousePosition.x) / hWidth;
-        
-			Transform mainCamTransform = activeCamera.transform;
-			Vector3 newPos = mainCamTransform.position + mainCamTransform.forward * 1.4f;
-			newPos.x += newX;
-
-			canvasParent.position = newPos;
-			canvasParent.rotation = startRotation * Quaternion.Euler(-20, 0, 0);
-
-			// inspectMoveTween = canvasParent.DOMove(newPos, 1).SetEase(Ease.OutCubic);
-			// inspectRotateTween = canvasParent.DORotate((startRotation * Quaternion.Euler(-20,0,0)).eulerAngles, 1).SetEase(Ease.OutCubic);
+			var tween =PhysicalCard.transform.DOScale(new Vector3(SCALE_AMOUNT, SCALE_AMOUNT, 1), SCALE_DURATION)
+				.SetEase(Ease.OutCubic);
+			
+			await tween.AsFastForwardTask(fastForwardToken);
 		}
 
-		public override void Update() {}
-
-		public override void Stop(Action onCompleteCallback)
+		public override Task Update()
 		{
-			canvasParent.position = startPosition;
-			canvasParent.rotation = startRotation;
-			
-			onCompleteCallback();
-			
-			// bool moveDone = false;
-			// bool rotateDone = false;
+			return Task.CompletedTask;
+		}
 
-			// inspectMoveTween = canvasParent.DOMove(startPosition, 1).SetEase(Ease.OutCubic).OnComplete(() =>
-			// {
-			// 	moveDone = true;
-			// 	if (rotateDone) onCompleteCallback();
-			// });
-			//      
-			// inspectRotateTween = canvasParent.DORotate(startRotation.eulerAngles, 1).SetEase(Ease.OutCubic).OnComplete(() =>
-			// {
-			// 	rotateDone = true;
-			// 	if (moveDone) onCompleteCallback();
-			// });
+		public override async Task Stop(CancellationToken fastForwardToken)
+		{
+			var tween = 
+				PhysicalCard.transform.DOScale(Vector3.one, SCALE_DURATION).SetEase(Ease.OutCubic);
+				
+			await tween.AsFastForwardTask(fastForwardToken);
 		}
 	}
 }

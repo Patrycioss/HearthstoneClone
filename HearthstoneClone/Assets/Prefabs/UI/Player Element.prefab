@@ -87,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543231954764451188}
   - component: {fileID: 520313081814354185}
+  - component: {fileID: 9054346191912278761}
   m_Layer: 5
   m_Name: Player 1
   m_TagString: Untagged
@@ -129,6 +130,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHand: {fileID: 4422523876382896351}
   manaBar: {fileID: 687882582837688570}
+  turn: {fileID: 9054346191912278761}
+--- !u!114 &9054346191912278761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691259880702118168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b6bc4f887a4fc0b41bc62f188bde39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 1002390397034399727}
+  countdownText: {fileID: 0}
 --- !u!1 &4123559549597411027
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,10 +16,29 @@ namespace Game
 	/// </summary>
 	public class PlayerHand : MonoBehaviour
 	{
+		/// <summary>
+		/// Can cards be moved?
+		/// </summary>
+		public bool IsLocked
+		{
+			set
+			{
+				isLocked = value;
+
+				foreach (PhysicalCard card in physicalCards)
+				{
+					card.IsLocked = isLocked;
+				}
+			}
+		}
+		
 		[SerializeField] private AssetLabelReference cardPrefabLabel;
 		
-		private List<CardInfo> cards = new List<CardInfo>();
 		private int maxCardAmount;
+
+		private bool isLocked;
+
+		private List<PhysicalCard> physicalCards = new List<PhysicalCard>();
 
 		private void Start()
 		{
@@ -28,9 +47,8 @@ namespace Game
 
 		public async void AddCard([NotNull] CardInfo cardInfo)
 		{
-			if (cards.Count < maxCardAmount)
+			if (physicalCards.Count < maxCardAmount)
 			{
-				cards.Add(cardInfo);
 				await SpawnCard(cardInfo);
 			}
 		}
@@ -44,6 +62,8 @@ namespace Game
 			{
 				physicalCard.Instantiate(card);
 				physicalCard.Flip();
+				
+				physicalCards.Add(physicalCard);
 			}
 		}
 	}

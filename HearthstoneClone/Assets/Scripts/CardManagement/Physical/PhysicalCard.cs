@@ -1,18 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CardManagement.CardComposition;
+using CardManagement.CardComposition.Behaviours;
 using CardManagement.Physical.MoveStates;
-using HoverSystem;
+using Extensions;
+using JetBrains.Annotations;
 using StateSystem;
 using TMPro;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
 namespace CardManagement.Physical
 {
@@ -26,19 +24,20 @@ namespace CardManagement.Physical
     /// <summary>
     /// Physical card in the game.
     /// </summary>
-    public class PhysicalCard : MonoBehaviour //,IMouseOver
+    public class PhysicalCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        private const int CONSCIOUS_HOVERING_TIME_MILLIS = 50;
+        
         private enum Side
         {
             Front,
             Back,
         }
-        
-        private const float CHECK_IF_HOLDING_TIME = 0.1f;
-        
-        // /// <inheritdoc/>
-        // public bool IsHovering { get; set; }
 
+        /// <summary>
+        /// Can the card be moved?
+        /// </summary>
+        public bool IsLocked { get; set; }
 
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
@@ -48,37 +47,36 @@ namespace CardManagement.Physical
         [SerializeField] private GameObject backObject;
         
         private StateMachine stateMachine;
-        // private Vector3 startPos;
-        // private Quaternion startRot;
-
-        // private bool stoppedHolding;
-
-        // private Vector3 holdingOffset;
-
-        // private bool checkingIfConsciouslyHovering = false;
-        // private bool consciouslyHovering = false;
-
-        private Location location = Location.None;
-
         private CardInfo cardInfo;
 
         private Side cardSide = Side.Back;
-        
+        private bool consciouslyHovering = false;
+        private bool moving = false;
 
+        [CanBeNull] private Task checkConsciousHoverTask;
+        private CancellationTokenSource cancelConsciousTimerToken = new CancellationTokenSource();
+        private bool initialized = false;
+        
         /// <summary>
         /// Instantiate the physical card.
         /// </summary>
         /// <param name="initCardInfo">Info necessary to instantiate the physical card.</param>
         public async void Instantiate(CardInfo initCardInfo)
         {
+            stateMachine = new StateMachine(new HeldState(this));
+            
             cardInfo = initCardInfo;
 
             title.text = initCardInfo.CardName;
             description.text = initCardInfo.Description;
             
             image.sprite = await LoadSprite();
+            initialized = true;
         }
 
+        /// <summary>
+        /// Flip the card.
+        /// </summary>
         public void Flip()
         {
             switch (cardSide)
@@ -96,124 +94,73 @@ namespace CardManagement.Physical
             }
         }
         
-        private void Awake()
+        private async void Update()
         {
-            // stateMachine = new StateMachine();
-        }
+            if (!initialized)
+            {
+                return;
+            }
+            
+            if (consciouslyHovering)
+            {
+                if (!moving && Input.GetMouseButton(0))
+                {
+                    Debug.Log($"Start moving");
+                    moving = true;
+                    stateMachine.FastForwardNextStateStartTask();
+                    stateMachine.FastForwardNextStateStopTask();
+                    stateMachine.SetState(new MovingState(this));
+                }
+                else if (moving && !Input.GetMouseButton(0))
+                {
+                    Debug.Log($"Stop moving");
 
-        private void Start()
-        {
-            // startPos = transform.position;
-            // startRot = transform.rotation;
-            // stateMachine.SetState(new HeldState(this));
+                    moving = false;
+                    stateMachine.SetState(new HeldState(this));
+                }
+            }
+            
+            if (stateMachine != null)
+            { 
+                await stateMachine.Update();
+            }
+
+            foreach (CardBehaviour behaviour in cardInfo.Behaviours)
+            {
+                behaviour.Update();
+            }
         }
         
-        private void Update()
-        {
-            
-            
-            // if (cardInfo == null)
-            // {
-            //     return;
-            // }
-            //
-            // stateMachine.Update();
-            //
-            // cardInfo.Behaviours.ForEach(behaviour => behaviour.Update());
-            //
-            // if (IsHovering)
-            // {
-            //     if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-            //     {
-            //         OnClick();
-            //     }
-            // }
-            //
-            // if (consciouslyHovering)
-            // {
-            //     if (stateMachine.CurrentState is HeldState)
-            //     {
-            //         stateMachine.SetState(new InspectingState(this, canvasParentTransform, startPos, startRot));
-            //     }
-            // }
-        }
-        
-        // private void OnClick()
-        // {
-        //     switch (location)
-        //     {
-        //         case Location.Board:
-        //             cardInfo.Behaviours.ForEach(behaviour => behaviour.OnInteract());
-        //             break;
-        //         case Location.Hand:
-        //             StartCoroutine(CheckIfHolding());
-        //             break;
-        //         case Location.None:
-        //             break;
-        //         default:
-        //             throw new ArgumentOutOfRangeException();
-        //     }
-        // }
-
-        // private IEnumerator CheckIfHolding()
-        // {
-        //     yield return new WaitForSeconds(CHECK_IF_HOLDING_TIME);
-        //     
-        //     if (IsHovering && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
-        //     {
-        //         location = Location.None;
-        //         cardInfo.Behaviours.ForEach(behaviour => behaviour.OnUse());
-        //
-        //         stateMachine.SetState(new MovingState(this, new HeldState(this)));
-        //     }
-        // }
-
-        // private IEnumerator CheckIfConsciouslyHovering()
-        // {
-        //     checkingIfConsciouslyHovering = true;
-        //     yield return new WaitForSeconds(0.1f);
-        //
-        //     checkingIfConsciouslyHovering = false;
-        //     
-        //     if (IsHovering)
-        //     {
-        //         consciouslyHovering = true;
-        //     }
-        // }
-
-        public void OnStartHover()
-        {
-            // if (!checkingIfConsciouslyHovering)
-            // {
-            //     StartCoroutine(CheckIfConsciouslyHovering());
-            // }
-            //
-            // if (stateMachine.currentState is CardInHandState)
-            // {
-            //     Debug.Log("dit wel");
-            //     stateMachine.SetState(new CardInspectingState(this, canvasParentTransform, startPos, startRot));
-            // }
-        }
-
-        // public void OnEndHover()
-        // {
-        //     consciouslyHovering = false;
-        //     
-        //     if (stateMachine.CurrentState is InspectingState)
-        //     {
-        //         stateMachine.SetState(new HeldState(this));
-        //     }
-        // }
-
-        // public static float GetMoveDuration(Vector3 startPos, Vector3 targetPos)
-        // {
-        //     float duration = Vector3.Distance(startPos, targetPos) * CARD_MOVE_SPEED;
-        //     return duration;
-        // }
-
         private async Task<Sprite> LoadSprite()
         {
             return await ResourceUtils.LoadAddressableFromReference<Sprite>(cardInfo.ImageReference);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(CONSCIOUS_HOVERING_TIME_MILLIS, cancelConsciousTimerToken.Token);
+                consciouslyHovering = true;
+            
+                if (stateMachine.ActiveState is HeldState)
+                {
+                    stateMachine.SetState(new InspectingState(this));
+                }
+            }, cancelConsciousTimerToken.Token);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            cancelConsciousTimerToken.Cancel();
+            cancelConsciousTimerToken = cancelConsciousTimerToken.Reset();
+
+            if (stateMachine.ActiveState is not HeldState)
+            {
+                stateMachine.SetState(new HeldState(this));
+            }
+            
+            consciouslyHovering = false;
         }
     }
 }

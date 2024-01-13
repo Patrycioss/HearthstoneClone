@@ -107,6 +107,7 @@ namespace UI.DeckView
 				MessageText = $"Are you sure you want to start a game with this deck?",
 				OnConfirm = () =>
 				{
+					GameManager.Instance.AddTransferable("ActiveDeck", new Transferable(selectedDeck));
 					GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.Game);
 				}
 			});
@@ -116,7 +117,7 @@ namespace UI.DeckView
 		{
 			Debug.Log($"Pressed edit button for {selectedDeckCard.name}. Setting active deck to {selectedDeck}. Loading deck editor scene...");
 			
-			GameManager.Instance.AddTransferable("ActiveDeck", selectedDeck);
+			GameManager.Instance.AddTransferable("ActiveDeck", new Transferable(selectedDeck));
 			GameManager.Instance.SceneSwapper.SetScene(SceneSwapper.Scene.DeckEditor);
 		}
 

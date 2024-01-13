@@ -49,7 +49,7 @@ namespace Game
 			switch (position)
 			{
 				case CardPosition.Random:
-					int index = Random.Range(0, cardsInDeck.Count - 1);
+					int index = Random.Range(0, cardsInDeck.Count);
 					cardInfo = cardsInDeck[index];
 					cardsInDeck.RemoveAt(index);
 					break;
@@ -87,7 +87,7 @@ namespace Game
 				
 				case CardPosition.Random:
 				default:
-					cardsInDeck.Insert(Random.Range(0,cardsInDeck.Count-1), cardInfo);
+					cardsInDeck.Insert(Random.Range(0,cardsInDeck.Count), cardInfo);
 					break;
 			}
 		}

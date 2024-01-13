@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Deck.DeckManagement;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Manages other managers that are important throughout the whole game.
@@ -55,14 +54,14 @@ public class GameManager : MonoBehaviour
    [SerializeField] private int maxCardsInHand = 5;
    [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
    
-   private Dictionary<string, ITransferable> transferableData;
+   private Dictionary<string, Transferable> transferableData;
 
    /// <summary>
    /// Add a <see cref="ITransferable"/> to transfer to other scenes.
    /// </summary>
    /// <param name="identifier">Name to identify the <see cref="ITransferable"/> with.</param>
    /// <param name="transferable"><see cref="ITransferable"/> to transfer.</param>
-   public void AddTransferable(string identifier, ITransferable transferable)
+   public void AddTransferable(string identifier, Transferable transferable)
    {
       if (transferableData.ContainsKey(identifier))
       {
@@ -73,17 +72,16 @@ public class GameManager : MonoBehaviour
    }
 
    /// <summary>
-   /// Get a <see cref="ITransferable"/>.
+   /// Get a <see cref="Transferable"/>.
    /// </summary>
-   /// <param name="identifier">The identifier to get the <see cref="ITransferable"/>.</param>
-   /// <remarks>Removes the <see cref="ITransferable"/> from the collection.</remarks>
-   /// <returns>A <see cref="ITransferable"/> if it can find the given identifier.</returns>
+   /// <param name="identifier">The identifier to get the <see cref="Transferable"/>.</param>
+   /// <remarks>Removes the <see cref="Transferable"/> from the collection.</remarks>
+   /// <returns>A <see cref="Transferable"/> if it can find the given identifier.</returns>
    [CanBeNull]
-   public ITransferable GetTransferable(string identifier)
+   public Transferable GetTransferable(string identifier)
    {
-      if (transferableData.TryGetValue(identifier, out ITransferable transferable))
+      if (transferableData.Remove(identifier, out Transferable transferable))
       {
-         transferableData.Remove(identifier);
          return transferable;
       }
 
@@ -103,7 +101,7 @@ public class GameManager : MonoBehaviour
       
       DontDestroyOnLoad(this);
 
-      transferableData = new Dictionary<string, ITransferable>();
+      transferableData = new Dictionary<string, Transferable>();
 
       DiskManager = new DiskManager();
       DiskManager.Initialize();
