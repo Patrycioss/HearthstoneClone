@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CardManagement.CardComposition;
+using CardManagement.Physical;
 using UI;
 using UnityEngine;
 using Utils;
@@ -12,6 +13,11 @@ namespace Game
 	/// </summary>
 	public class Player : MonoBehaviour
 	{
+		/// <summary>
+		/// Delegate to check whether a <see cref="PhysicalCard"/> can be played.
+		/// </summary>
+		public delegate bool TryPlayCallback(PhysicalCard physicalCard);
+		
 		/// <summary>
 		/// Name of the player.
 		/// </summary>
@@ -26,6 +32,11 @@ namespace Game
 		/// Health of the player.
 		/// </summary>
 		public ResourceContainer Health { get; private set; }
+		
+		/// <summary>
+		/// Mana of the player.
+		/// </summary>
+		public ResourceContainer Mana { get; private set; }
 		
 		/// <summary>
 		/// Deck that the player uses.
@@ -54,12 +65,17 @@ namespace Game
 		/// </summary>
 		/// <param name="playerName">Name of the player.</param>
 		/// <param name="cards">The cards the player has.</param>
-		public void Instantiate(string playerName, IEnumerable<CardInfo> cards)
+		public void Initialize(string playerName, IEnumerable<CardInfo> cards)
 		{
 			PlayerName = playerName;
+			
 			PlayerHand = playerHand;
+			PlayerHand.Initialize(OnTryPlayPhysicalCard);
+			
 			Turn = turn;
 			ManaBar = manaBar;
+			
+			Mana = new ResourceContainer(GameManager.Instance.StartMana);
 			Health = new ResourceContainer(GameManager.Instance.PlayerStartHealth);
 			PlayerDeck = new PlayerDeck(CollectionUtils.RandomizeList(cards.ToList()));
 		}
@@ -83,6 +99,17 @@ namespace Game
 					Debug.Log($"[{PlayerName}]: No more cards to draw!");
 				}
 			}
+		}
+
+		private bool OnTryPlayPhysicalCard(PhysicalCard card)
+		{
+			if (Mana.TryRemove(card.CardInfo.Cost))
+			{
+				
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

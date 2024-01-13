@@ -1,21 +1,21 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CardManagement.Physical;
 using DG.Tweening;
 using Extensions;
-using StateSystem;
 using UnityEngine;
 
-namespace CardManagement.Physical.MoveStates
+namespace FancyStateStuff
 {
 	/// <summary>
 	/// State that handles what happens when the player is inspecting a <see cref="PhysicalCard"/>.
 	/// </summary>
-	public class InspectingState : MovePhysicalCardState
+	public class FancyInspectingState : FancyMovePhysicalCardFancyState
 	{
 		private const float SCALE_AMOUNT = 1.3f;
 		private const float SCALE_DURATION = 0.5f;
 		
-		public InspectingState(PhysicalCard pPhysicalCard) : base(pPhysicalCard)
+		public FancyInspectingState(PhysicalCard pPhysicalCard) : base(pPhysicalCard)
 		{
 		}
 

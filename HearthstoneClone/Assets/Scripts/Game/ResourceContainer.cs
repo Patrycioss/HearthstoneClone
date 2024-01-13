@@ -107,5 +107,21 @@ namespace Game
 				OnChanged?.Invoke(Total);
 			}
 		}
+
+		/// <summary>
+		/// Checks if there's enough of the resource to remove, if not doesn't remove it.
+		/// </summary>
+		/// <param name="amount">Amount of the resource to remove.</param>
+		/// <returns>Whether it can remove this amount.</returns>
+		public bool TryRemove(int amount)
+		{
+			if (amount <= Total)
+			{
+				AddOrRemove(-amount);
+				return true;
+			}
+
+			return false;
+		}
 	}
 }

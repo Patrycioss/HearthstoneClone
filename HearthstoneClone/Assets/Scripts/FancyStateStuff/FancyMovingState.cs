@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CardManagement.Physical;
 using DG.Tweening;
 using Extensions;
-using StateSystem;
 using UnityEngine;
 
-namespace CardManagement.Physical.MoveStates
+namespace FancyStateStuff
 {
 	/// <summary>
 	/// State that handles what happens when a <see cref="PhysicalCard"/> is being moved by the player.
 	/// </summary>
-	public class MovingState : MovePhysicalCardState
+	public class FancyMovingState : FancyMovePhysicalCardFancyState
 	{
 		private const float SPEED_FACTOR = 700;
 
-		public MovingState(PhysicalCard card) : base(card) {}
+		public FancyMovingState(PhysicalCard card) : base(card) {}
 
 		public override Task Start(CancellationToken fastForwardToken)
 		{

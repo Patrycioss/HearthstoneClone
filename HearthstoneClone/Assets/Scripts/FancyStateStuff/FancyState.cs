@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace StateSystem
+namespace FancyStateStuff
 {
 	/// <summary>
-	/// State for a <see cref="StateSystem.StateMachine"/>.
+	/// State for a <see cref="FancyStateMachine"/>.
 	/// </summary>
-	public abstract class State
+	public abstract class FancyState
 	{
 		/// <summary>
-		/// StateMachine that this <see cref="State"/> is part of.
+		/// StateMachine that this <see cref="FancyState"/> is part of.
 		/// <remarks>
-		/// Is set through reflection in the <see cref="StateSystem.StateMachine"/> that this is added to.
+		/// Is set through reflection in the <see cref="FancyStateMachine"/> that this is added to.
 		/// </remarks>
 		/// </summary>
-		protected StateMachine StateMachine;
+		protected FancyStateMachine FancyStateMachine;
 
 		/// <summary>
 		/// Is called when the state starts.
@@ -28,7 +28,7 @@ namespace StateSystem
 		public abstract Task Update();
 
 		/// <summary>
-		/// Is called when this <see cref="State"/> stops.
+		/// Is called when this <see cref="FancyState"/> stops.
 		/// </summary>
 		/// <param name="fastForwardToken">Cancellation token to fast forward the function.</param>
 		public abstract Task Stop(CancellationToken fastForwardToken);

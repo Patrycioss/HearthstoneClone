@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardManagement.CardComposition;
 using Deck.DeckManagement;
 using JetBrains.Annotations;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Deck
 {
@@ -14,8 +11,8 @@ namespace Deck
 	[Serializable]
 	public class DeckInfo : Savable
 	{
-		private static readonly int MaxCardCount = 15;
-		
+		private const int MAX_CARD_COUNT = 15;
+
 		/// <summary>
 		/// Name of the deck.
 		/// </summary>
@@ -25,21 +22,13 @@ namespace Deck
 		/// Description of the deck.
 		/// </summary>
 		[NotNull] public string Description = string.Empty;
-
+		
 		/// <summary>
-		/// Image for the thumbnail of the deck.
-		/// </summary>
-		[CanBeNull] public AssetReference Image = null;
-
-		/// <summary>
-		/// Cards in the deck.
+		/// Paths to the cards in the deck.
 		/// </summary>
 		[NotNull] public List<string> Cards = new List<string>();
 
-		public DeckInfo() : base(SaveDirectory.Decks)
-		{
-			
-		}
+		public DeckInfo() : base(SaveDirectory.Decks){}
 
 		/// <summary>
 		/// Adds a card to the list.
@@ -49,15 +38,18 @@ namespace Deck
 		/// <returns>Whether the card can be added.</returns>
 		public bool AddCard(string card)
 		{
-			if (Cards.Count < MaxCardCount)
+			if (Cards.Count < MAX_CARD_COUNT)
 			{
 				Cards.Add(card);
 				return true;
 			}
-
 			return false;
 		}
 		
+		/// <summary>
+		/// Constructs a string containing debug information about the deck.
+		/// </summary>
+		/// <returns>A string containing debug information.</returns>
 		public override string ToString()
 		{
 			return $"[Deck( Name: {Name}, Description: {Description}), {base.ToString()}]";

@@ -1,30 +1,33 @@
 using CardManagement.CardComposition;
-using Game;
+using CardManagement.Physical;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.UI;
+using Utils;
 
 public class TestButton : MonoBehaviour
 {
     [SerializeField] private CardInfo testCard;
-    [SerializeField] private PlayerHand hand;
-    
-    
-    
+    [SerializeField] private  HorizontalLayoutGroup horizontalLayoutGroup;
+    [SerializeField] private AssetLabelReference cardPrefabLabel;
+
     private Button button;
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(() =>
+        button.onClick.AddListener(async () =>
         {
-            hand.AddCard(testCard);
-        });
-    }
+            GameObject cardObject = await ResourceUtils.InstantiateFromLabel(cardPrefabLabel,
+                new InstantiationParameters(horizontalLayoutGroup.transform, false));
 
-    // Update is called once per frame
-    void Update()
-    {
+            if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
+            {
+                physicalCard.Initialize(testCard, (card) => false);
+                physicalCard.Flip();
+            }});
     }
 
     private void OnDestroy()

@@ -22,8 +22,8 @@ namespace Game
 			}
 			
 			IList<CardInfo> cards = await ResourceUtils.LoadAddressablesFromIdentifiers<CardInfo>(deck.Cards);
-			player1.Instantiate("Player 1",cards);
-			player2.Instantiate("Player 2",cards);
+			player1.Initialize("Player 1",cards);
+			player2.Initialize("Player 2",cards);
 			
 			player1.Turn.OnEndCallback += OnPlayer1TurnComplete;
 			player1.Turn.OnStartCallback += OnPlayer1TurnStart;

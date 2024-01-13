@@ -1,6 +1,6 @@
 ﻿using CardManagement.Physical;
 
-namespace StateSystem
+namespace StateStuff
 {
 	public abstract class MovePhysicalCardState : State
 	{

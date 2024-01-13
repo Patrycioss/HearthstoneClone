@@ -39,18 +39,32 @@ namespace Game
 		private bool isLocked;
 
 		private List<PhysicalCard> physicalCards = new List<PhysicalCard>();
+		private Player.TryPlayCallback tryPlayCallback;
 
-		private void Start()
+		/// <summary>
+		/// Initialize the player hand.
+		/// </summary>
+		/// <param name="playCallback">The callback to call when a card is tried to play.</param>
+		public void Initialize(Player.TryPlayCallback playCallback)
 		{
-			maxCardAmount = GameManager.Instance.MaxCardsInHand;
+			tryPlayCallback = playCallback;
 		}
 
+		/// <summary>
+		/// Add a card to the player hand.
+		/// </summary>
+		/// <param name="cardInfo">Info associated with the card.</param>
 		public async void AddCard([NotNull] CardInfo cardInfo)
 		{
 			if (physicalCards.Count < maxCardAmount)
 			{
 				await SpawnCard(cardInfo);
 			}
+		}
+		
+		private void Start()
+		{
+			maxCardAmount = GameManager.Instance.MaxCardsInHand;
 		}
 
 		private async Task SpawnCard(CardInfo card)
@@ -60,7 +74,7 @@ namespace Game
 
 			if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
 			{
-				physicalCard.Instantiate(card);
+				physicalCard.Initialize(card, tryPlayCallback);
 				physicalCard.Flip();
 				
 				physicalCards.Add(physicalCard);
