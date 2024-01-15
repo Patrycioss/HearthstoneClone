@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: HOI
   Description: A test description for my test card.
-  Cost: 1
+  Cost: 0
   ImageReference:
     m_AssetGUID: 04797641de2a4024aac8e3559f281d6c
     m_SubObjectName: TestSprite

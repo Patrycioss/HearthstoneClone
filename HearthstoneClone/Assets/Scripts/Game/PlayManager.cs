@@ -33,10 +33,10 @@ namespace Game
 			StartGame();
 		}
 
-		private void StartGame()
+		private async void StartGame()
 		{
-			player1.DrawCard(3);
-			player2.DrawCard(3);
+			await player1.DrawCard(3);
+			await player2.DrawCard(3);
 			
 			player1.Turn.Begin();
 		}
@@ -52,25 +52,28 @@ namespace Game
 		private void OnPlayer1TurnComplete()
 		{
 			player2.Turn.Begin();
-			player2.PlayerHand.IsLocked = true;
+			player2.IsLocked = true;
 		}
 
-		private void OnPlayer1TurnStart()
+		private async void OnPlayer1TurnStart()
 		{
-			player1.DrawCard(1);
-			player1.PlayerHand.IsLocked = false;
+			Debug.Log($"booger");
+			await player1.DrawCard(1);
+			player1.IsLocked = false;
+			player2.IsLocked = true;
 		}
 		
 		private void OnPlayer2TurnComplete()
 		{
 			player1.Turn.Begin();
-			player1.PlayerHand.IsLocked = true;
+			player1.IsLocked = true;
 		}
 		
-		private void OnPlayer2TurnStart()
+		private async void OnPlayer2TurnStart()
 		{
-			player2.DrawCard(1);
-			player2.PlayerHand.IsLocked = false;
+			await player2.DrawCard(1);
+			player2.IsLocked = false;
+			player1.IsLocked = true;
 		}
 	}
 }

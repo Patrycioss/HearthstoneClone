@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using Extensions;
 using UnityEngine;
 
 namespace StateStuff
@@ -12,15 +14,8 @@ namespace StateStuff
 		/// Current active state of the state machine.
 		/// </summary>
 		public State ActiveState { get; private set; }
-
-		/// <summary>
-		/// Makes a new state machine.
-		/// </summary>
-		/// <param name="startState">The starting state of the state machine.</param>
-		public StateMachine(State startState)
-		{
-			SetState(startState);
-		}
+		
+		private Dictionary<string, object> referenceStorage = new Dictionary<string, object>();
 		
 		/// <summary>
 		/// Set a new active state.
@@ -28,9 +23,9 @@ namespace StateStuff
 		/// <param name="state">The new active state.</param>
 		public void SetState(State state)
 		{
-			if (ActiveState != state)
+			if (ActiveState == null || ActiveState.GetType() != state.GetType())
 			{ 
-				Debug.Log($"Setting state to {state.GetType()}");
+				TimedLogger.Log($"Setting state to {state.GetType()}");
 
 				if (ActiveState != null)
 				{
@@ -41,7 +36,7 @@ namespace StateStuff
 				ActiveState = state;
 				
 				FieldInfo a = ActiveState.GetType()
-					.GetField("stateMachine", BindingFlags.Instance | BindingFlags.NonPublic);
+					.GetField("StateMachine", BindingFlags.Instance | BindingFlags.NonPublic);
 
 				if (a != null)
 				{
@@ -50,11 +45,11 @@ namespace StateStuff
 			
 				ActiveState.Start();
 			
-				Debug.Log($"Started active state: {ActiveState.GetType()}.");
+				TimedLogger.Log($"Started active state: {ActiveState.GetType()}.");
 			}
 			else
 			{
-				Debug.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
+				TimedLogger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
 			}
 		}
 
@@ -65,6 +60,33 @@ namespace StateStuff
 		public void Update()
 		{
 			ActiveState?.Update();
+		}
+
+		/// <summary>
+		/// Add an object to store.
+		/// </summary>
+		/// <param name="name">Name of the reference.</param>
+		/// <param name="reference">Object to store.</param>
+		public void AddReference<T>(string name, T reference)
+		{
+			referenceStorage.TryAdd(name, reference);
+		}
+
+		/// <summary>
+		/// Get a reference from storage.
+		/// </summary>
+		/// <param name="name">Name of the reference.</param>
+		/// <param name="reference">The referenced object.</param>
+		/// <returns></returns>
+		public void GetReference<T>(string name, out T reference)
+		{
+			if (referenceStorage.TryGetValue(name, out object obj))
+			{
+				reference = (T) obj;
+				return;
+			}
+
+			reference = default;
 		}
 	}
 }

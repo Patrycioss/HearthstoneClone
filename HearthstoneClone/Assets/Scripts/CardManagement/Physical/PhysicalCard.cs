@@ -32,18 +32,27 @@ namespace CardManagement.Physical
         public bool IsLocked
         {
             get => locked;
-            set => locked = value;
+            set
+            {
+                Debug.Log($"Has locked: {CardInfo.name}? {value}");
+                locked = value;
+            }
         }
 
         /// <summary>
-        /// Base position of the card.
-        /// </summary>
-        public Vector3 BasePosition { get; set; }
-        
-        /// <summary>
         /// <see cref="CardInfo"/> associated with this physical card.
         /// </summary>
-        public CardInfo CardInfo { get; set; }
+        public CardInfo CardInfo { get; private set; }
+        
+        /// <summary>
+        /// Is the mouse hovering over the cared?
+        /// </summary>
+        public bool IsHoveringOver { get; private set; } = false;
+
+        /// <summary>
+        /// Is the card on the board right now?
+        /// </summary>
+        public bool IsOnBoard { get; set; } = false;
 
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
@@ -55,38 +64,39 @@ namespace CardManagement.Physical
         [SerializeField] private GameObject backObject;
 
         private bool initialized = false;
-        private bool hovering = false;
-        private bool moving = false;
         private bool locked = false;
-        private bool onBoard = false;
-
         private StateMachine stateMachine;
         private Side cardSide = Side.Back;
-        private Player.TryPlayCallback onTryPlay;
+        
+        private Transform playerHandTransform;
+        private Transform movingContainer;
+        private Board board;
         
         [CanBeNull] 
         private Task setStateToInspectingTask;
-
-
+        
         /// <summary>
         /// Initialize the physical card.
         /// </summary>
-        /// <param name="initCardInfo">Info necessary to initialize the physical card.</param>
-        /// <param name="onTryPlayCallback">Called when the card is tried to play.</param>
-        public async void Initialize(CardInfo initCardInfo, Player.TryPlayCallback onTryPlayCallback)
+        /// <param name="configuration">Configuration for the physical card.</param>
+        public async void Initialize(PhysicalCardConfiguration configuration)
         {
-            stateMachine = new StateMachine(new HeldState(this));
+            CardInfo = configuration.CardInfo;
+            title.text = configuration.CardInfo.CardName;
+            description.text = configuration.CardInfo.Description;
+            movingContainer = configuration.IntermediateContainer;
+            board = configuration.Board;
             
-            CardInfo = initCardInfo;
-
-            title.text = initCardInfo.CardName;
-            description.text = initCardInfo.Description;
+            stateMachine = new StateMachine();
+            stateMachine.AddReference("Card", this);
+            stateMachine.AddReference("MovingContainer", movingContainer);
+            stateMachine.AddReference("Board", board);
+            stateMachine.AddReference("Player", configuration.Player);
+            
+            stateMachine.SetState(new HeldState());
             
             image.sprite = await LoadSprite();
             initialized = true;
-
-            BasePosition = transform.position;
-            onTryPlay = onTryPlayCallback;
         }
 
         /// <summary>
@@ -139,11 +149,11 @@ namespace CardManagement.Physical
         /// <param name="eventData">Data associated with the event.</param>
         public void OnPointerEnter(PointerEventData eventData)
         {
-            hovering = true;
+            IsHoveringOver = true;
             
             if (stateMachine.ActiveState is not null or HeldState)
             {
-                stateMachine.SetState(new InspectingState(this));
+                stateMachine.SetState(new InspectingState());
             }
         }
 
@@ -153,40 +163,16 @@ namespace CardManagement.Physical
         /// <param name="eventData">Data associated with the event.</param>
         public void OnPointerExit(PointerEventData eventData)
         {
-            hovering = false;
-          
-            if (stateMachine.ActiveState is not null or HeldState)
-            {
-                stateMachine.SetState(new HeldState(this));
-            }
+            IsHoveringOver = false;
         }
-        
+
         private void Update()
         {
             if (!initialized)
             {
                 return;
             }
-
-            if (!onBoard && hovering)
-            {
-                if (Input.GetMouseButton(0) && !moving)
-                {
-                    moving = true;
-                    stateMachine.SetState(new MovingState(this));
-                }
-                else if (!Input.GetMouseButton(0) && moving)
-                {
-                    if (onTryPlay(this))
-                    {
-                        stateMachine.SetState(new BoardState(this));
-                        onBoard = true;
-                    }
-                    moving = false;
-                    stateMachine.SetState(new HeldState(this));
-                }
-            }
-
+            
             stateMachine?.Update();
 
             foreach (CardBehaviour behaviour in CardInfo.Behaviours)

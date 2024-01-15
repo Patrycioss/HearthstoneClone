@@ -46,21 +46,28 @@ public class GameManager : MonoBehaviour
    /// <summary>
    /// Turn length in seconds.
    /// </summary>
-   public int TurnLength => turnLength; 
-   
+   public int TurnLength => turnLength;
+
+   /// <summary>
+   /// Maximum amount of cards on a board.
+   /// </summary>
+   public int MaxBoardSize => maxBoardSize;
+
    [SerializeField] private int playerStartHealth = 30;
    [SerializeField] private int maxMana = 10;
-   [SerializeField] private int startMana = 1;
+   [SerializeField] private int startMana = 10;
    [SerializeField] private int maxCardsInHand = 5;
+   [SerializeField] private int maxBoardSize = 7;
+   
    [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
    
    private Dictionary<string, Transferable> transferableData;
 
    /// <summary>
-   /// Add a <see cref="ITransferable"/> to transfer to other scenes.
+   /// Add a <see cref="Transferable"/> to transfer to other scenes.
    /// </summary>
-   /// <param name="identifier">Name to identify the <see cref="ITransferable"/> with.</param>
-   /// <param name="transferable"><see cref="ITransferable"/> to transfer.</param>
+   /// <param name="identifier">Name to identify the <see cref="Transferable"/> with.</param>
+   /// <param name="transferable"><see cref="Transferable"/> to transfer.</param>
    public void AddTransferable(string identifier, Transferable transferable)
    {
       if (transferableData.ContainsKey(identifier))

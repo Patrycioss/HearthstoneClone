@@ -1,21 +1,27 @@
 ﻿using CardManagement.CardComposition;
 using CardManagement.Physical;
+using Game;
 
 namespace StateStuff
 {
 	/// <summary>
 	/// State that handles what happens when a <see cref="PhysicalCard"/> is put on the board.
 	/// </summary>
-	public class BoardState : MovePhysicalCardState
+	public class BoardState : State
 	{
-		public BoardState(PhysicalCard card) : base(card) {}
+		private PhysicalCard card;
+		private Board board;
 
 		public override void Start()
 		{
-			switch (PhysicalCard.CardInfo.Type)
+			StateMachine.GetReference("Card", out card);
+			StateMachine.GetReference("Board", out board);
+			
+			board.TryAddCard(card);
+			
+			switch (card.CardInfo.Type)
 			{
 				case CardType.Minion:
-					
 					break;
 				case CardType.Spell:
 					//Todo: cast spell.

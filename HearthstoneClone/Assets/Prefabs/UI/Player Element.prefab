@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7047916550887144318}
-  - component: {fileID: 4422523876382896351}
   - component: {fileID: 3385957018813741522}
   - component: {fileID: 7456849901210534997}
   - component: {fileID: 3657321248179646137}
@@ -39,20 +38,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4422523876382896351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115200848147153237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f2a227d3cee4e3faa41f93c5e33a0ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardPrefabLabel:
-    m_LabelString: card_prefab
 --- !u!114 &3385957018813741522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,9 +155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645135b05d2a425aa69951194ebfc5b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHand: {fileID: 4422523876382896351}
   manaBar: {fileID: 687882582837688570}
   turn: {fileID: 9054346191912278761}
+  cardPrefabLabel:
+    m_LabelString: 
+  intermediateContainer: {fileID: 0}
+  hand: {fileID: 0}
+  board: {fileID: 0}
 --- !u!114 &9054346191912278761
 MonoBehaviour:
   m_ObjectHideFlags: 0

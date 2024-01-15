@@ -23,15 +23,16 @@ namespace FancyStateStuff
 
 		public override Task Update()
 		{
-			PhysicalCard.transform.position = Input.mousePosition;
+			// PhysicalCard.transform.position = Input.mousePosition;
 			return Task.CompletedTask;
 		}
 		
-		public override async Task Stop(CancellationToken fastForwardToken)
+		public override Task Stop(CancellationToken fastForwardToken)
 		{
-			float duration = Vector3.Distance(PhysicalCard.BasePosition, PhysicalCard.transform.position) / SPEED_FACTOR;
-			var tween = PhysicalCard.transform.DOMove(PhysicalCard.BasePosition, duration);
-			await tween.AsFastForwardTask(fastForwardToken);
+			return Task.CompletedTask;
+			// float duration = Vector3.Distance(PhysicalCard.BasePosition, PhysicalCard.transform.position) / SPEED_FACTOR;
+			// var tween = PhysicalCard.transform.DOMove(PhysicalCard.BasePosition, duration);
+			// await tween.AsFastForwardTask(fastForwardToken);
 		}
 	}
 }

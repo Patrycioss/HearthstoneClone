@@ -1,5 +1,6 @@
 using CardManagement.CardComposition;
 using CardManagement.Physical;
+using Game;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -11,6 +12,9 @@ public class TestButton : MonoBehaviour
     [SerializeField] private CardInfo testCard;
     [SerializeField] private  HorizontalLayoutGroup horizontalLayoutGroup;
     [SerializeField] private AssetLabelReference cardPrefabLabel;
+
+    [SerializeField] private Player player;
+    
 
     private Button button;
     
@@ -25,7 +29,11 @@ public class TestButton : MonoBehaviour
 
             if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
             {
-                physicalCard.Initialize(testCard, (card) => false);
+                physicalCard.Initialize(new PhysicalCardConfiguration()
+                {
+                    CardInfo = testCard,
+                    Player = player,
+                });
                 physicalCard.Flip();
             }});
     }

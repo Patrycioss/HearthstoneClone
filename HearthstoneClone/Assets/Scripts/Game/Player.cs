@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CardManagement.CardComposition;
 using CardManagement.Physical;
+using JetBrains.Annotations;
 using UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using Utils;
 
 namespace Game
@@ -14,9 +18,23 @@ namespace Game
 	public class Player : MonoBehaviour
 	{
 		/// <summary>
-		/// Delegate to check whether a <see cref="PhysicalCard"/> can be played.
+		/// Can cards be moved?
 		/// </summary>
-		public delegate bool TryPlayCallback(PhysicalCard physicalCard);
+		public bool IsLocked
+		{
+			get => isLocked;
+			set
+			{
+				isLocked = value;
+				
+				Debug.Log($"{physicalCards.Count}");
+
+				foreach (PhysicalCard card in physicalCards)
+				{
+					card.IsLocked = isLocked;
+				}
+			}
+		}
 		
 		/// <summary>
 		/// Name of the player.
@@ -42,23 +60,27 @@ namespace Game
 		/// Deck that the player uses.
 		/// </summary>
 		public PlayerDeck PlayerDeck { get; private set; }
-		
+
 		/// <summary>
 		/// Hand of the player.
 		/// </summary>
-		public PlayerHand PlayerHand { get; private set; }
+		public Transform Hand => hand;
 		
 		/// <summary>
 		/// Mana bar of the player.
 		/// </summary>
 		public ManaBar ManaBar { get; private set; }
 
-		[SerializeField] private PlayerHand playerHand;
 		[SerializeField] private ManaBar manaBar;
 		[SerializeField] private Turn turn;
+		[SerializeField] private AssetLabelReference cardPrefabLabel;
+		[SerializeField] private Transform intermediateContainer;
+		[SerializeField] private Transform hand;
+		[SerializeField] private Board board;
 		
-
-		private List<CardInfo> cardsInHand;
+		private List<PhysicalCard> physicalCards = new List<PhysicalCard>();
+		private int maxCardAmount;
+		private bool isLocked;
 
 		/// <summary>
 		/// Construct a new player with a set of cards in the deck.
@@ -69,8 +91,7 @@ namespace Game
 		{
 			PlayerName = playerName;
 			
-			PlayerHand = playerHand;
-			PlayerHand.Initialize(OnTryPlayPhysicalCard);
+			maxCardAmount = GameManager.Instance.MaxCardsInHand;
 			
 			Turn = turn;
 			ManaBar = manaBar;
@@ -84,7 +105,7 @@ namespace Game
 		/// Draw cards from <see cref="PlayerDeck"/> and put them in <see cref="PlayerHand"/>.
 		/// </summary>
 		/// <param name="amount">The amount of cards.</param>
-		public void DrawCard(int amount)
+		public async Task DrawCard(int amount)
 		{
 			for (int i = 0; i < amount; i++)
 			{
@@ -92,7 +113,10 @@ namespace Game
 				{
 					Debug.Log($"[{PlayerName}]: Drawing card: {card.CardName}");
 
-					PlayerHand.AddCard(card!);
+					if (physicalCards.Count < maxCardAmount)
+					{
+						await SpawnCard(card);
+					}
 				}
 				else
 				{
@@ -100,16 +124,25 @@ namespace Game
 				}
 			}
 		}
-
-		private bool OnTryPlayPhysicalCard(PhysicalCard card)
+		
+		private async Task SpawnCard(CardInfo card)
 		{
-			if (Mana.TryRemove(card.CardInfo.Cost))
-			{
-				
-				return true;
-			}
+			GameObject cardObject = await ResourceUtils.InstantiateFromLabel(cardPrefabLabel,
+				new InstantiationParameters(hand.transform, false));
 
-			return false;
+			if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
+			{
+				physicalCard.Initialize(new PhysicalCardConfiguration()
+				{
+					CardInfo = card,
+					Player =  this,
+					IntermediateContainer = intermediateContainer,
+					Board = board,
+				});
+				physicalCard.Flip();
+				
+				physicalCards.Add(physicalCard);
+			}
 		}
 	}
 }
