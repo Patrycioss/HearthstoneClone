@@ -4,6 +4,7 @@ using CardManagement.CardComposition.Behaviours;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 
 namespace CardManagement.CardComposition
 {
@@ -35,11 +36,10 @@ namespace CardManagement.CardComposition
 		public AssetReference ImageReference;
 		
 		/// <summary>
-		/// Behaviour associated with the card.
+		/// Behaviour references associated with the card.
 		/// </summary>
-		[NotNull]
-		public List<CardBehaviour> Behaviours = new List<CardBehaviour>();
-		
+		public List<AssetReference> CardBehaviourReferences = new List<AssetReference>();
+
 		/// <summary>
 		/// Type of the card.
 		/// </summary>

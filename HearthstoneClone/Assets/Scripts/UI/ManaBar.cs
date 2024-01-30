@@ -10,9 +10,13 @@ namespace UI
 	{
 		[SerializeField] private TextMeshProUGUI manaText;
 		
-		public void SetManaText(int amount, int maxAmount)
+		/// <summary>
+		/// Set the mana displayed.
+		/// </summary>
+		/// <param name="amount">Amount of mana the player currently has.</param>
+		public void SetManaText(int amount)
 		{
-			manaText.text = $"{amount}/{maxAmount} Mana";
+			manaText.text = $"{amount} Mana";
 		}
 	}
 }

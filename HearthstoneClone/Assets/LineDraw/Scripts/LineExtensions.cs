@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+namespace LineDraw.Scripts
+{
+	public static class LineExtensions 
+	{
+		/// <summary>
+		/// Returns vector with specified y.
+		/// </summary>
+		/// <returns>The y.</returns>
+		/// <param name="a">Input vector.</param>
+		/// <param name="y">The y coordinate.</param>
+		public static Vector3 WithY(this Vector3 a, float y)
+		{
+			return new Vector3 (a.x, y, a.z);
+		}
+	}
+}

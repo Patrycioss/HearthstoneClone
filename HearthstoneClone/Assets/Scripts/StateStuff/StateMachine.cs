@@ -17,6 +17,17 @@ namespace StateStuff
 		
 		private Dictionary<string, object> referenceStorage = new Dictionary<string, object>();
 		
+		private TimedLogger logger = new TimedLogger();
+
+		/// <summary>
+		/// Construct a new state machine.
+		/// </summary>
+		/// <param name="log">Whether to log state swapping or not.</param>
+		public StateMachine(bool log = true)
+		{
+			logger.Enabled = log;
+		}
+		
 		/// <summary>
 		/// Set a new active state.
 		/// </summary>
@@ -25,12 +36,12 @@ namespace StateStuff
 		{
 			if (ActiveState == null || ActiveState.GetType() != state.GetType())
 			{ 
-				TimedLogger.Log($"Setting state to {state.GetType()}");
+				logger.Log($"Setting state to {state.GetType()}");
 
 				if (ActiveState != null)
 				{
 					ActiveState.Stop();
-					Debug.Log($"Stopped active state: {ActiveState.GetType()}.");
+					logger.Log($"Stopped active state: {ActiveState.GetType()}.");
 				}
 
 				ActiveState = state;
@@ -45,11 +56,11 @@ namespace StateStuff
 			
 				ActiveState.Start();
 			
-				TimedLogger.Log($"Started active state: {ActiveState.GetType()}.");
+				logger.Log($"Started active state: {ActiveState.GetType()}.");
 			}
 			else
 			{
-				TimedLogger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
+				logger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
 			}
 		}
 

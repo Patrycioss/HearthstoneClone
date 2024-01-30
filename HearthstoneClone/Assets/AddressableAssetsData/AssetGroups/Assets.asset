@@ -51,6 +51,17 @@ MonoBehaviour:
     m_SerializedLabels:
     - card_prefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cb111769a1bb0f4f8bcddc68388ae0e
+    m_Address: Assets/Prefabs/UI/Line.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - line
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40814cde127670145b97dfc45ea273d5
+    m_Address: Assets/Prefabs/CardBehaviours/TargetBehaviour.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 64e27590390a40641a23ffe0df3fde3c, type: 2}
   m_SchemaSet:

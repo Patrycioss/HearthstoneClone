@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CardManagement.CardComposition;
+using CardManagement.CardComposition.Behaviours;
 using CardManagement.Physical;
-using JetBrains.Annotations;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -26,7 +26,7 @@ namespace Game
 			set
 			{
 				isLocked = value;
-				
+
 				Debug.Log($"{physicalCards.Count}");
 
 				foreach (PhysicalCard card in physicalCards)
@@ -35,27 +35,27 @@ namespace Game
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// Name of the player.
 		/// </summary>
 		public string PlayerName { get; private set; }
-		
+
 		/// <summary>
 		/// Turn object of the player.
 		/// </summary>
 		public Turn Turn { get; private set; }
-		
+
 		/// <summary>
 		/// Health of the player.
 		/// </summary>
 		public ResourceContainer Health { get; private set; }
-		
+
 		/// <summary>
 		/// Mana of the player.
 		/// </summary>
 		public ResourceContainer Mana { get; private set; }
-		
+
 		/// <summary>
 		/// Deck that the player uses.
 		/// </summary>
@@ -65,11 +65,21 @@ namespace Game
 		/// Hand of the player.
 		/// </summary>
 		public Transform Hand => hand;
-		
+
+		/// <summary>
+		/// Board associated with the player.
+		/// </summary>
+		public Board Board => board;
+
 		/// <summary>
 		/// Mana bar of the player.
 		/// </summary>
 		public ManaBar ManaBar { get; private set; }
+
+		/// <summary>
+		/// Active target behaviour.
+		/// </summary>
+		public TargetBehaviour ActiveTargetBehaviour { get; set; }
 
 		[SerializeField] private ManaBar manaBar;
 		[SerializeField] private Turn turn;
@@ -95,14 +105,17 @@ namespace Game
 			
 			Turn = turn;
 			ManaBar = manaBar;
-			
 			Mana = new ResourceContainer(GameManager.Instance.StartMana);
+			
+			Mana.OnChanged += OnManaChanged;
+			Mana.SetMaximum(5);
+			
 			Health = new ResourceContainer(GameManager.Instance.PlayerStartHealth);
 			PlayerDeck = new PlayerDeck(CollectionUtils.RandomizeList(cards.ToList()));
 		}
 
 		/// <summary>
-		/// Draw cards from <see cref="PlayerDeck"/> and put them in <see cref="PlayerHand"/>.
+		/// Draw cards from <see cref="PlayerDeck"/> and put them in their hand.
 		/// </summary>
 		/// <param name="amount">The amount of cards.</param>
 		public async Task DrawCard(int amount)
@@ -143,6 +156,16 @@ namespace Game
 				
 				physicalCards.Add(physicalCard);
 			}
+		}
+
+		private void OnDestroy()
+		{
+			Mana.OnChanged -= OnManaChanged;
+		}
+
+		private void OnManaChanged()
+		{
+			ManaBar.SetManaText(Mana.Total);
 		}
 	}
 }

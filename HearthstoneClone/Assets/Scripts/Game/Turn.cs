@@ -20,10 +20,10 @@ namespace Game
 		
 		[SerializeField] private Image background;
 		[SerializeField] private TMP_Text countdownText;
-		
 
 		private int turnLength = 10;
 		private int currentTurnLength;
+		private Coroutine activeCoroutine;
 		
 		private void Start()
 		{
@@ -35,11 +35,14 @@ namespace Game
 			background.color = Color.green;
 
 			OnStartCallback?.Invoke();
-			StartCoroutine(TurnCountDown());
+			activeCoroutine = StartCoroutine(TurnCountDown());
 		}
 
 		public void End()
 		{
+			StopCoroutine(activeCoroutine);
+			currentTurnLength = turnLength;
+
 			background.color = Color.red;
 			OnEndCallback?.Invoke();
 		}

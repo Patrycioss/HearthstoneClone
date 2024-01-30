@@ -1,6 +1,4 @@
 ﻿
-// Based on this answer from the Unity forums: https://discussions.unity.com/t/inspector-field-for-scene-asset/40763/5
-
 namespace CustomEditor
 {
 	using UnityEngine;
@@ -8,6 +6,7 @@ namespace CustomEditor
 
 	/// <summary>
 	/// Used to make serialized fields for scenes in the editor.
+	/// Based on this answer from the Unity forums: https://discussions.unity.com/t/inspector-field-for-scene-asset/40763/5
 	/// </summary>
 	[System.Serializable]
 	public class SceneField

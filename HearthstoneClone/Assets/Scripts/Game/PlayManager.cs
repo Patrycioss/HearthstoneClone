@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CardManagement.CardComposition;
+using CardManagement.Physical;
 using Deck;
 using UnityEngine;
 using Utils;
@@ -12,6 +12,23 @@ namespace Game
 		[SerializeField] private DeckInfo testDeck;
 		[SerializeField] private Player player1;
 		[SerializeField] private Player player2;
+
+		private int turnCount = 0;
+		private int active = 1;
+
+		public void EndActiveTurn()
+		{
+			switch (active)
+			{
+				case 1:
+					player1.Turn.End();
+					break;
+				
+				case 2:
+					player2.Turn.End();
+					break;
+			}
+		}
 		
 		private async void Start()
 		{
@@ -37,7 +54,8 @@ namespace Game
 		{
 			await player1.DrawCard(3);
 			await player2.DrawCard(3);
-			
+
+			turnCount++;
 			player1.Turn.Begin();
 		}
 
@@ -53,27 +71,42 @@ namespace Game
 		{
 			player2.Turn.Begin();
 			player2.IsLocked = true;
+			
+			foreach (PhysicalCard physicalCard in player1.Board.Cards)
+			{
+				physicalCard.IsAwake = true;
+			}
 		}
 
 		private async void OnPlayer1TurnStart()
 		{
+			active = 1;
 			Debug.Log($"booger");
 			await player1.DrawCard(1);
 			player1.IsLocked = false;
 			player2.IsLocked = true;
+			player1.Mana.SetTotal(turnCount);
 		}
 		
 		private void OnPlayer2TurnComplete()
 		{
 			player1.Turn.Begin();
 			player1.IsLocked = true;
+			turnCount++;
+			
+			foreach (PhysicalCard physicalCard in player2.Board.Cards)
+			{
+				physicalCard.IsAwake = true;
+			}
 		}
 		
 		private async void OnPlayer2TurnStart()
 		{
+			active = 2;
 			await player2.DrawCard(1);
 			player2.IsLocked = false;
 			player1.IsLocked = true;
+			player2.Mana.SetTotal(turnCount);
 		}
 	}
 }

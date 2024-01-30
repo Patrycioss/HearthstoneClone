@@ -1,6 +1,7 @@
 ﻿using CardManagement.CardComposition;
 using CardManagement.Physical;
 using Game;
+using UnityEngine;
 
 namespace StateStuff
 {
@@ -11,29 +12,33 @@ namespace StateStuff
 	{
 		private PhysicalCard card;
 		private Board board;
+		private Transform movingContainer;
 
 		public override void Start()
 		{
 			StateMachine.GetReference("Card", out card);
 			StateMachine.GetReference("Board", out board);
-			
-			board.TryAddCard(card);
+			StateMachine.GetReference("MovingContainer", out movingContainer);
 			
 			switch (card.CardInfo.Type)
 			{
 				case CardType.Minion:
+					board.TryAddCard(card);
 					break;
-				case CardType.Spell:
-					//Todo: cast spell.
-					break;
-				case CardType.Weapon:
-					//Todo: equip weapon.
+				case CardType.Spell or CardType.Weapon:
+					Transform transform = card.transform;
+					transform.SetParent(movingContainer);
+					transform.position = new Vector3(9999,999999,1);
 					break;
 			}
 		}
 
 		public override void Update()
 		{
+			if (Input.GetMouseButtonUp(0))
+			{
+				card.Deselect();
+			}
 		}
 
 		public override void Stop()

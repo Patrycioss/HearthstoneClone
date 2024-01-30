@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game
 {
@@ -10,7 +11,7 @@ namespace Game
 		/// <summary>
 		/// Called whenever the amount of the resource changes.
 		/// </summary>
-		public event Action<int> OnChanged;
+		public event Action OnChanged;
 
 		/// <summary>
 		/// Called whenever the amount reaches 0.
@@ -66,6 +67,7 @@ namespace Game
 		{
 			UsesMaximum = true;
 			Max = maximum;
+			OnChanged?.Invoke();
 		}
 
 		/// <summary>
@@ -74,6 +76,27 @@ namespace Game
 		public void SetMaximum()
 		{
 			UsesMaximum = false;
+		}
+
+		/// <summary>
+		/// Ignores everything and just sets the total to the value.
+		/// </summary>
+		/// <param name="value">Value to set to.</param>
+		public void SetTotal(int value)
+		{
+			bool changed = Total != value;
+			
+			Total = value;
+
+			if (changed)
+			{
+				OnChanged?.Invoke();
+			}
+
+			if (Total == 0)
+			{
+				OnEmpty?.Invoke();
+			}
 		}
 
 		/// <summary>
@@ -96,15 +119,16 @@ namespace Game
 					Total = Max;
 				}
 			}
-
+			
 			if (Total <= 0)
 			{
 				Total = 0;
 				OnEmpty?.Invoke();
 			}
-			else if (Total != currentTotal)
+
+			if (Total != currentTotal)
 			{
-				OnChanged?.Invoke(Total);
+				OnChanged?.Invoke();
 			}
 		}
 
@@ -122,6 +146,21 @@ namespace Game
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Fill the resource container to its maximum. Only works if there is a maximum.
+		/// </summary>
+		public void Fill()
+		{
+			if (UsesMaximum)
+			{
+				Total = Max;
+			}
+			else
+			{
+				Debug.LogWarning($"Can't fill a resource container without a maximum!");
+			}
 		}
 	}
 }

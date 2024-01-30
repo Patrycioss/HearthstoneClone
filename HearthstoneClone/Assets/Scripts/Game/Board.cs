@@ -14,6 +14,11 @@ namespace Game
 		/// A read-only collection of all the cards on the board.
 		/// </summary>
 		public IReadOnlyCollection<PhysicalCard> Cards => cards;
+
+		/// <summary>
+		/// Container to put temporary UI stuff in.
+		/// </summary>
+		public GameObject DrawingContainer => drawingContainer;
 		
 		/// <summary>
 		/// Returns whether the mouse is hovering over the board.
@@ -26,6 +31,7 @@ namespace Game
 		public bool HasCapacity => cards.Count < GameManager.Instance.MaxBoardSize;
 		
 		[SerializeField] private GameObject cardContainer;
+		[SerializeField] private GameObject drawingContainer;
 		
 		private List<PhysicalCard> cards = new List<PhysicalCard>();
 
@@ -42,7 +48,6 @@ namespace Game
 				cards.Add(card);
 			}
 			card.transform.SetParent(cardContainer.transform);
-			card.IsOnBoard = true;
 			
 			LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform) cardContainer.transform);
 		}
@@ -54,13 +59,7 @@ namespace Game
 		/// <returns>Whether it could be removed.</returns>
 		public bool TryRemoveCard(PhysicalCard card)
 		{
-			if (cards.Remove(card))
-			{
-				card.IsOnBoard = false;
-				return true;
-			}
-
-			return false;
+			return cards.Remove(card);
 		}
 		
 		private void Awake()

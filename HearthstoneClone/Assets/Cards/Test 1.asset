@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: HOI
   Description: A test description for my test card.
-  Cost: 0
+  Cost: 2
   ImageReference:
     m_AssetGUID: 04797641de2a4024aac8e3559f281d6c
     m_SubObjectName: TestSprite
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  Behaviours:
-  - {fileID: 11400000, guid: 0f9ae92d7b7c89c4d8c104efe2bb72fc, type: 2}
+  CardBehaviourReferences:
+  - m_AssetGUID: 40814cde127670145b97dfc45ea273d5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Type: 0
   Health: 1
   Attack: 1

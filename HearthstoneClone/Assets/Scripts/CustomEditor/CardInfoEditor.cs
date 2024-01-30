@@ -43,7 +43,7 @@ namespace CustomEditor
 			SerializedProperty imageReference = serializedObject.FindProperty("ImageReference");
 			EditorGUILayout.PropertyField(imageReference);
 			
-			SerializedProperty behaviours = serializedObject.FindProperty("Behaviours");
+			SerializedProperty behaviours = serializedObject.FindProperty("CardBehaviourReferences");
 			EditorGUILayout.PropertyField(behaviours);
 			serializedObject.ApplyModifiedProperties();
 

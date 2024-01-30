@@ -31,7 +31,15 @@ namespace StateStuff
 			
 			if (!Input.GetMouseButton(0))
 			{
-				StateMachine.SetState(CanBePlayed()? new BoardState() : new HeldState());
+				if (CanBePlayed())
+				{
+					card.Play();
+					StateMachine.SetState(new BoardState());
+				}
+				else
+				{
+					StateMachine.SetState(new HeldState());
+				}
 			}
 		}
 		
@@ -50,14 +58,15 @@ namespace StateStuff
 						return true;
 					}
 
-					Debug.LogWarning($"Can't play card because the player doesn't have enough mana!");
+					card.ShowError(PhysicalCard.Error.NotEnoughMana);
+					// Debug.LogWarning($"Can't play card because the player doesn't have enough mana!");
 				}
 				else
 				{
-					Debug.LogWarning($"Can't play minion because the board is full!");
+					card.ShowError(PhysicalCard.Error.BoardIsFull);
+					// Debug.LogWarning($"Can't play minion because the board is full!");
 				}
 			}
-
 			return false;
 		}
 	}

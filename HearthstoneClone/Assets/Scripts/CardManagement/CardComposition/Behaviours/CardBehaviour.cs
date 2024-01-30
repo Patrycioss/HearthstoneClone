@@ -1,31 +1,49 @@
-﻿using UnityEngine;
+﻿using CardManagement.Physical;
+using Extensions;
+using UnityEngine;
 
 namespace CardManagement.CardComposition.Behaviours
 {
-	public abstract class CardBehaviour : ScriptableObject
+	/// <summary>
+	/// Behaviour associated with a card.
+	/// </summary>
+	public abstract class CardBehaviour : MonoBehaviour
 	{
+		protected PhysicalCard Card;
+		protected TimedLogger Logger;
+		protected GameObject Container;
+		
 		/// <summary>
-		/// Called when it's the player's turn and the player clicks on the card on the board.
+		/// Called whenever the card is played from the hand.
 		/// </summary>
-		public virtual void OnInteract()
+		public virtual void OnPlay()
 		{
-			
+			Logger.Log($"Behaviour of type {GetType()} OnPlay called!");
 		}
 
 		/// <summary>
-		/// Should be called in the unity update loop.
+		/// Called every frame.
 		/// </summary>
 		public virtual void Update()
 		{
-			
+
 		}
 
 		/// <summary>
-		/// Called whenever the card is used in the hand.
+		/// Called when it's the player's turn and the player selects the card.
 		/// </summary>
-		public virtual void OnUse()
+		public virtual void OnSelect()
 		{
-			
+			Logger.Log($"Behaviour of type {GetType()} OnSelect called!");
+
+		}
+		
+		/// <summary>
+		/// Called when it's the player's turn and the player deselects the card.
+		/// </summary>
+		public virtual void OnDeselect()
+		{
+			Logger.Log($"Behaviour of type {GetType()} OnDeselect called!");
 		}
 	}
 }

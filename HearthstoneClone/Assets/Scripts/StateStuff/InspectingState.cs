@@ -19,17 +19,34 @@ namespace StateStuff
 
 		public override void Update()
 		{
-			if (card.IsHoveringOver)
+			if (Input.GetMouseButtonDown(0))
 			{
-				if (Input.GetMouseButtonDown(0) && !card.IsOnBoard && !card.IsLocked)
+				if (card.HasBeenPlayed)
+				{
+					if (!card.IsLocked)
+					{
+						if (card.IsAwake)
+						{
+							card.Select();
+						}
+					}
+				}
+				else if (!card.IsLocked)
 				{
 					StateMachine.SetState(new MovingState());
+				}
+			}
+			else if (Input.GetMouseButtonUp(0))
+			{
+				if (card.HasBeenPlayed)
+				{
+					card.Deselect();
 				}
 			}
 			
 			if (!card.IsHoveringOver)
 			{
-				StateMachine.SetState(card.IsOnBoard? new BoardState() : new HeldState());
+				StateMachine.SetState(card.HasBeenPlayed? new BoardState() : new HeldState());
 			}
 		}
 

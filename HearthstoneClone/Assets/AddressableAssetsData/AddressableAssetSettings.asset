@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: d9bae0423e776b647b7a3e6ca705f21a
   m_currentHash:
     serializedVersion: 2
-    Hash: 173f803b146bf6715507733be6c4caa1
+    Hash: c3ab5b583a1226798c4fc9bc1825267c
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
     - ui_card_prefab
     - ui_card_layer_prefab
     - deck_card_prefab
+    - line
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9e589db05459fe24088b1879a06e207a, type: 2}
