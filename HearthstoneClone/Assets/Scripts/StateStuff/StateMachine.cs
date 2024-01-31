@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using Extensions;
-using UnityEngine;
+using CustomLogging;
 
 namespace StateStuff
 {
@@ -15,6 +14,9 @@ namespace StateStuff
 		/// </summary>
 		public State ActiveState { get; private set; }
 		
+		/// <summary>
+		/// Used to store references to data that states need to function.
+		/// </summary>
 		private Dictionary<string, object> referenceStorage = new Dictionary<string, object>();
 		
 		private TimedLogger logger = new TimedLogger();
@@ -34,34 +36,33 @@ namespace StateStuff
 		/// <param name="state">The new active state.</param>
 		public void SetState(State state)
 		{
-			if (ActiveState == null || ActiveState.GetType() != state.GetType())
-			{ 
-				logger.Log($"Setting state to {state.GetType()}");
-
-				if (ActiveState != null)
-				{
-					ActiveState.Stop();
-					logger.Log($"Stopped active state: {ActiveState.GetType()}.");
-				}
-
-				ActiveState = state;
-				
-				FieldInfo a = ActiveState.GetType()
-					.GetField("StateMachine", BindingFlags.Instance | BindingFlags.NonPublic);
-
-				if (a != null)
-				{
-					a.SetValue(ActiveState, this);
-				}
-			
-				ActiveState.Start();
-			
-				logger.Log($"Started active state: {ActiveState.GetType()}.");
-			}
-			else
+			if (ActiveState != null && ActiveState.GetType() == state.GetType())
 			{
 				logger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
+				return;
 			}
+			
+			logger.Log($"Setting state to {state.GetType()}");
+
+			if (ActiveState != null)
+			{
+				ActiveState.Stop();
+				logger.Log($"Stopped active state: {ActiveState.GetType()}.");
+			}
+
+			ActiveState = state;
+
+			FieldInfo a = ActiveState.GetType()
+				.GetField("StateMachine", BindingFlags.Instance | BindingFlags.NonPublic);
+
+			if (a != null)
+			{
+				a.SetValue(ActiveState, this);
+			}
+
+			ActiveState.Start();
+
+			logger.Log($"Started active state: {ActiveState.GetType()}.");
 		}
 
 		/// <summary>
@@ -88,7 +89,6 @@ namespace StateStuff
 		/// </summary>
 		/// <param name="name">Name of the reference.</param>
 		/// <param name="reference">The referenced object.</param>
-		/// <returns></returns>
 		public void GetReference<T>(string name, out T reference)
 		{
 			if (referenceStorage.TryGetValue(name, out object obj))

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace CustomEditor
 {
+	/// <summary>
+	/// Exists to make swapping between the <see cref="CardType"/> on a <see cref="CardInfo"/> more interactive in the editor.
+	/// </summary>
 	[UnityEditor.CustomEditor(typeof(CardInfo))]
 	public class CardInfoEditor : Editor
 	{

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Extensions
+namespace CustomLogging
 {
 	/// <summary>
 	/// Helper functions to log debug information with timestamps.

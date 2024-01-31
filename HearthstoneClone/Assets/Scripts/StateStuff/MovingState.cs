@@ -53,17 +53,17 @@ namespace StateStuff
 			{
 				if (board.HasCapacity || card.CardInfo.Type != CardType.Minion)
 				{
-					if (player.Mana.TryRemove(card.CardInfo.Cost))
+					if (player.Mana.TryRemove(card.Controller.Cost))
 					{
 						return true;
 					}
 
-					card.ShowError(PhysicalCard.Error.NotEnoughMana);
+					card.Visuals.ShowError(PhysicalCardVisuals.Error.NotEnoughMana);
 					// Debug.LogWarning($"Can't play card because the player doesn't have enough mana!");
 				}
 				else
 				{
-					card.ShowError(PhysicalCard.Error.BoardIsFull);
+					card.Visuals.ShowError(PhysicalCardVisuals.Error.BoardIsFull);
 					// Debug.LogWarning($"Can't play minion because the board is full!");
 				}
 			}

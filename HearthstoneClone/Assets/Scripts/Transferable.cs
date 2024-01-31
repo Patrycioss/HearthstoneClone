@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Can be used to transfer an object between scenes.
 /// </summary>
-public class Transferable
+public struct Transferable
 {
 	/// <summary>
 	/// Value of the transferable.

@@ -35,7 +35,6 @@ namespace UI.DeckEditor
 			ShouldSave = false;
 			
 			SetUpText();
-			SetUpCardsView();
 		}
 
 		public void EnableShouldSave()
@@ -73,9 +72,9 @@ namespace UI.DeckEditor
 		{
 			if (string.IsNullOrEmpty(deckInfo.Name))
 			{
-				message.Activate(new MessageConfiguration()
+				message.Activate(new MessageConfiguration
 				{
-					MessageText = $"Make sure to give your deck a name before saving!",
+					MessageText = "Make sure to give your deck a name before saving!",
 					ButtonText = "Continue"
 				});
 				return;
@@ -92,11 +91,6 @@ namespace UI.DeckEditor
 		{
 			nameText.SetTextWithoutNotify(deckInfo.Name);
 			descriptionText.SetTextWithoutNotify(deckInfo.Description);
-		}
-
-		private void SetUpCardsView()
-		{
-			
 		}
 	}
 }

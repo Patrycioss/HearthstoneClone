@@ -18,5 +18,14 @@ namespace UI
 		{
 			iconText.text = text;
 		}
+
+		/// <summary>
+		/// Determines whether the icon is shown or not.
+		/// </summary>
+		/// <param name="show">Whether to show or not.</param>
+		public void Show(bool show)
+		{
+			gameObject.SetActive(show);
+		}
 	}
 }

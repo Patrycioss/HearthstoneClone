@@ -42,7 +42,7 @@ namespace UI.DeckEditor
 
 		private async void Start()
 		{
-			if (GameManager.Instance.GetTransferable("ActiveDeck")?.Value is not DeckInfo deck)
+			if (GameManager.Instance.GetTransferable("ActiveDeck").Value is not DeckInfo deck)
 			{
 				Debug.LogError($"No active deck found in GameManager!");
 			}

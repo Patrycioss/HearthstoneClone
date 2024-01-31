@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardManagement.CardComposition.Behaviours;
+using CustomEditor;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Serialization;
 
 namespace CardManagement.CardComposition
 {
+	/// <summary>
+	/// Contains the information associated with a card.
+	/// <remarks>Correct properties in the editor are shown using <see cref="CardInfoEditor"/>.</remarks>
+	/// </summary>
 	[CreateAssetMenu(menuName = "Cards/Card", order = 0)]
 	[Serializable]
 	public class CardInfo : ScriptableObject

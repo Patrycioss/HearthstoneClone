@@ -49,7 +49,6 @@ namespace Deck.DeckManagement
 					{
 						File.Delete(pathResult.Value!);
 					}
-
 				}
 				catch (Exception e)
 				{
@@ -62,7 +61,7 @@ namespace Deck.DeckManagement
 			{
 				result += $"Succeeded in deleting file with path {pathResult.Value}.";
 			}
-			
+
 			Debug.Log(result);
 		}
 		

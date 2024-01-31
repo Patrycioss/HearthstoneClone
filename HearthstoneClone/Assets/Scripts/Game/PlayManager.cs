@@ -33,7 +33,7 @@ namespace Game
 		private async void Start()
 		{
 			DeckInfo deck = testDeck;
-			if (GameManager.Instance.GetTransferable("ActiveDeck")?.Value is DeckInfo foundDeck)
+			if (GameManager.Instance.GetTransferable("ActiveDeck").Value is DeckInfo foundDeck)
 			{
 				deck = foundDeck;
 			}

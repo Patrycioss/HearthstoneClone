@@ -22,20 +22,21 @@ public class TestButton : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(async () =>
-        {
-            GameObject cardObject = await ResourceUtils.InstantiateFromLabel(cardPrefabLabel,
-                new InstantiationParameters(horizontalLayoutGroup.transform, false));
+        button.onClick.AddListener(Call);
+    }
 
-            if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
-            {
-                physicalCard.Initialize(new PhysicalCardConfiguration()
-                {
-                    CardInfo = testCard,
-                    Player = player,
-                });
-                physicalCard.Flip();
-            }});
+    private async void Call()
+    {
+        GameObject cardObject = await ResourceUtils.InstantiateFromLabel(
+            cardPrefabLabel, 
+            new InstantiationParameters(horizontalLayoutGroup.transform, 
+                false));
+
+        if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
+        {
+            physicalCard.Initialize(testCard, player, null, null);
+            physicalCard.Visuals.Flip();
+        }
     }
 
     private void OnDestroy()

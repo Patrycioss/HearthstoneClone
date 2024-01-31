@@ -36,9 +36,6 @@ namespace Deck.DeckManagement
 
 			// Try to load the contents from the file into the buffer.
 			char[] buffer;
-			
-			StringBuilder builder = new StringBuilder();
-			
 			try
 			{
 				using (StreamReader reader = File.OpenText(path))
@@ -51,8 +48,10 @@ namespace Deck.DeckManagement
 			{
 				return result + $"Failed to load savable from file with path {path}. Exception '{e}' occurred!";
 			}
-
+			
 			// Convert buffer to a string and make sure conversion goes well.
+			StringBuilder builder = new StringBuilder();
+
 			foreach (char c in buffer)
 			{
 				builder.Append(c);

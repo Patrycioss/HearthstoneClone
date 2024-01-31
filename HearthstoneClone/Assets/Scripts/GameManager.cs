@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
    
    [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
    
-   private Dictionary<string, Transferable> transferableData;
+   private Dictionary<string, Transferable> transferableData = new Dictionary<string, Transferable>();
 
    /// <summary>
    /// Add a <see cref="Transferable"/> to transfer to other scenes.
@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
    /// <param name="identifier">The identifier to get the <see cref="Transferable"/>.</param>
    /// <remarks>Removes the <see cref="Transferable"/> from the collection.</remarks>
    /// <returns>A <see cref="Transferable"/> if it can find the given identifier.</returns>
-   [CanBeNull]
    public Transferable GetTransferable(string identifier)
    {
       if (transferableData.Remove(identifier, out Transferable transferable))
@@ -92,7 +91,7 @@ public class GameManager : MonoBehaviour
          return transferable;
       }
 
-      return null;
+      return default;
    }
    
    private void Awake()
@@ -107,8 +106,6 @@ public class GameManager : MonoBehaviour
       }
       
       DontDestroyOnLoad(this);
-
-      transferableData = new Dictionary<string, Transferable>();
 
       DiskManager = new DiskManager();
       DiskManager.Initialize();

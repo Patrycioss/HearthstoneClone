@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CardManagement.Physical;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +38,16 @@ namespace Game
 		private List<PhysicalCard> cards = new List<PhysicalCard>();
 
 		private RectTransform rectTransform;
+
+		/// <summary>
+		/// Finds the first card on the board that the player is hovering over.
+		/// </summary>
+		/// <returns>The first card on the board that the player is hovering over.</returns>
+		[CanBeNull]
+		public PhysicalCard GetFirstCardPlayerIsHoveringOver()
+		{
+			return cards.FirstOrDefault(card => card.IsHoveringOver);
+		}
 		
 		/// <summary>
 		/// Add a <see cref="PhysicalCard"/> to the board and the internal list.

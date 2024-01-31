@@ -8,6 +8,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Game
@@ -84,7 +85,7 @@ namespace Game
 		[SerializeField] private ManaBar manaBar;
 		[SerializeField] private Turn turn;
 		[SerializeField] private AssetLabelReference cardPrefabLabel;
-		[SerializeField] private Transform intermediateContainer;
+		[FormerlySerializedAs("intermediateContainer")] [SerializeField] private Transform movingContainer;
 		[SerializeField] private Transform hand;
 		[SerializeField] private Board board;
 		
@@ -145,14 +146,9 @@ namespace Game
 
 			if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
 			{
-				physicalCard.Initialize(new PhysicalCardConfiguration()
-				{
-					CardInfo = card,
-					Player =  this,
-					IntermediateContainer = intermediateContainer,
-					Board = board,
-				});
-				physicalCard.Flip();
+				physicalCard.Initialize(card, this, movingContainer, board);
+				
+				physicalCard.Visuals.Flip();
 				
 				physicalCards.Add(physicalCard);
 			}

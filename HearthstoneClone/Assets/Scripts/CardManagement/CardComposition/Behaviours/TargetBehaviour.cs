@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CardManagement.CardComposition.Behaviours
 {
-	public abstract class TargetBehaviour : CardBehaviour
+	public class TargetBehaviour : CardBehaviour
 	{
 		[SerializeField] private GameObject selectorPrefab;
 
@@ -37,6 +37,7 @@ namespace CardManagement.CardComposition.Behaviours
 		public override void OnDeselect()
 		{
 			base.OnDeselect();
+			
 
 			CleanUp();			
 		}
