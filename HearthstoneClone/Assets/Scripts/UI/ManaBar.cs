@@ -16,7 +16,7 @@ namespace UI
 		/// <param name="amount">Amount of mana the player currently has.</param>
 		public void SetManaText(int amount)
 		{
-			manaText.text = $"{amount} Mana";
+			manaText.text = $"{amount}";
 		}
 	}
 }

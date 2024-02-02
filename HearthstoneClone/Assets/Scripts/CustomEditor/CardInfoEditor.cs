@@ -28,8 +28,8 @@ namespace CustomEditor
 
 			GUILayout.Space(10);
 
-			GUILayout.Label("Description", EditorStyles.boldLabel);
-			cardInfo.Description = EditorGUILayout.TextArea(cardInfo.Description, GUILayout.MinHeight(100));
+			// GUILayout.Label("Description", EditorStyles.boldLabel);
+			// cardInfo.Description = EditorGUILayout.TextArea(cardInfo.Description, GUILayout.MinHeight(100));
 
 			GUILayout.Space(10);
 

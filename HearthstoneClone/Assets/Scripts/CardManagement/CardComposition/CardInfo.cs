@@ -22,11 +22,11 @@ namespace CardManagement.CardComposition
 		[CanBeNull] 
 		public string CardName;
 
-		/// <summary>
-		/// Description of the card.
-		/// </summary>
-		[CanBeNull] 
-		public string Description;
+		// /// <summary>
+		// /// Description of the card.
+		// /// </summary>
+		// [CanBeNull] 
+		// public string Description;
 		
 		/// <summary>
 		/// Cost of the card.

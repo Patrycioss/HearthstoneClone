@@ -2,13 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CardManagement.CardComposition;
-using CardManagement.CardComposition.Behaviours;
 using CardManagement.Physical;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.Serialization;
 using Utils;
 
 namespace Game
@@ -72,17 +70,11 @@ namespace Game
 		/// </summary>
 		public ManaBar ManaBar { get; private set; }
 
-		/// <summary>
-		/// Active target behaviour.
-		/// </summary>
-		public TargetBehaviour ActiveTargetBehaviour { get; set; }
-
 		[SerializeField] private ManaBar manaBar;
 		[SerializeField] private Turn turn;
 		[SerializeField] private AssetLabelReference cardPrefabLabel;
-		[FormerlySerializedAs("intermediateContainer")] [SerializeField] private Transform movingContainer;
+		[SerializeField] private Transform movingContainer;
 		[SerializeField] private Transform hand;
-		[SerializeField] private Board board;
 		
 		private List<PhysicalCard> physicalCards = new List<PhysicalCard>();
 		private int maxCardAmount;
@@ -132,6 +124,16 @@ namespace Game
 					Debug.Log($"[{PlayerName}]: No more cards to draw!");
 				}
 			}
+		}
+
+		/// <summary>
+		/// Tries to remove a card from the internal list of physical cards.
+		/// </summary>
+		/// <param name="card">Card to remove.</param>
+		/// <returns>Whether the operation was successful.</returns>
+		public bool TryRemoveCard(PhysicalCard card)
+		{
+			return physicalCards.Remove(card);
 		}
 		
 		private async Task SpawnCard(CardInfo card)

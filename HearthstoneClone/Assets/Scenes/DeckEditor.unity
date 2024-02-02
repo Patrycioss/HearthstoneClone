@@ -644,6 +644,26 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6544038696629503809, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: m_Spacing.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544038696629503809, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: m_Spacing.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544038696629503809, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: m_CellSize.x
+      value: 315
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544038696629503809, guid: 0e6b59aa670d22f4381a190045a3ca7a,
+        type: 3}
+      propertyPath: m_CellSize.y
+      value: 450
+      objectReference: {fileID: 0}
     - target: {fileID: 7232080772399465271, guid: 0e6b59aa670d22f4381a190045a3ca7a,
         type: 3}
       propertyPath: m_AnchoredPosition.y

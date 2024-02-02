@@ -106,9 +106,6 @@ namespace Game
 		private void OnPlayer1TurnComplete()
 		{
 			player2.Turn.Begin();
-			player2.IsLocked = true;
-			
-			
 		}
 
 		private async void OnPlayer1TurnStart()
@@ -122,9 +119,9 @@ namespace Game
 		
 		private void OnPlayer2TurnComplete()
 		{
-			player1.Turn.Begin();
-			player1.IsLocked = true;
 			turnCount++;
+
+			player1.Turn.Begin();
 			
 			foreach (PhysicalCard physicalCard in board.GetAllCards())
 			{

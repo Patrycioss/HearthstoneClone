@@ -89,8 +89,8 @@ namespace CardManagement.Physical
             {
                 return;
             }
-            
-            cardBehaviourController.CallOnPlay();
+
+            Owner.TryRemoveCard(this);
             HasBeenPlayed = true;
         }
 

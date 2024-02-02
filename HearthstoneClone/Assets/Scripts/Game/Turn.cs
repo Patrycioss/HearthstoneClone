@@ -40,7 +40,11 @@ namespace Game
 
 		public void End()
 		{
-			StopCoroutine(activeCoroutine);
+			if (activeCoroutine != null)
+			{
+				StopCoroutine(activeCoroutine);
+			}
+			
 			currentTurnLength = turnLength;
 
 			background.color = Color.red;

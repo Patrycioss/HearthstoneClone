@@ -1353,11 +1353,6 @@ MonoBehaviour:
   deckToSave:
     Name: DoTestTest
     Description: Testtestest
-    Image:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
     Cards:
     - 
   saveSpecificButton: {fileID: 2083361670}
@@ -1800,6 +1795,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
+        type: 3}
+      propertyPath: maxBoardSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8905176323176074787, guid: 589c0084b14107c4c9aab3673a331f72,
+        type: 3}
+      propertyPath: maxCardsInHand
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

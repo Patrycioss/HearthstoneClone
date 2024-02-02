@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
    [SerializeField] private int playerStartHealth = 30;
    [SerializeField] private int maxMana = 10;
    [SerializeField] private int startMana = 10;
-   [SerializeField] private int maxCardsInHand = 5;
+   [SerializeField] private int maxCardsInHand = 4;
    [SerializeField] private int maxBoardSize = 7;
    
    [Tooltip("Turn Length in Seconds"),SerializeField] private int turnLength = 20;
