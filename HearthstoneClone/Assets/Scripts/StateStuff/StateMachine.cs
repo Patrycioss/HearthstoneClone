@@ -27,7 +27,7 @@ namespace StateStuff
 		/// <param name="log">Whether to log state swapping or not.</param>
 		public StateMachine(bool log = true)
 		{
-			logger.Enabled = log;
+			TimedLogger.Enabled = log;
 		}
 		
 		/// <summary>
@@ -38,16 +38,16 @@ namespace StateStuff
 		{
 			if (ActiveState != null && ActiveState.GetType() == state.GetType())
 			{
-				logger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
+				TimedLogger.Log($"Not setting active state to {state.GetType()} because the state machine is already in that state!");
 				return;
 			}
 			
-			logger.Log($"Setting state to {state.GetType()}");
+			TimedLogger.Log($"Setting state to {state.GetType()}");
 
 			if (ActiveState != null)
 			{
 				ActiveState.Stop();
-				logger.Log($"Stopped active state: {ActiveState.GetType()}.");
+				TimedLogger.Log($"Stopped active state: {ActiveState.GetType()}.");
 			}
 
 			ActiveState = state;
@@ -62,7 +62,7 @@ namespace StateStuff
 
 			ActiveState.Start();
 
-			logger.Log($"Started active state: {ActiveState.GetType()}.");
+			TimedLogger.Log($"Started active state: {ActiveState.GetType()}.");
 		}
 
 		/// <summary>

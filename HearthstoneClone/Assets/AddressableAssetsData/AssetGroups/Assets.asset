@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cc96da57d3dd9014caf0bbf42ba6c847
-    m_Address: Assets/Prefabs/Card.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6ec99ad42c844a45ae246eb37247447
     m_Address: Assets/Prefabs/UI/CollectionCard.prefab
     m_ReadOnly: 0
@@ -59,6 +54,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 40814cde127670145b97dfc45ea273d5
     m_Address: Assets/Prefabs/CardBehaviours/TargetBehaviour.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 247b1142ec134444480eed38a75f7d7c
+    m_Address: Assets/Card Sprites/fred.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

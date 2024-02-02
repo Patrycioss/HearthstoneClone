@@ -11,19 +11,17 @@ namespace StateStuff
 	public class BoardState : State
 	{
 		private PhysicalCard card;
-		private Board board;
 		private Transform movingContainer;
 
 		public override void Start()
 		{
 			StateMachine.GetReference("Card", out card);
-			StateMachine.GetReference("Board", out board);
 			StateMachine.GetReference("MovingContainer", out movingContainer);
 			
 			switch (card.CardInfo.Type)
 			{
 				case CardType.Minion:
-					board.TryAddCard(card);
+					PlayManager.Instance.Board.AddCard(card);
 					break;
 				case CardType.Spell or CardType.Weapon:
 					Transform transform = card.transform;

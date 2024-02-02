@@ -7,9 +7,33 @@ using Utils;
 
 namespace Game
 {
+	/// <summary>
+	/// Contains references to commonly used logic like the players and the board.
+	/// </summary>
 	public class PlayManager : MonoBehaviour
 	{
+		/// <summary>
+		/// Instance of the manager to get commonly used references in the game.
+		/// </summary>
+		public static PlayManager Instance { get; private set; }
+
+		/// <summary>
+		/// Board used in the game.
+		/// </summary>
+		public Board Board => board;
+
+		/// <summary>
+		/// Player on the bottom side of the screen.
+		/// </summary>
+		public Player Player1 => player1;
+
+		/// <summary>
+		/// Player on the top side of the screen.
+		/// </summary>
+		public Player Player2 => player2;
+			
 		[SerializeField] private DeckInfo testDeck;
+		[SerializeField] private Board board;
 		[SerializeField] private Player player1;
 		[SerializeField] private Player player2;
 
@@ -29,7 +53,19 @@ namespace Game
 					break;
 			}
 		}
-		
+
+		private void Awake()
+		{
+			if (Instance == null)
+			{
+				Instance = this;
+			}
+			else
+			{
+				Destroy(this);
+			}
+		}
+
 		private async void Start()
 		{
 			DeckInfo deck = testDeck;
@@ -72,16 +108,12 @@ namespace Game
 			player2.Turn.Begin();
 			player2.IsLocked = true;
 			
-			foreach (PhysicalCard physicalCard in player1.Board.Cards)
-			{
-				physicalCard.IsAwake = true;
-			}
+			
 		}
 
 		private async void OnPlayer1TurnStart()
 		{
 			active = 1;
-			Debug.Log($"booger");
 			await player1.DrawCard(1);
 			player1.IsLocked = false;
 			player2.IsLocked = true;
@@ -94,9 +126,9 @@ namespace Game
 			player1.IsLocked = true;
 			turnCount++;
 			
-			foreach (PhysicalCard physicalCard in player2.Board.Cards)
+			foreach (PhysicalCard physicalCard in board.GetAllCards())
 			{
-				physicalCard.IsAwake = true;
+				physicalCard.CountRound();
 			}
 		}
 		

@@ -68,11 +68,6 @@ namespace Game
 		public Transform Hand => hand;
 
 		/// <summary>
-		/// Board associated with the player.
-		/// </summary>
-		public Board Board => board;
-
-		/// <summary>
 		/// Mana bar of the player.
 		/// </summary>
 		public ManaBar ManaBar { get; private set; }
@@ -146,7 +141,7 @@ namespace Game
 
 			if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
 			{
-				physicalCard.Initialize(card, this, movingContainer, board);
+				physicalCard.Initialize(card, this, movingContainer);
 				
 				physicalCard.Visuals.Flip();
 				

@@ -34,7 +34,7 @@ public class TestButton : MonoBehaviour
 
         if (cardObject.TryGetComponent(out PhysicalCard physicalCard))
         {
-            physicalCard.Initialize(testCard, player, null, null);
+            physicalCard.Initialize(testCard, player, null);
             physicalCard.Visuals.Flip();
         }
     }

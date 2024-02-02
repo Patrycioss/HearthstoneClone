@@ -1,16 +1,9 @@
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
 using CardManagement.CardComposition;
-using CardManagement.CardComposition.Behaviours;
-using CustomLogging;
 using Game;
 using Settings;
 using StateStuff;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
-using Utils;
 
 namespace CardManagement.Physical
 {
@@ -28,12 +21,12 @@ namespace CardManagement.Physical
         /// <summary>
         /// Determines whether the card can be used on the board, only applies to minions.
         /// </summary>
-        public bool IsAwake { get; set; } = false;
+        public bool IsAwake => roundsActive > 1;
         
         /// <summary>
         /// Controls the active data of the physical card.
         /// </summary>
-        public ActiveCardController Controller { get; private set; }
+        public ActiveCardController CardController { get; private set; }
 
         /// <summary>
         /// Controls the visuals of the physical card.
@@ -55,27 +48,36 @@ namespace CardManagement.Physical
         /// </summary>
         public bool HasBeenPlayed { get; private set; }= false;
         
+        /// <summary>
+        /// Owner of the card.
+        /// </summary>
+        public Player Owner { get; private set; }
+        
         [SerializeField] private LogSettings logSettings;
 
         private StateMachine stateMachine;
-        private List<CardBehaviour> behaviours = new List<CardBehaviour>();
-
-        private bool initialized = false;
+        private CardBehaviourController cardBehaviourController;
+        
+        /// <summary>
+        /// Amount of rounds active.
+        /// <remarks>A round is a </remarks>
+        /// </summary>
+        private int roundsActive;
         
         /// <summary>
         /// Initialize the physical card.
         /// </summary>
-        public async void Initialize(CardInfo cardInfo, Player player, Transform movingContainer, Board board)
+        public void Initialize(CardInfo cardInfo, Player player, Transform movingContainer)
         {
             CardInfo = cardInfo;
+            Owner = player;
 
-            Visuals.Initialize(CardInfo.CardName, CardInfo.Description, CardInfo.ImageReference);
+            Visuals.Initialize(CardInfo.ImageReference);
 
-            Controller = new ActiveCardController(CardInfo, Visuals);
+            CardController = new ActiveCardController(CardInfo, Visuals);
+            cardBehaviourController = new CardBehaviourController(cardInfo.CardBehaviour, transform);
             
-            PrepareStateMachine(player, board, movingContainer);
-            await InitializeBehaviours(board);
-            initialized = true;
+            PrepareStateMachine(player, movingContainer);
         }
 
         /// <summary>
@@ -88,12 +90,16 @@ namespace CardManagement.Physical
                 return;
             }
             
+            cardBehaviourController.CallOnPlay();
             HasBeenPlayed = true;
+        }
 
-            foreach (CardBehaviour behaviour in behaviours)
-            {
-                behaviour.OnPlay();
-            }
+        /// <summary>
+        /// Add a round to the internal rounds counter.
+        /// </summary>
+        public void CountRound()
+        {
+            roundsActive++;
         }
 
         /// <summary>
@@ -103,6 +109,7 @@ namespace CardManagement.Physical
         public void OnPointerEnter(PointerEventData eventData)
         {
             IsHoveringOver = true;
+            PlayManager.Instance.Board.CardOfInterest = this;
             
             if (stateMachine.ActiveState is not null or HeldState)
             {
@@ -116,16 +123,22 @@ namespace CardManagement.Physical
         /// </summary>
         public void Select()
         {
-            behaviours.ForEach(behaviour => behaviour.OnSelect());
+            if (HasBeenPlayed && !IsAwake)
+            {
+                cardBehaviourController.CallOnSelect();
+            }
         }
 
-        /// <summary>
+        /// <summary>9
         /// Deselect the card.
         /// <remarks>Only works when the card <see cref="HasBeenPlayed"/>.</remarks>
         /// </summary>
         public void Deselect()
         {
-            behaviours.ForEach(behaviour => behaviour.OnDeselect());
+            if (HasBeenPlayed)
+            {
+                cardBehaviourController.CallOnDeselect();
+            }
         }
 
         /// <summary>
@@ -135,6 +148,10 @@ namespace CardManagement.Physical
         public void OnPointerExit(PointerEventData eventData)
         {
             IsHoveringOver = false;
+            if (PlayManager.Instance.Board.CardOfInterest != this)
+            {
+                PlayManager.Instance.Board.CardOfInterest = null;
+            }
         }
 
         private void Awake()
@@ -144,69 +161,19 @@ namespace CardManagement.Physical
 
         private void Update()
         {
-            if (!initialized)
-            {
-                return;
-            }
-            
             stateMachine?.Update();
 
             if (HasBeenPlayed)
             {
-                foreach (CardBehaviour behaviour in behaviours)
-                {
-                    behaviour.Update();
-                }
-            }
-        }
-        
-        private async Task InitializeBehaviours(Board board)
-        {
-            foreach (AssetReference reference in CardInfo.CardBehaviourReferences)
-            {
-                GameObject prefab = await ResourceUtils.LoadAddressableFromReference<GameObject>(reference);
-                GameObject spawned = Instantiate(prefab, transform);
-                
-                if (spawned.TryGetComponent(out CardBehaviour behaviour))
-                {
-                    behaviours.Add(behaviour);
-                }
-            }
-            
-            foreach (CardBehaviour behaviour in behaviours)
-            {
-                FieldInfo cardField = behaviour.GetType()
-                    .GetField("Card", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                if (cardField != null)
-                {
-                    cardField.SetValue(behaviour, this);
-                }
-                
-                FieldInfo loggerField = behaviour.GetType()
-                    .GetField("Logger", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                if (loggerField != null)
-                {
-                    loggerField.SetValue(behaviour, new TimedLogger {Enabled = logSettings.LogBehaviours});
-                }
-                
-                FieldInfo containerField = behaviour.GetType()
-                    .GetField("Container", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                if (containerField != null)
-                {
-                    containerField.SetValue(behaviour, board.DrawingContainer);
-                }
+                cardBehaviourController.CallUpdate();
             }
         }
 
-        private void PrepareStateMachine(Player player, Board board, Transform movingContainer)
+        private void PrepareStateMachine(Player player, Transform movingContainer)
         {
             stateMachine = new StateMachine(logSettings.LogStateMachine);
             stateMachine.AddReference("Card", this);
             stateMachine.AddReference("MovingContainer", movingContainer);
-            stateMachine.AddReference("Board", board);
             stateMachine.AddReference("Player", player);
             
             stateMachine.SetState(new HeldState());

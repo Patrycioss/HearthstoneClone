@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using CardManagement.Physical;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -13,55 +13,53 @@ namespace Game
 	public class Board : MonoBehaviour
 	{
 		/// <summary>
-		/// A read-only collection of all the cards on the board.
+		/// Wrapper object for a card container and its corresponding player.
 		/// </summary>
-		public IReadOnlyCollection<PhysicalCard> Cards => cards;
-
-		/// <summary>
-		/// Container to put temporary UI stuff in.
-		/// </summary>
-		public GameObject DrawingContainer => drawingContainer;
-		
-		/// <summary>
-		/// Returns whether the mouse is hovering over the board.
-		/// </summary>
-		public bool IsMouseHovering =>  RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition);
-		
-		/// <summary>
-		/// Returns whether the board has capacity for another card.
-		/// </summary>
-		public bool HasCapacity => cards.Count < GameManager.Instance.MaxBoardSize;
-		
-		[SerializeField] private GameObject cardContainer;
-		[SerializeField] private GameObject drawingContainer;
-		
-		private List<PhysicalCard> cards = new List<PhysicalCard>();
-
-		private RectTransform rectTransform;
-
-		/// <summary>
-		/// Finds the first card on the board that the player is hovering over.
-		/// </summary>
-		/// <returns>The first card on the board that the player is hovering over.</returns>
-		[CanBeNull]
-		public PhysicalCard GetFirstCardPlayerIsHoveringOver()
+		[Serializable]
+		public class CardContainer
 		{
-			return cards.FirstOrDefault(card => card.IsHoveringOver);
+			/// <summary>
+			/// Owner of the cards.
+			/// </summary>
+			public Player Owner;
+			
+			/// <summary>
+			/// Transform that is the parent to the cards.
+			/// </summary>
+			public Transform Container;
+
+			/// <summary>
+			/// Cards on the board.
+			/// </summary>
+			public List<PhysicalCard> Cards { get; set; } = new List<PhysicalCard>();
 		}
 		
+		/// <summary>
+		/// The last card the player is hovering over.
+		/// </summary>
+		[CanBeNull]
+		public PhysicalCard CardOfInterest { get; set; }
+		
+		[SerializeField] private List<CardContainer> containers;
+		
+		private Dictionary<Player, CardContainer> containerLookup = new Dictionary<Player,CardContainer>();
+
 		/// <summary>
 		/// Add a <see cref="PhysicalCard"/> to the board and the internal list.
 		/// </summary>
 		/// <param name="card">The <see cref="PhysicalCard"/> to add.</param>
-		public void TryAddCard(PhysicalCard card)
+		public void AddCard(PhysicalCard card)
 		{
-			if (!cards.Contains(card))
+			if (containerLookup.TryGetValue(card.Owner, out CardContainer container))
 			{
-				cards.Add(card);
-			}
-			card.transform.SetParent(cardContainer.transform);
+				if (!container.Cards.Contains(card))
+				{
+					container.Cards.Add(card);
+				}
+				card.transform.SetParent(container.Container);
 			
-			LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform) cardContainer.transform);
+				LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform) container.Container);
+			}
 		}
 		
 		/// <summary>
@@ -71,12 +69,48 @@ namespace Game
 		/// <returns>Whether it could be removed.</returns>
 		public bool TryRemoveCard(PhysicalCard card)
 		{
-			return cards.Remove(card);
+			if (containerLookup.TryGetValue(card.Owner, out CardContainer container))
+			{
+				return container.Cards.Remove(card);
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Returns whether the board has capacity for another card on the player's side.
+		/// </summary>
+		public bool DoesPlayerHaveCapacity(Player player)
+		{
+			if (containerLookup.TryGetValue(player, out CardContainer container))
+			{
+				return container.Cards.Count < GameManager.Instance.MaxBoardSize;
+			}
+
+			return false;
+		}
+		
+		/// <summary>
+		/// Returns all the cards on the board.
+		/// </summary>
+		public IEnumerable<PhysicalCard> GetAllCards()
+		{
+			List<PhysicalCard> cards = new List<PhysicalCard>();
+
+			foreach (CardContainer container in containers)
+			{
+				cards.AddRange(container.Cards);
+			}
+
+			return cards;
 		}
 		
 		private void Awake()
 		{
-			rectTransform = GetComponent<RectTransform>();
+			foreach (CardContainer container in containers)
+			{
+				containerLookup.TryAdd(container.Owner, container);
+			}
 		}
 	}
 }

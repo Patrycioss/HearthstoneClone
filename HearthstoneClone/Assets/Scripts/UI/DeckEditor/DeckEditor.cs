@@ -17,19 +17,14 @@ namespace UI.DeckEditor
 	/// </summary>
 	public class DeckEditor : MonoBehaviour
 	{
-		
 		[SerializeField] private AssetLabelReference cardsLabel;
 		[SerializeField] private AssetLabelReference cardPrefabLabel;
 		[SerializeField] private AssetLabelReference cardLayerPrefabLabel;
-		
 		[SerializeField] private GridLayoutGroup gridLayoutGroup;
 		[SerializeField] private VerticalLayoutGroup stackVerticalLayoutGroup;
-		
-		
 		[SerializeField] private DeckInformation deckInformation;
 
 		private GameManager gameManager;
-		private List<CardInfo> cards = new List<CardInfo>();
 
 		private List<GameObject> physicalCards = new List<GameObject>();
 
@@ -81,7 +76,6 @@ namespace UI.DeckEditor
 				
 				return cardInfos.Select((cardInfo, index) => (t: cardInfo, locations[index])).ToList();
 			}
-			
 
 			Debug.LogError($"Failed to load cards for deck editor.");
 			return new List<(CardInfo, IResourceLocation)>();

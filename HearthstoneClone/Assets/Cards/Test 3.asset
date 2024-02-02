@@ -21,11 +21,7 @@ MonoBehaviour:
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  CardBehaviourReferences:
-  - m_AssetGUID: 40814cde127670145b97dfc45ea273d5
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  CardBehaviour: {fileID: 0}
   Type: 0
   Health: 1
   Attack: 1

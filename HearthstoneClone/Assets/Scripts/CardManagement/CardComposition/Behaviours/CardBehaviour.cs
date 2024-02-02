@@ -1,5 +1,4 @@
-﻿using CardManagement.Physical;
-using CustomLogging;
+﻿using CustomLogging;
 using UnityEngine;
 
 namespace CardManagement.CardComposition.Behaviours
@@ -7,18 +6,14 @@ namespace CardManagement.CardComposition.Behaviours
 	/// <summary>
 	/// Behaviour associated with a card.
 	/// </summary>
-	public abstract class CardBehaviour : MonoBehaviour
+	public class CardBehaviour : MonoBehaviour
 	{
-		protected PhysicalCard Card;
-		protected TimedLogger Logger;
-		protected GameObject Container;
-		
 		/// <summary>
 		/// Called whenever the card is played from the hand.
 		/// </summary>
 		public virtual void OnPlay()
 		{
-			Logger.Log($"Behaviour of type {GetType()} OnPlay called!");
+			TimedLogger.Log($"Behaviour of type {GetType()} OnPlay called!");
 		}
 
 		/// <summary>
@@ -34,7 +29,7 @@ namespace CardManagement.CardComposition.Behaviours
 		/// </summary>
 		public virtual void OnSelect()
 		{
-			Logger.Log($"Behaviour of type {GetType()} OnSelect called!");
+			TimedLogger.Log($"Behaviour of type {GetType()} OnSelect called!");
 
 		}
 		
@@ -43,7 +38,7 @@ namespace CardManagement.CardComposition.Behaviours
 		/// </summary>
 		public virtual void OnDeselect()
 		{
-			Logger.Log($"Behaviour of type {GetType()} OnDeselect called!");
+			TimedLogger.Log($"Behaviour of type {GetType()} OnDeselect called!");
 		}
 	}
 }

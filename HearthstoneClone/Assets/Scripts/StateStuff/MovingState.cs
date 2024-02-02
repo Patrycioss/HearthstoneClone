@@ -12,14 +12,12 @@ namespace StateStuff
 	{
 		private PhysicalCard card;
 		private Transform movingContainer;
-		private Board board;
 		private Player player;
 		
 		public override void Start()
 		{
 			StateMachine.GetReference("Card", out card);
 			StateMachine.GetReference("MovingContainer", out movingContainer);
-			StateMachine.GetReference("Board", out board);
 			StateMachine.GetReference("Player", out player);
 			
 			card.transform.parent.SetParent(movingContainer);
@@ -49,23 +47,20 @@ namespace StateStuff
 
 		private bool CanBePlayed()
 		{
-			if (board.IsMouseHovering)
+			if (PlayManager.Instance.Board.DoesPlayerHaveCapacity(card.Owner) || card.CardInfo.Type != CardType.Minion)
 			{
-				if (board.HasCapacity || card.CardInfo.Type != CardType.Minion)
+				if (player.Mana.TryRemove(card.CardController.Cost))
 				{
-					if (player.Mana.TryRemove(card.Controller.Cost))
-					{
-						return true;
-					}
+					return true;
+				}
 
-					card.Visuals.ShowError(PhysicalCardVisuals.Error.NotEnoughMana);
-					// Debug.LogWarning($"Can't play card because the player doesn't have enough mana!");
-				}
-				else
-				{
-					card.Visuals.ShowError(PhysicalCardVisuals.Error.BoardIsFull);
-					// Debug.LogWarning($"Can't play minion because the board is full!");
-				}
+				card.Visuals.ShowError(PhysicalCardVisuals.Error.NotEnoughMana);
+				// Debug.LogWarning($"Can't play card because the player doesn't have enough mana!");
+			}
+			else
+			{
+				card.Visuals.ShowError(PhysicalCardVisuals.Error.BoardIsFull);
+				// Debug.LogWarning($"Can't play minion because the board is full!");
 			}
 			return false;
 		}

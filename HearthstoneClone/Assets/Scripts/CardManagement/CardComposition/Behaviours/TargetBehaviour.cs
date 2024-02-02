@@ -27,7 +27,7 @@ namespace CardManagement.CardComposition.Behaviours
 		{
 			base.OnSelect();
 
-			selector = Instantiate(selectorPrefab, Container.transform);
+			selector = Instantiate(selectorPrefab, transform);
 			if (selector != null)
 			{
 				selector.transform.localScale = Vector3.one;
@@ -37,8 +37,9 @@ namespace CardManagement.CardComposition.Behaviours
 		public override void OnDeselect()
 		{
 			base.OnDeselect();
-			
 
+			//Todo: check what card it's hovering over
+			
 			CleanUp();			
 		}
 

@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a2e314ab648450aac16a4853ce80671, type: 3}
-  m_Name: Test
+  m_Name: Fred
   m_EditorClassIdentifier: 
-  CardName: DOEI
-  Description: A test description for my test card.
+  CardName: Fred
+  Description: Just Fred.
   Cost: 1
   ImageReference:
-    m_AssetGUID: 04797641de2a4024aac8e3559f281d6c
-    m_SubObjectName: TestSprite
+    m_AssetGUID: 247b1142ec134444480eed38a75f7d7c
+    m_SubObjectName: fred
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  CardBehaviourReferences:
-  - m_AssetGUID: 40814cde127670145b97dfc45ea273d5
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  CardBehaviour: {fileID: 0}
   Type: 0
   Health: 1
   Attack: 1

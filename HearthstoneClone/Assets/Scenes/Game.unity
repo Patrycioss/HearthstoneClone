@@ -857,7 +857,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 894697326}
-  - component: {fileID: 894697327}
   m_Layer: 5
   m_Name: Player 1 Board
   m_TagString: Untagged
@@ -886,20 +885,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &894697327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894697325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cd9d87b064d48fabc2406a0ffaab855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardContainer: {fileID: 1541862301}
-  drawingContainer: {fileID: 486664676}
 --- !u!224 &904861029 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7047916550887144318, guid: 9d1838c561e72f845a76e57c801d2223,
@@ -955,8 +940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.50445, g: 0.9811321, b: 0.9289309, a: 1}
+  m_Material: {fileID: 2100000, guid: 63cda137f46717c4abbe6eadc60949d5, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -964,7 +949,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1254,7 +1239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 63cda137f46717c4abbe6eadc60949d5, type: 2}
   m_Color: {r: 0.9056604, g: 0.7507815, b: 0.6707013, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1289,7 +1274,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099981729}
-  - component: {fileID: 1099981730}
   m_Layer: 5
   m_Name: Player 2 Board
   m_TagString: Untagged
@@ -1318,20 +1302,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1099981730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099981728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cd9d87b064d48fabc2406a0ffaab855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardContainer: {fileID: 243912380}
-  drawingContainer: {fileID: 982897926}
 --- !u!1 &1141530567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,7 +1664,12 @@ PrefabInstance:
         type: 3}
       propertyPath: board
       value: 
-      objectReference: {fileID: 1099981730}
+      objectReference: {fileID: 1749094722}
+    - target: {fileID: 520313081814354185, guid: 9d1838c561e72f845a76e57c801d2223,
+        type: 3}
+      propertyPath: movingContainer
+      value: 
+      objectReference: {fileID: 1894312510}
     - target: {fileID: 520313081814354185, guid: 9d1838c561e72f845a76e57c801d2223,
         type: 3}
       propertyPath: intermediateContainer
@@ -1854,7 +1829,7 @@ PrefabInstance:
         type: 3}
       propertyPath: board
       value: 
-      objectReference: {fileID: 1099981730}
+      objectReference: {fileID: 0}
     - target: {fileID: 4422523876382896351, guid: 9d1838c561e72f845a76e57c801d2223,
         type: 3}
       propertyPath: boardContainer
@@ -2244,22 +2219,23 @@ MonoBehaviour:
     Name: Test Deck
     Description: Test description
     Cards:
-    - Assets/Cards/Test.asset
+    - Assets/Cards/Fred.asset
     - Assets/Cards/Test 1.asset
     - Assets/Cards/Test 2.asset
     - Assets/Cards/Test 3.asset
     - Assets/Cards/Test 2.asset
-    - Assets/Cards/Test.asset
+    - Assets/Cards/Fred.asset
     - Assets/Cards/Test 3.asset
     - Assets/Cards/Test 2.asset
     - Assets/Cards/Test 1.asset
-    - Assets/Cards/Test 2.asset
-    - Assets/Cards/Test 2.asset
-    - Assets/Cards/Test 1.asset
+    - Assets/Cards/Fred.asset
     - Assets/Cards/Test 2.asset
     - Assets/Cards/Test 1.asset
     - Assets/Cards/Test 2.asset
+    - Assets/Cards/Fred.asset
     - Assets/Cards/Test 2.asset
+    - Assets/Cards/Fred.asset
+  board: {fileID: 1749094722}
   player1: {fileID: 1862802815}
   player2: {fileID: 1527715523}
 --- !u!4 &1690057411
@@ -2346,8 +2322,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1749094720}
   - component: {fileID: 1749094721}
+  - component: {fileID: 1749094722}
   m_Layer: 5
-  m_Name: PlayingField
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2402,6 +2379,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1749094722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749094719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd9d87b064d48fabc2406a0ffaab855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containers:
+  - Owner: {fileID: 1862802815}
+    Container: {fileID: 1541862302}
+  - Owner: {fileID: 1527715523}
+    Container: {fileID: 243912381}
 --- !u!1 &1768001018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,7 +2412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1768001019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2434,10 +2428,10 @@ RectTransform:
   - {fileID: 355821095}
   m_Father: {fileID: 1545422114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1720, y: -340}
+  m_SizeDelta: {x: 400, y: 680}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1768001020
 MonoBehaviour:
@@ -2714,7 +2708,7 @@ PrefabInstance:
         type: 3}
       propertyPath: board
       value: 
-      objectReference: {fileID: 894697327}
+      objectReference: {fileID: 0}
     - target: {fileID: 520313081814354185, guid: 9d1838c561e72f845a76e57c801d2223,
         type: 3}
       propertyPath: intermediateContainer
@@ -2839,7 +2833,7 @@ PrefabInstance:
         type: 3}
       propertyPath: board
       value: 
-      objectReference: {fileID: 894697327}
+      objectReference: {fileID: 0}
     - target: {fileID: 4422523876382896351, guid: 9d1838c561e72f845a76e57c801d2223,
         type: 3}
       propertyPath: boardContainer

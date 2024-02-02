@@ -51,8 +51,6 @@ namespace CardManagement.Physical
 		/// </summary>
 		public IconController Attack => attackIcon;
 
-		[SerializeField] private TextMeshProUGUI title;
-		[SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image image;
         [SerializeField] private IconController costRoot;
         [SerializeField] private IconController healthIcon;
@@ -66,11 +64,8 @@ namespace CardManagement.Physical
         private Side cardSide = Side.Back;
         private CancellationTokenSource currentCancelSource = new CancellationTokenSource();
         
-        public async void Initialize(string titleText, string descriptionText, AssetReference imageReference)
+        public async void Initialize(AssetReference imageReference)
         {
-	        title.text = titleText;
-	        description.text = descriptionText;
-	        
 	        image.sprite = await LoadSprite(imageReference);
         }
         

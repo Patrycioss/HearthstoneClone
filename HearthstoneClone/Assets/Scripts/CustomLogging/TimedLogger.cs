@@ -7,9 +7,9 @@ namespace CustomLogging
 	/// </summary>
 	public class TimedLogger
 	{
-		public bool Enabled { get; set; } = true;
+		public static bool Enabled { get; set; } = true;
 		
-		public void Log(string message)
+		public static void Log(string message)
 		{
 			if (Enabled)
 			{
