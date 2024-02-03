@@ -1,6 +1,6 @@
 ﻿using CardManagement.Physical;
 
-namespace CardManagement.CardComposition.Behaviours
+namespace CardBehaviours
 {
 	/// <summary>
 	/// Behaviour that handles attacking a target.

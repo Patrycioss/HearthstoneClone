@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CardManagement.CardComposition.Behaviours;
+﻿using CardBehaviours;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utils;
@@ -11,12 +10,12 @@ namespace CardManagement.Physical
 	/// </summary>
 	public class CardBehaviourController
 	{
-		private List<CardBehaviour> behaviours = new List<CardBehaviour>();
-		private bool instantiatedBehaviours = false;
+		private bool instantiatedBehaviour = false;
+		private CardBehaviour behaviour;
 		
-		public CardBehaviourController(CardBehaviour behaviour, Transform behaviourParent)
+		public CardBehaviourController(AssetReference behaviour, Transform behaviourParent)
 		{
-			InitializeBehaviours(behaviour, behaviourParent);
+			InitializeBehaviour(behaviour, behaviourParent);
 		}
 		
 		/// <summary>
@@ -24,15 +23,12 @@ namespace CardManagement.Physical
 		/// </summary>
 		public void CallUpdate()
 		{
-			if (!instantiatedBehaviours)
+			if (!instantiatedBehaviour)
 			{
 				return;
 			}
 			
-			foreach (CardBehaviour behaviour in behaviours)
-			{
-				behaviour.Update();
-			}
+			behaviour.Update();
 		}
 
 		/// <summary>
@@ -40,12 +36,12 @@ namespace CardManagement.Physical
 		/// </summary>
 		public void CallOnPlay()
 		{
-			if (!instantiatedBehaviours)
+			if (!instantiatedBehaviour)
 			{
 				return;
 			}
 			
-			behaviours.ForEach(behaviour => behaviour.OnPlay());
+			behaviour.OnPlay();
 		}
 
 		/// <summary>
@@ -53,12 +49,12 @@ namespace CardManagement.Physical
 		/// </summary>
 		public void CallOnSelect()
 		{
-			if (!instantiatedBehaviours)
+			if (!instantiatedBehaviour)
 			{
 				return;
 			}
 			
-			behaviours.ForEach(behaviour => behaviour.OnSelect());
+			behaviour.OnSelect();
 		}
 
 		/// <summary>
@@ -66,27 +62,26 @@ namespace CardManagement.Physical
 		/// </summary>
 		public void CallOnDeselect()
 		{
-			if (!instantiatedBehaviours)
+			if (!instantiatedBehaviour)
 			{
 				return;
 			}
 			
-			behaviours.ForEach(behaviour => behaviour.OnDeselect());
+			behaviour.OnDeselect();
 		}
 		
-		private async void InitializeBehaviours(CardBehaviour behaviourReferences, Transform behaviourParent)
+		private async void InitializeBehaviour(AssetReference behaviourReference, Transform behaviourParent)
 		{
-			// foreach (AssetReference reference in behaviourReferences)
-			// {
-			// 	GameObject spawned = await ResourceUtils.InstantiateFromHandle(reference.InstantiateAsync(behaviourParent));
-   //              
-			// 	if (spawned.TryGetComponent(out CardBehaviour behaviour))
-			// 	{
-			// 		behaviours.Add(behaviour);
-			// 	}
-			// }
+			GameObject spawned = await ResourceUtils.InstantiateFromHandle(behaviourReference.InstantiateAsync(behaviourParent));
 
-			// instantiatedBehaviours = true;
+			if (spawned.TryGetComponent(out behaviour))
+			{
+				instantiatedBehaviour = true;
+			}
+			else
+			{
+				Debug.LogError($"Couldn't find card behaviour on prefab!");
+			}
 		}
 	}
 }

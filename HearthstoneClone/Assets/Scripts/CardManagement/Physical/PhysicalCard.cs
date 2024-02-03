@@ -92,6 +92,7 @@ namespace CardManagement.Physical
 
             Owner.TryRemoveCard(this);
             HasBeenPlayed = true;
+            cardBehaviourController.CallOnPlay();
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardManagement.CardComposition.Behaviours;
 using CustomEditor;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -44,9 +43,8 @@ namespace CardManagement.CardComposition
 		// /// </summary>
 		// public List<AssetReference> CardBehaviourReferences = new List<AssetReference>();
 
-		public CardBehaviour CardBehaviour;
+		public AssetReference CardBehaviour;
 		
-
 		/// <summary>
 		/// Type of the card.
 		/// </summary>

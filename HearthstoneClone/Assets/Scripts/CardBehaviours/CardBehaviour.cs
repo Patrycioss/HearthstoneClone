@@ -1,7 +1,7 @@
 ﻿using CustomLogging;
 using UnityEngine;
 
-namespace CardManagement.CardComposition.Behaviours
+namespace CardBehaviours
 {
 	/// <summary>
 	/// Behaviour associated with a card.

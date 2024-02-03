@@ -1,7 +1,7 @@
 ﻿using CardManagement.Physical;
 using UnityEngine;
 
-namespace CardManagement.CardComposition.Behaviours
+namespace CardBehaviours
 {
 	public class TargetBehaviour : CardBehaviour
 	{
@@ -39,6 +39,11 @@ namespace CardManagement.CardComposition.Behaviours
 			base.OnDeselect();
 
 			//Todo: check what card it's hovering over
+			Debug.DrawRay(transform.position, Vector3.forward);
+			if (Physics.Raycast(transform.position, Vector3.forward, out RaycastHit hit))
+			{ 
+				Debug.LogError($"{hit.transform.name}");
+			}
 			
 			CleanUp();			
 		}
