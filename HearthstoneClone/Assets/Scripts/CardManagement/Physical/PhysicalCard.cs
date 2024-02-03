@@ -21,7 +21,7 @@ namespace CardManagement.Physical
         /// <summary>
         /// Determines whether the card can be used on the board, only applies to minions.
         /// </summary>
-        public bool IsAwake => roundsActive > 1;
+        public bool IsAwake => roundsActive > 0;
         
         /// <summary>
         /// Controls the active data of the physical card.
@@ -57,6 +57,7 @@ namespace CardManagement.Physical
 
         private StateMachine stateMachine;
         private CardBehaviourController cardBehaviourController;
+        private bool isSelected = false;
         
         /// <summary>
         /// Amount of rounds active.
@@ -120,24 +121,26 @@ namespace CardManagement.Physical
         
         /// <summary>
         /// Select the card.
-        /// <remarks>Only works when the card <see cref="HasBeenPlayed"/> and not <see cref="IsAwake"/>.</remarks>
+        /// <remarks>Only works when the card <see cref="HasBeenPlayed"/>.</remarks>
         /// </summary>
         public void Select()
         {
-            if (HasBeenPlayed && !IsAwake)
+            if (HasBeenPlayed)
             {
+                isSelected = true;
                 cardBehaviourController.CallOnSelect();
             }
         }
 
         /// <summary>9
         /// Deselect the card.
-        /// <remarks>Only works when the card <see cref="HasBeenPlayed"/>.</remarks>
+        /// <remarks>Only works when the card <see cref="HasBeenPlayed"/> and is currently selected.</remarks>
         /// </summary>
         public void Deselect()
         {
-            if (HasBeenPlayed)
+            if (isSelected && HasBeenPlayed)
             {
+                isSelected = false;
                 cardBehaviourController.CallOnDeselect();
             }
         }

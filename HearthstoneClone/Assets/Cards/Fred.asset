@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Fred
   m_EditorClassIdentifier: 
   CardName: Fred
-  Description: Just Fred.
   Cost: 1
   ImageReference:
     m_AssetGUID: 247b1142ec134444480eed38a75f7d7c
@@ -21,7 +20,11 @@ MonoBehaviour:
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  CardBehaviour: {fileID: 0}
+  CardBehaviour:
+    m_AssetGUID: b64b19011b022d94c9d250963a731699
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Type: 0
   Health: 1
   Attack: 1

@@ -8,6 +8,8 @@ namespace CardBehaviours
 	/// </summary>
 	public class CardBehaviour : MonoBehaviour
 	{
+		protected bool Selected;
+		
 		/// <summary>
 		/// Called whenever the card is played from the hand.
 		/// </summary>
@@ -29,8 +31,8 @@ namespace CardBehaviours
 		/// </summary>
 		public virtual void OnSelect()
 		{
+			Selected = true;
 			TimedLogger.Log($"Behaviour of type {GetType()} OnSelect called!");
-
 		}
 		
 		/// <summary>
@@ -38,6 +40,7 @@ namespace CardBehaviours
 		/// </summary>
 		public virtual void OnDeselect()
 		{
+			Selected = false;
 			TimedLogger.Log($"Behaviour of type {GetType()} OnDeselect called!");
 		}
 	}
