@@ -1,5 +1,5 @@
-﻿using CardManagement.Physical;
-using Game;
+﻿using Game;
+using PhysicalCards;
 using UnityEngine;
 using UnityEngine.UI;
 

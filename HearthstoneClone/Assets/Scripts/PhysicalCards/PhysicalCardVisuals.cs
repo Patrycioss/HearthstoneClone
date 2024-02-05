@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 using Utils;
 using Task = System.Threading.Tasks.Task;
 
-namespace CardManagement.Physical
+namespace PhysicalCards
 {
 	/// <summary>
 	/// Controls all the visuals of the <see cref="PhysicalCard"/>.

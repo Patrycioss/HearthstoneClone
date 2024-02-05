@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a2e314ab648450aac16a4853ce80671, type: 3}
-  m_Name: Test 4
+  m_Name: Bert
   m_EditorClassIdentifier: 
-  CardName: COSTS MANA
-  Description: A test description for my test card.
-  Cost: 1
+  CardName: Bert
+  Cost: 3
   ImageReference:
-    m_AssetGUID: 04797641de2a4024aac8e3559f281d6c
-    m_SubObjectName: TestSprite
+    m_AssetGUID: 06bc539a8cd31c24f9d86310574f8b74
+    m_SubObjectName: bert_the_cow
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
-  CardBehaviourReferences:
-  - m_AssetGUID: 40814cde127670145b97dfc45ea273d5
+  CardBehaviour:
+    m_AssetGUID: b64b19011b022d94c9d250963a731699
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   Type: 0
-  Health: 1
-  Attack: 1
+  Health: 3
+  Attack: 3
   MinionAttributes: 

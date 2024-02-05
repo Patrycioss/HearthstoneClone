@@ -1,4 +1,4 @@
-﻿namespace CardManagement.CardComposition
+﻿namespace CardComposition
 {
 	/// <summary>
 	/// Type of card.

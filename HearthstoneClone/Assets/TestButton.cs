@@ -1,6 +1,6 @@
-using CardManagement.CardComposition;
-using CardManagement.Physical;
+using CardComposition;
 using Game;
+using PhysicalCards;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;

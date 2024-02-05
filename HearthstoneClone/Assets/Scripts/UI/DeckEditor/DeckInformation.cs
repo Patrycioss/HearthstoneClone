@@ -1,5 +1,5 @@
 ﻿using Deck;
-using Deck.DeckManagement;
+using IOSystem;
 using TMPro;
 using UI.Generic;
 using UnityEngine;
@@ -21,7 +21,6 @@ namespace UI.DeckEditor
 		[SerializeField] private ButtonContainer saveButton;
 		[SerializeField] private Message message;
 		
-		private DiskManager diskManager;
 		private DeckInfo deckInfo;
 
 		/// <summary>
@@ -31,9 +30,8 @@ namespace UI.DeckEditor
 		public void Initialize(DeckInfo initDeckInfo)
 		{
 			deckInfo = initDeckInfo;
-			diskManager = GameManager.Instance.DiskManager;
 			ShouldSave = false;
-			
+
 			SetUpText();
 		}
 
@@ -82,7 +80,7 @@ namespace UI.DeckEditor
 			
 			if (ShouldSave)
 			{
-				await diskManager.SaveToDisk(deckInfo);
+				await DiskManager.SaveToDisk(deckInfo);
 				ShouldSave = false;
 			}
 		}

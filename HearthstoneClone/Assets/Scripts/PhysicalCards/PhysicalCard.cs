@@ -1,11 +1,11 @@
-using CardManagement.CardComposition;
+using CardComposition;
 using Game;
 using Settings;
 using StateStuff;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CardManagement.Physical
+namespace PhysicalCards
 {
     /// <summary>
     /// Physical card in the game.

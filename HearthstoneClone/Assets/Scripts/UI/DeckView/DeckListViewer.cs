@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Deck;
-using Deck.DeckManagement;
+using IOSystem;
 using UI.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -21,15 +21,12 @@ namespace UI.DeckView
 		[SerializeField] private GameObject selectedOptionsElement;
 		[SerializeField] private ConfirmationScreen confirmationScreen;
 
-		private DiskManager diskManager;
-		
 		private List<DeckInfo> decks = new();
 		private DeckInfo selectedDeck = null;
 		private DeckCard selectedDeckCard = null;
 		
 		private void Start()
 		{
-			diskManager = GameManager.Instance.DiskManager;
 			selectedOptionsElement.SetActive(false);
 			LoadDecks();
 		}
@@ -43,7 +40,7 @@ namespace UI.DeckView
 
 		private async void LoadDecks()
 		{
-			decks = await diskManager.LoadFromDisk<DeckInfo>(SaveDirectory.Decks);
+			decks = await DiskManager.LoadFromDisk<DeckInfo>(SaveDirectory.Decks);
 			
 			for (int i = 0; i < decks.Count; i++)
 			{
@@ -130,7 +127,7 @@ namespace UI.DeckView
 				MessageText = $"Are you sure you wish to delete this deck?",
 				OnConfirm = () =>
 				{
-					diskManager.RemoveFromDisk(selectedDeck);
+					DiskManager.RemoveFromDisk(selectedDeck);
 					Destroy(selectedDeckCard.gameObject);
 				}
 			});

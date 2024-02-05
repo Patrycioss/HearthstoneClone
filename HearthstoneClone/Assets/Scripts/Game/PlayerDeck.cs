@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CardManagement.CardComposition;
+using CardComposition;
 using JetBrains.Annotations;
 using Random = UnityEngine.Random;
 

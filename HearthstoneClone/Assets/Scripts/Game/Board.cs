@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardManagement.Physical;
 using JetBrains.Annotations;
+using PhysicalCards;
 using UnityEngine;
 using UnityEngine.UI;
 

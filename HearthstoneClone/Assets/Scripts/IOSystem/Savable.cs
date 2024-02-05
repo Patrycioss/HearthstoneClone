@@ -3,7 +3,7 @@ using System.IO;
 using ErrorHandling;
 using UnityEngine;
 
-namespace Deck.DeckManagement
+namespace IOSystem
 {
 	/// <summary>
 	/// Contains information of what to save and where to save it.
@@ -30,7 +30,7 @@ namespace Deck.DeckManagement
 			Result<string> result = new Result<string>();
 
 			string identifierString = Identifier.ToString();
-			
+			 
 			if (string.IsNullOrEmpty(identifierString))
 			{
 				return result + $"Failed to make a path for {ToString()} as Name is empty!";

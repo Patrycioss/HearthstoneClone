@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Deck;
-using Deck.DeckManagement;
+using IOSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,8 +20,6 @@ namespace DebugTools
 		[SerializeField] private Button loadSpecificButton;
 		[SerializeField] private Button loadAllButton;
 
-		private DiskManager diskManager;
-
 		private void Awake()
 		{
 			saveSpecificButton.onClick.AddListener(OnSaveSpecificButtonClick);
@@ -30,26 +28,21 @@ namespace DebugTools
 			loadAllButton.onClick.AddListener(OnLoadAllButtonClick);
 		}
 
-		private void Start()
-		{
-			diskManager = GameManager.Instance.DiskManager;
-		}
-
 		private async void OnSaveSpecificButtonClick()
 		{
-			await diskManager.SaveToDisk(deckToSave);
+			await DiskManager.SaveToDisk(deckToSave);
 		}
 
 		private async void OnSaveAllButtonClick()
 		{
-			await diskManager.SaveToDisk(decksToSave);
+			await DiskManager.SaveToDisk(decksToSave);
 		}
 
 		private async void OnLoadSpecificButtonClick()
 		{
 			if (!string.IsNullOrEmpty(deckToLoad))
 			{
-				DeckInfo deck = await diskManager.LoadFromDisk<DeckInfo>(deckToLoad)!;
+				DeckInfo deck = await DiskManager.LoadFromDisk<DeckInfo>(deckToLoad)!;
 				if (deck != null)
 				{
 					Debug.Log($"Loaded {deck}");
@@ -59,7 +52,7 @@ namespace DebugTools
 
 		private async void OnLoadAllButtonClick()
 		{
-			List<DeckInfo> loadedDecks = await diskManager.LoadFromDisk<DeckInfo>(directoryToLoadFrom);
+			List<DeckInfo> loadedDecks = await DiskManager.LoadFromDisk<DeckInfo>(directoryToLoadFrom);
 			foreach (DeckInfo deck in loadedDecks)
 			{
 				if (deck != null)

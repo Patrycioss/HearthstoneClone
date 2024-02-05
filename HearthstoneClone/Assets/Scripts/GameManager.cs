@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Deck.DeckManagement;
+using IOSystem;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -12,11 +12,6 @@ public class GameManager : MonoBehaviour
    /// Active instance of this GameManager.
    /// </summary>
    public static GameManager Instance;
-   
-   /// <summary>
-   /// Active <see cref="DiskManager"/>.
-   /// </summary>
-   public DiskManager DiskManager { get; private set; }
    
    /// <summary>
    /// Active <see cref="SceneSwapper"/>.
@@ -107,7 +102,6 @@ public class GameManager : MonoBehaviour
       
       DontDestroyOnLoad(this);
 
-      DiskManager = new DiskManager();
       DiskManager.Initialize();
 
       SceneSwapper = new SceneSwapper();

@@ -1,4 +1,4 @@
-﻿using CardManagement.Physical;
+﻿using PhysicalCards;
 
 namespace CardBehaviours
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CardManagement.CardComposition;
-using CardManagement.Physical;
+using CardComposition;
 using Deck;
+using PhysicalCards;
 using UnityEngine;
 using Utils;
 

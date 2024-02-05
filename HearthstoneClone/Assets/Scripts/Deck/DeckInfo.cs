@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Deck.DeckManagement;
+using IOSystem;
 using JetBrains.Annotations;
 
 namespace Deck

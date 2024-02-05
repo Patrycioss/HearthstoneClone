@@ -1,4 +1,4 @@
-﻿namespace CardManagement.CardComposition
+﻿namespace CardComposition
 {
 	/// <summary>
 	/// Special attributes that a minion can have.

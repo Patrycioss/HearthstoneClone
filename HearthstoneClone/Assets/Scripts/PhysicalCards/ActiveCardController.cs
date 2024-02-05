@@ -1,8 +1,7 @@
-﻿using CardManagement.CardComposition;
-using CardManagement.Physical;
+﻿using CardComposition;
 using Game;
 
-namespace CardManagement
+namespace PhysicalCards
 {
 	/// <summary>
 	/// Controls the stats of an active card in the game.

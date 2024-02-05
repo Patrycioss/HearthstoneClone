@@ -1,6 +1,6 @@
-﻿using CardManagement.CardComposition;
-using CardManagement.Physical;
+﻿using CardComposition;
 using Game;
+using PhysicalCards;
 using UnityEngine;
 
 namespace StateStuff

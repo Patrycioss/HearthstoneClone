@@ -6,7 +6,7 @@ using ErrorHandling;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace Deck.DeckManagement
+namespace IOSystem
 {
 	/// <summary>
 	/// Loads an object from disk into memory.
@@ -18,7 +18,7 @@ namespace Deck.DeckManagement
 		/// </summary>
 		/// <param name="path">Path of the <see cref="Savable"/> to load.</param>
 		/// <returns>An object containing the <see cref="Savable"/> and whether it succeeded retrieving it.</returns>
-		public async Task<Result<T>> LoadFromPath<T>([NotNull] string path) where T : Savable
+		public static async Task<Result<T>> LoadFromPath<T>([NotNull] string path) where T : Savable
 		{
 			Result<T> result = new Result<T>();
 			

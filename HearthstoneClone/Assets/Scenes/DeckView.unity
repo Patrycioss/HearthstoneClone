@@ -522,6 +522,16 @@ PrefabInstance:
       propertyPath: deckCardLabel.m_LabelString
       value: deck_card_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4606269671446861163, guid: 7163a0f6bfe01f14fa50631e719d9890,
+        type: 3}
+      propertyPath: m_CellSize.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606269671446861163, guid: 7163a0f6bfe01f14fa50631e719d9890,
+        type: 3}
+      propertyPath: m_CellSize.y
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4668867735034730033, guid: 7163a0f6bfe01f14fa50631e719d9890,
         type: 3}
       propertyPath: m_AnchorMax.x

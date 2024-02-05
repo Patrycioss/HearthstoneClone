@@ -1,5 +1,5 @@
 ﻿using System;
-using CardManagement.CardComposition;
+using CardComposition;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

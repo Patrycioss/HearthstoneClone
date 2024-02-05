@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utils;
 
-namespace CardManagement.Physical
+namespace PhysicalCards
 {
 	/// <summary>
 	/// Manages the <see cref="CardBehaviour"/> on a <see cref="PhysicalCard"/>.

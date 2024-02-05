@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d9bae0423e776b647b7a3e6ca705f21a
   m_SerializeEntries:
-  - m_GUID: 04797641de2a4024aac8e3559f281d6c
-    m_Address: Assets/TestSprite.png
+  - m_GUID: 06bc539a8cd31c24f9d86310574f8b74
+    m_Address: Assets/Sprites/bert_the_cow.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

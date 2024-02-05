@@ -5,7 +5,7 @@ using ErrorHandling;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace Deck.DeckManagement
+namespace IOSystem
 {
 	/// <summary>
 	/// Saves a <see cref="Savable"/> from memory to disk.
@@ -18,7 +18,7 @@ namespace Deck.DeckManagement
 		/// <param name="savable"><see cref="Savable"/> object to save.</param>
 		/// <returns>Whether the saving succeeded or not.</returns>
 		[NotNull]
-		public async Task<Result> Save(Savable savable)
+		public static async Task<Result> Save(Savable savable)
 		{
 			Result result = new Result();
 

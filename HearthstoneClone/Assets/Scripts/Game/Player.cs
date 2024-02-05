@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CardManagement.CardComposition;
-using CardManagement.Physical;
+using CardComposition;
+using PhysicalCards;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -25,8 +25,6 @@ namespace Game
 			set
 			{
 				isLocked = value;
-
-				Debug.Log($"{physicalCards.Count}");
 
 				foreach (PhysicalCard card in physicalCards)
 				{

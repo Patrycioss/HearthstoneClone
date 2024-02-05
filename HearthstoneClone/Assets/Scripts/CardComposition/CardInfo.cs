@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CardManagement.CardComposition
+namespace CardComposition
 {
 	/// <summary>
 	/// Contains the information associated with a card.

@@ -6,27 +6,19 @@ using ErrorHandling;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Deck.DeckManagement
+namespace IOSystem
 {
 	/// <summary>
 	/// Generic IO for saving and loading a <see cref="Savable"/> which uses <see cref="DiskSaver"/> and <see cref="DiskLoader"/>.
 	/// </summary>
 	public class DiskManager
 	{
-		private DiskSaver diskSaver;
-		private DiskLoader diskLoader;
-
 		/// <summary>
 		/// Initializes this DiskManager.
 		/// </summary>
 		/// <remarks>Should only be called once.</remarks>
-		public void Initialize()
+		public static void Initialize()
 		{			
-			Debug.Log($"Initializing DiskManager.");
-		
-			diskSaver = new DiskSaver();
-			diskLoader = new DiskLoader();
-			
 			PerformDirectoryChecks();
 		}
 
@@ -34,7 +26,7 @@ namespace Deck.DeckManagement
 		/// Try to remove a <see cref="Savable"/> from disk.
 		/// </summary>
 		/// <param name="savable">A <see cref="Savable"/> to delete.</param>
-		public void RemoveFromDisk([NotNull] Savable savable)
+		public static void RemoveFromDisk([NotNull] Savable savable)
 		{
 			Result result = new Result();
 
@@ -69,9 +61,9 @@ namespace Deck.DeckManagement
 		/// Save a <see cref="Savable"/> to disk using <see cref="DiskSaver"/>.
 		/// </summary>
 		/// <param name="savable"><see cref="Savable"/> to save.</param>
-		public async Task SaveToDisk([NotNull] Savable savable)
+		public static async Task SaveToDisk([NotNull] Savable savable)
 		{
-			Result result = await diskSaver.Save(savable);
+			Result result = await DiskSaver.Save(savable);
 			Debug.Log(result);
 		}
 
@@ -79,7 +71,7 @@ namespace Deck.DeckManagement
 		/// Save multiple <see cref="Savable"/> to disk using <see cref="DiskSaver"/>.
 		/// </summary>
 		/// <param name="savableList">A collection of <see cref="Savable"/>.</param>
-		public async Task SaveToDisk([NotNull] IEnumerable<Savable> savableList)
+		public static async Task SaveToDisk([NotNull] IEnumerable<Savable> savableList)
 		{
 			foreach (Savable savable in savableList)
 			{
@@ -94,9 +86,9 @@ namespace Deck.DeckManagement
 		/// <typeparam name="T">Type of <see cref="Savable"/> to load.</typeparam>
 		/// <returns>The loaded <see cref="Savable"/>.</returns>
 		[CanBeNull]
-		public async Task<T> LoadFromDisk<T>([NotNull] string path) where T : Savable
+		public static async Task<T> LoadFromDisk<T>([NotNull] string path) where T : Savable
 		{
-			Result<T> result = await diskLoader.LoadFromPath<T>(path);
+			Result<T> result = await DiskLoader.LoadFromPath<T>(path);
 			Debug.Log(result);
 			return result.Value;
 		}
@@ -107,7 +99,7 @@ namespace Deck.DeckManagement
 		/// <param name="saveDirectory">The <see cref="SaveDirectory"/> to load the <see cref="Savable"/> from.</param>
 		/// <typeparam name="T">Type of <see cref="Savable"/> to load.</typeparam>
 		/// <returns>A <see cref="ICollection{T}"/> where T is a <see cref="Savable"/>.</returns>
-		public async Task<List<T>> LoadFromDisk<T>(SaveDirectory saveDirectory) where T : Savable
+		public static async Task<List<T>> LoadFromDisk<T>(SaveDirectory saveDirectory) where T : Savable
 		{
 			Result<List<T>> result = new Result<List<T>>()
 			{
@@ -135,7 +127,7 @@ namespace Deck.DeckManagement
 			{
 				foreach (string filePath in Directory.GetFiles(directoryPath))
 				{
-					Result<T> loadResult = await diskLoader.LoadFromPath<T>(filePath);
+					Result<T> loadResult = await DiskLoader.LoadFromPath<T>(filePath);
 					result += loadResult.Message;
 
 					if (loadResult.Value != null)
@@ -153,7 +145,7 @@ namespace Deck.DeckManagement
 		/// Check if the directories defined in <see cref="SaveDirectory"/> exist
 		/// so the individual calls don't have to check for that.
 		/// </summary>
-		private void PerformDirectoryChecks()
+		private static void PerformDirectoryChecks()
 		{
 			Result result = new Result();
 			

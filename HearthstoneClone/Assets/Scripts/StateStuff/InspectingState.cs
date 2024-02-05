@@ -1,4 +1,4 @@
-﻿using CardManagement.Physical;
+﻿using PhysicalCards;
 using UnityEngine;
 
 namespace StateStuff
@@ -23,15 +23,10 @@ namespace StateStuff
 			{
 				if (card.HasBeenPlayed)
 				{
-					Debug.LogWarning("3");
-
 					if (!card.IsLocked)
 					{							
-						Debug.LogWarning("4");
-                        
 						if (card.IsAwake)
 						{
-							Debug.LogWarning("5");
 							card.Select();
 						}
 					}

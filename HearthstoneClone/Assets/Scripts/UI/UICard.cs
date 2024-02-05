@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CardManagement.CardComposition;
+using CardComposition;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
