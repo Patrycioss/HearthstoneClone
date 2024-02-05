@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['oncancel_0',['OnCancel',['../d3/d4b/class_u_i_1_1_generic_1_1_confirmation_screen_configuration.html#a330cce30684c2ec6c3cac91a2d9ca529',1,'UI::Generic::ConfirmationScreenConfiguration']]],
-  ['onconfirm_1',['OnConfirm',['../d3/d4b/class_u_i_1_1_generic_1_1_confirmation_screen_configuration.html#a0b519aedd4c79b0084c424ff0fd51fc1',1,'UI::Generic::ConfirmationScreenConfiguration']]],
-  ['oncontinue_2',['OnContinue',['../db/de8/class_u_i_1_1_generic_1_1_message_configuration.html#ac7bb444b94dc53864d8105b262741ede',1,'UI::Generic::MessageConfiguration']]]
+  ['statemachine_0',['StateMachine',['../db/d2f/class_state_stuff_1_1_state.html#a57855a6c67a5371a7dc029419cc6b6a1',1,'StateStuff::State']]],
+  ['success_1',['Success',['../d2/d34/class_error_handling_1_1_result.html#ac43a71560f75b294d3ae6bd027697ca8',1,'ErrorHandling::Result']]]
 ];

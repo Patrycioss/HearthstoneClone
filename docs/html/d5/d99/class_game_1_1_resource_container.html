@@ -102,12 +102,19 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMaximum</b> ()</td></tr>
 <tr class="memdesc:a90097fc62e3ff50ffbe6ca26363e8d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables UsesMaximum. <br /></td></tr>
 <tr class="separator:a90097fc62e3ff50ffbe6ca26363e8d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0945bdf39093eaa46fef927c55595da" id="r_ad0945bdf39093eaa46fef927c55595da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0945bdf39093eaa46fef927c55595da">SetTotal</a> (int value)</td></tr>
+<tr class="memdesc:ad0945bdf39093eaa46fef927c55595da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ignores everything and just sets the total to the value.  <br /></td></tr>
+<tr class="separator:ad0945bdf39093eaa46fef927c55595da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82f9895bce76aea285a2a1e867727e98" id="r_a82f9895bce76aea285a2a1e867727e98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82f9895bce76aea285a2a1e867727e98">AddOrRemove</a> (int amount, bool ignoreMax=false)</td></tr>
 <tr class="memdesc:a82f9895bce76aea285a2a1e867727e98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add or remove an amount of resources.  <br /></td></tr>
 <tr class="separator:a82f9895bce76aea285a2a1e867727e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b5c38ff7dd357f6e018872f85a95bba" id="r_a9b5c38ff7dd357f6e018872f85a95bba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b5c38ff7dd357f6e018872f85a95bba">TryRemove</a> (int amount)</td></tr>
 <tr class="memdesc:a9b5c38ff7dd357f6e018872f85a95bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there's enough of the resource to remove, if not doesn't remove it.  <br /></td></tr>
 <tr class="separator:a9b5c38ff7dd357f6e018872f85a95bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a760deb0ca4186dc2648ca6d8a1f9fd98" id="r_a760deb0ca4186dc2648ca6d8a1f9fd98"><td class="memItemLeft" align="right" valign="top"><a id="a760deb0ca4186dc2648ca6d8a1f9fd98" name="a760deb0ca4186dc2648ca6d8a1f9fd98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Fill</b> ()</td></tr>
+<tr class="memdesc:a760deb0ca4186dc2648ca6d8a1f9fd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the resource container to its maximum. Only works if there is a maximum. <br /></td></tr>
+<tr class="separator:a760deb0ca4186dc2648ca6d8a1f9fd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
@@ -125,10 +132,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>UsesMaximum</b><code>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="events" name="events"></a>
 Events</h2></td></tr>
-<tr class="memitem:a6c738adc7cafd928de988c8016b2f1dd" id="r_a6c738adc7cafd928de988c8016b2f1dd"><td class="memItemLeft" align="right" valign="top"><a id="a6c738adc7cafd928de988c8016b2f1dd" name="a6c738adc7cafd928de988c8016b2f1dd"></a>
-Action&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OnChanged</b></td></tr>
-<tr class="memdesc:a6c738adc7cafd928de988c8016b2f1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the amount of the resource changes. <br /></td></tr>
-<tr class="separator:a6c738adc7cafd928de988c8016b2f1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb3429e49fa9cd53a7725c4b7efb6e41" id="r_afb3429e49fa9cd53a7725c4b7efb6e41"><td class="memItemLeft" align="right" valign="top"><a id="afb3429e49fa9cd53a7725c4b7efb6e41" name="afb3429e49fa9cd53a7725c4b7efb6e41"></a>
+Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnChanged</b></td></tr>
+<tr class="memdesc:afb3429e49fa9cd53a7725c4b7efb6e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the amount of the resource changes. <br /></td></tr>
+<tr class="separator:afb3429e49fa9cd53a7725c4b7efb6e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8d131780cb45bcddff35a546a3fe97c" id="r_ac8d131780cb45bcddff35a546a3fe97c"><td class="memItemLeft" align="right" valign="top"><a id="ac8d131780cb45bcddff35a546a3fe97c" name="ac8d131780cb45bcddff35a546a3fe97c"></a>
 Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnEmpty</b></td></tr>
 <tr class="memdesc:ac8d131780cb45bcddff35a546a3fe97c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the amount reaches 0. <br /></td></tr>
@@ -277,6 +284,39 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnEmpty</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">maximum</td><td>The new maximum.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad0945bdf39093eaa46fef927c55595da" name="ad0945bdf39093eaa46fef927c55595da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0945bdf39093eaa46fef927c55595da">&#9670;&#160;</a></span>SetTotal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Game.ResourceContainer.SetTotal </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ignores everything and just sets the total to the value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Value to set to.</td></tr>
   </table>
   </dd>
 </dl>

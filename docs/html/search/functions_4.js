@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['getcard_0',['GetCard',['../df/df8/class_game_1_1_player_deck.html#a45810624ec4572d4afb8b5e763fb2704',1,'Game::PlayerDeck']]],
-  ['getpath_1',['GetPath',['../dd/d13/class_deck_1_1_deck_management_1_1_savable.html#adab6e020929c7306dfa01548b5941efb',1,'Deck::DeckManagement::Savable']]],
-  ['getsprite_2',['GetSprite',['../dd/de2/class_asset_management_1_1_sprites_1_1_sprite_manager.html#a46a5fc4f9fe6286947be7340d1f55e22',1,'AssetManagement::Sprites::SpriteManager']]],
-  ['gettransferable_3',['GetTransferable',['../db/d10/class_game_manager.html#a8f8be9eeae19d2fb89ea2756218a84ad',1,'GameManager']]]
+  ['fill_0',['Fill',['../d5/d99/class_game_1_1_resource_container.html#a760deb0ca4186dc2648ca6d8a1f9fd98',1,'Game::ResourceContainer']]],
+  ['flip_1',['Flip',['../d0/df9/class_physical_cards_1_1_physical_card_visuals.html#a9f82f81b765eedb44e960599ccb483ff',1,'PhysicalCards::PhysicalCardVisuals']]]
 ];

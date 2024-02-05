@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_0',['Type',['../d2/d3b/class_card_management_1_1_card_composition_1_1_card_info.html#a3acefb1a0508e86f71e7517102d1745f',1,'CardManagement::CardComposition::CardInfo']]]
+  ['value_0',['Value',['../d2/d34/class_error_handling_1_1_result.html#aad0c035bd3ec6d540655ff955303fede',1,'ErrorHandling.Result.Value'],['../de/dc0/struct_transferable.html#a35a68eab6cb8fd23b66cb2fdfe047ccd',1,'Transferable.Value']]]
 ];

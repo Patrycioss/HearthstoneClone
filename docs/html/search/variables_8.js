@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['name_0',['Name',['../d1/de3/struct_asset_management_1_1_sprites_1_1_sprite_information.html#ad2fdbd1784e66b6d2316ef5db6488611',1,'AssetManagement.Sprites.SpriteInformation.Name'],['../da/d85/class_deck_1_1_deck_info.html#a08aa533c652ad7859f55a26b5e4b83b9',1,'Deck.DeckInfo.Name']]]
+  ['oncancel_0',['OnCancel',['../d3/d4b/class_u_i_1_1_generic_1_1_confirmation_screen_configuration.html#a330cce30684c2ec6c3cac91a2d9ca529',1,'UI::Generic::ConfirmationScreenConfiguration']]],
+  ['onconfirm_1',['OnConfirm',['../d3/d4b/class_u_i_1_1_generic_1_1_confirmation_screen_configuration.html#a0b519aedd4c79b0084c424ff0fd51fc1',1,'UI::Generic::ConfirmationScreenConfiguration']]],
+  ['oncontinue_2',['OnContinue',['../db/de8/class_u_i_1_1_generic_1_1_message_configuration.html#ac7bb444b94dc53864d8105b262741ede',1,'UI::Generic::MessageConfiguration']]],
+  ['owner_3',['Owner',['../db/dc7/class_game_1_1_board_1_1_card_container.html#a2c7cd2a76a89b8382bd46217a9c069be',1,'Game::Board::CardContainer']]]
 ];

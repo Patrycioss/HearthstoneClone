@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamemanager_0',['GameManager',['../db/d10/class_game_manager.html',1,'']]]
+  ['endturnbutton_0',['EndTurnButton',['../d8/db7/class_u_i_1_1_end_turn_button.html',1,'UI']]]
 ];

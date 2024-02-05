@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['value_0',['Value',['../d2/d34/class_error_handling_1_1_result.html#aad0c035bd3ec6d540655ff955303fede',1,'ErrorHandling.Result.Value'],['../d3/d4c/class_transferable.html#a35a68eab6cb8fd23b66cb2fdfe047ccd',1,'Transferable.Value']]]
+  ['value_0',['Value',['../d2/d34/class_error_handling_1_1_result.html#aad0c035bd3ec6d540655ff955303fede',1,'ErrorHandling.Result.Value'],['../de/dc0/struct_transferable.html#a35a68eab6cb8fd23b66cb2fdfe047ccd',1,'Transferable.Value']]],
+  ['visuals_1',['Visuals',['../d8/dc6/class_physical_cards_1_1_physical_card.html#ac991be5afb8cdd224cef1dfbb27e777f',1,'PhysicalCards::PhysicalCard']]]
 ];

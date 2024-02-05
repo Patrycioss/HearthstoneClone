@@ -94,19 +94,22 @@ Inheritance diagram for Game.Player:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4320edcfa5db7242793a08a4ec422f9f" id="r_a4320edcfa5db7242793a08a4ec422f9f"><td class="memItemLeft" align="right" valign="top"><a id="a4320edcfa5db7242793a08a4ec422f9f" name="a4320edcfa5db7242793a08a4ec422f9f"></a>
-delegate bool&#160;</td><td class="memItemRight" valign="bottom"><b>TryPlayCallback</b> (<a class="el" href="../../d1/d80/class_card_management_1_1_physical_1_1_physical_card.html">PhysicalCard</a> physicalCard)</td></tr>
-<tr class="memdesc:a4320edcfa5db7242793a08a4ec422f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegate to check whether a PhysicalCard can be played. <br /></td></tr>
-<tr class="separator:a4320edcfa5db7242793a08a4ec422f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5bd090eda92b7943a00bdfc500904a6" id="r_ae5bd090eda92b7943a00bdfc500904a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5bd090eda92b7943a00bdfc500904a6">Initialize</a> (string playerName, IEnumerable&lt; <a class="el" href="../../d2/d3b/class_card_management_1_1_card_composition_1_1_card_info.html">CardInfo</a> &gt; cards)</td></tr>
+<tr class="memitem:ae5bd090eda92b7943a00bdfc500904a6" id="r_ae5bd090eda92b7943a00bdfc500904a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5bd090eda92b7943a00bdfc500904a6">Initialize</a> (string playerName, IEnumerable&lt; <a class="el" href="../../d0/d9e/class_card_composition_1_1_card_info.html">CardInfo</a> &gt; cards)</td></tr>
 <tr class="memdesc:ae5bd090eda92b7943a00bdfc500904a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new player with a set of cards in the deck.  <br /></td></tr>
 <tr class="separator:ae5bd090eda92b7943a00bdfc500904a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99b77fbcc6782a99a7ee29c45e68694b" id="r_a99b77fbcc6782a99a7ee29c45e68694b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99b77fbcc6782a99a7ee29c45e68694b">DrawCard</a> (int amount)</td></tr>
-<tr class="memdesc:a99b77fbcc6782a99a7ee29c45e68694b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw cards from PlayerDeck and put them in PlayerHand.  <br /></td></tr>
-<tr class="separator:a99b77fbcc6782a99a7ee29c45e68694b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ee672b88e1eec9dc61868665bd36b7" id="r_a66ee672b88e1eec9dc61868665bd36b7"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66ee672b88e1eec9dc61868665bd36b7">DrawCard</a> (int amount)</td></tr>
+<tr class="memdesc:a66ee672b88e1eec9dc61868665bd36b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw cards from PlayerDeck and put them in their hand.  <br /></td></tr>
+<tr class="separator:a66ee672b88e1eec9dc61868665bd36b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4a1093afb75ef4182003ad7b38f4c77" id="r_ad4a1093afb75ef4182003ad7b38f4c77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4a1093afb75ef4182003ad7b38f4c77">TryRemoveCard</a> (<a class="el" href="../../d8/dc6/class_physical_cards_1_1_physical_card.html">PhysicalCard</a> card)</td></tr>
+<tr class="memdesc:ad4a1093afb75ef4182003ad7b38f4c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to remove a card from the internal list of physical cards.  <br /></td></tr>
+<tr class="separator:ad4a1093afb75ef4182003ad7b38f4c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:a36d805e76b32f9250fc603ed0972f91c" id="r_a36d805e76b32f9250fc603ed0972f91c"><td class="memItemLeft" align="right" valign="top"><a id="a36d805e76b32f9250fc603ed0972f91c" name="a36d805e76b32f9250fc603ed0972f91c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsLocked</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:a36d805e76b32f9250fc603ed0972f91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can cards be moved? <br /></td></tr>
+<tr class="separator:a36d805e76b32f9250fc603ed0972f91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853f9100152ff73e063c760bb06a0ec1" id="r_a853f9100152ff73e063c760bb06a0ec1"><td class="memItemLeft" align="right" valign="top"><a id="a853f9100152ff73e063c760bb06a0ec1" name="a853f9100152ff73e063c760bb06a0ec1"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code> [get]</code></td></tr>
 <tr class="memdesc:a853f9100152ff73e063c760bb06a0ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the player. <br /></td></tr>
@@ -127,10 +130,10 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
 <a class="el" href="../../df/df8/class_game_1_1_player_deck.html">PlayerDeck</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerDeck</b><code> [get]</code></td></tr>
 <tr class="memdesc:a0f0ca618043d7a5fab3557233eb755d9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../df/d41/namespace_deck.html">Deck</a> that the player uses. <br /></td></tr>
 <tr class="separator:a0f0ca618043d7a5fab3557233eb755d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc8f57dcbd5ca2f4f30e3215eb504a1c" id="r_abc8f57dcbd5ca2f4f30e3215eb504a1c"><td class="memItemLeft" align="right" valign="top"><a id="abc8f57dcbd5ca2f4f30e3215eb504a1c" name="abc8f57dcbd5ca2f4f30e3215eb504a1c"></a>
-<a class="el" href="../../d5/d82/class_game_1_1_player_hand.html">PlayerHand</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerHand</b><code> [get]</code></td></tr>
-<tr class="memdesc:abc8f57dcbd5ca2f4f30e3215eb504a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hand of the player. <br /></td></tr>
-<tr class="separator:abc8f57dcbd5ca2f4f30e3215eb504a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df5b6dec76cef6aeac24a408e6afad7" id="r_a9df5b6dec76cef6aeac24a408e6afad7"><td class="memItemLeft" align="right" valign="top"><a id="a9df5b6dec76cef6aeac24a408e6afad7" name="a9df5b6dec76cef6aeac24a408e6afad7"></a>
+Transform&#160;</td><td class="memItemRight" valign="bottom"><b>Hand</b><code> [get]</code></td></tr>
+<tr class="memdesc:a9df5b6dec76cef6aeac24a408e6afad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hand of the player. <br /></td></tr>
+<tr class="separator:a9df5b6dec76cef6aeac24a408e6afad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adff8c1ef97ba43450b8243ae4ccae961" id="r_adff8c1ef97ba43450b8243ae4ccae961"><td class="memItemLeft" align="right" valign="top"><a id="adff8c1ef97ba43450b8243ae4ccae961" name="adff8c1ef97ba43450b8243ae4ccae961"></a>
 <a class="el" href="../../db/da6/class_u_i_1_1_mana_bar.html">ManaBar</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ManaBar</b><code> [get]</code></td></tr>
 <tr class="memdesc:adff8c1ef97ba43450b8243ae4ccae961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mana bar of the player. <br /></td></tr>
@@ -139,8 +142,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Object containing all the information of a character in the game. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a99b77fbcc6782a99a7ee29c45e68694b" name="a99b77fbcc6782a99a7ee29c45e68694b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99b77fbcc6782a99a7ee29c45e68694b">&#9670;&#160;</a></span>DrawCard()</h2>
+<a id="a66ee672b88e1eec9dc61868665bd36b7" name="a66ee672b88e1eec9dc61868665bd36b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66ee672b88e1eec9dc61868665bd36b7">&#9670;&#160;</a></span>DrawCard()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,7 +152,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Game.Player.DrawCard </td>
+          <td class="memname">async Task Game.Player.DrawCard </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>amount</em></span></td><td>)</td>
           <td></td>
@@ -162,7 +165,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
 </table>
 </div><div class="memdoc">
 
-<p>Draw cards from PlayerDeck and put them in PlayerHand. </p>
+<p>Draw cards from PlayerDeck and put them in their hand. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">amount</td><td>The amount of cards.</td></tr>
@@ -189,7 +192,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IEnumerable&lt; <a class="el" href="../../d2/d3b/class_card_management_1_1_card_composition_1_1_card_info.html">CardInfo</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>cards</em></span>&#160;)</td>
+          <td class="paramtype">IEnumerable&lt; <a class="el" href="../../d0/d9e/class_card_composition_1_1_card_info.html">CardInfo</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>cards</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -207,6 +210,40 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>PlayerName</b><code
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad4a1093afb75ef4182003ad7b38f4c77" name="ad4a1093afb75ef4182003ad7b38f4c77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4a1093afb75ef4182003ad7b38f4c77">&#9670;&#160;</a></span>TryRemoveCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Game.Player.TryRemoveCard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d8/dc6/class_physical_cards_1_1_physical_card.html">PhysicalCard</a></td>          <td class="paramname"><span class="paramname"><em>card</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tries to remove a card from the internal list of physical cards. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the operation was successful.</dd></dl>
 
 </div>
 </div>
