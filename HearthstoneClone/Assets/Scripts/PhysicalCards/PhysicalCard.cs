@@ -132,7 +132,7 @@ namespace PhysicalCards
             }
         }
 
-        /// <summary>9
+        /// <summary>
         /// Deselect the card.
         /// <remarks>Only works when the card <see cref="HasBeenPlayed"/> and is currently selected.</remarks>
         /// </summary>
